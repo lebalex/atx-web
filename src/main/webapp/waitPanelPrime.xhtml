@@ -1,0 +1,22 @@
+    <p:dialog  xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:p="http://primefaces.org/ui" widgetVar="waitPrime" closable="false" modal="true" resizable="false" closeOnEscape="false"
+     visible="false" position="center">
+
+    <f:facet name="header">
+        <h:panelGroup styleClass="popupHeaderWrapper">
+            <h:outputText id="caption1"
+                    value="Загрузка..." styleClass="popupHeaderText"/>
+        </h:panelGroup>
+    </f:facet>
+
+        <p:outputLabel  value="Идет обработка, пожалуйста подождите!"/><p/>
+        <p:progressBar widgetVar="pbAjax"  value="0" style="background-image: url('images/progress2.gif')" global="false"/>
+        
+
+ 
+            </p:dialog>
+
+
+

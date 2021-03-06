@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+
+
+    <script type="text/javascript" src="js/ru.js"/>
+
+    <title>Автохозяйство УВД</title>
+    <link rel="stylesheet" type="text/css" href="css/atx.css"/>
+    <h:outputStylesheet name="css/primeflex.min.css" />
+    <!--link rel="stylesheet" type="text/css" href="resources/css/primeflex.min.css"/-->
+
+</h:head>
+<h:body>
+    <ui:include src="waitPanelPrime.xhtml"/>
+    <p:ajaxStatus onstart="PF('waitPrime').show()" onsuccess="PF('waitPrime').hide()"/>
+
+    <!--p:layout fullPage="true">
+        <p:layoutUnit position="north" size="100" resizable="true" closable="false" collapsible="true"-->
+    <div class="p-d-inline">
+            <p:panelGrid id="idPanelAddUsers" styleClass="panelGridTitleNoBorder">
+            <p:row>
+                <p:column><p:outputLabel styleClass="mytitles" value="Автохозяйство УВД"/></p:column>
+                <p:column styleClass="col_right"><p:outputLabel value="#{atxLogin.fio}" /></p:column>
+            </p:row>
+            </p:panelGrid>
+
+
+            <ui:include src="atx_menu.xhtml"/>
+
+    </div>
+        <!--/p:layoutUnit>
+
+
+        <p:layoutUnit id="content" widgetVar="content" position="center" style="padding: 20px;"-->
+
+
+            <h:panelGroup id="main-content">
+                <ui:include src="#{managerPages.page}" />
+            </h:panelGroup>
+
+
+
+
+
+        <!--/p:layoutUnit>
+    </p:layout-->
+
+
+
+</h:body>
+</html>
+

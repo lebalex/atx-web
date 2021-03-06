@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<p:dialog modal="true" style="margin-top: 20px" id="zakrepDetail"
+          header="#{quickSearch.getFromLyb(quickSearch.selectedAvto.id_mark,'MarkAvtModel')} #{quickSearch.selectedAvto.model} - #{quickSearch.selectedAvto.numb_1}"
+          widgetVar="dlg_zakrep" resizable="false">
+
+    <p:panelGrid rendered="#{not empty quickSearch.selectedAvto.selectedZakrep}" columnClasses="label,value"
+                 styleClass="panelGridAvtoCard">
+
+        <p:row>
+            <p:column><p:outputLabel value="Дата закрепления*"/></p:column>
+            <p:column><p:calendar showOn="button" value="#{quickSearch.selectedAvto.selectedZakrep.date_begin}"
+                                  locale="ru" pattern="dd.MM.yyyy"/></p:column>
+            <p:column colspan="2"><p:selectBooleanCheckbox itemLabel="Временно закрепленный" value="#{quickSearch.selectedAvto.selectedZakrep.temp}"/> </p:column>
+        </p:row>
+        <p:row>
+            <p:column><p:outputLabel value="Дата окончания закрепления"/></p:column>
+            <p:column colspan="3"><p:calendar showOn="button" value="#{quickSearch.selectedAvto.selectedZakrep.date_end}"
+                                  locale="ru" pattern="dd.MM.yyyy"/></p:column>
+        </p:row>
+        <p:row>
+            <p:column><p:outputLabel value="Приказ о закреплении"/></p:column>
+            <p:column>
+                <p:inputText value="#{quickSearch.selectedAvto.selectedZakrep.prikaz}" style="width:100px"/>
+            </p:column>
+            <p:column><p:outputLabel value="Приказ об откоеплении"/></p:column>
+            <p:column>
+                <p:inputText value="#{quickSearch.selectedAvto.selectedZakrep.out_prikaz}" style="width:100px"/>
+            </p:column>
+        </p:row>
+        <p:row>
+            <p:column><p:outputLabel value="Дата приказа о закреплении*"/></p:column>
+            <p:column><p:calendar showOn="button" value="#{quickSearch.selectedAvto.selectedZakrep.date_prikaz}"
+                                  locale="ru" pattern="dd.MM.yyyy"/></p:column>
+            <p:column><p:outputLabel value="Дата приказа об откреплении*"/></p:column>
+            <p:column><p:calendar showOn="button" value="#{quickSearch.selectedAvto.selectedZakrep.date_out_prikaz}"
+                                  locale="ru" pattern="dd.MM.yyyy"/></p:column>
+        </p:row>
+        <p:row>
+            <p:column colspan="2"><p:selectBooleanCheckbox itemLabel="Справка о закреплении выдана" value="#{quickSearch.selectedAvto.selectedZakrep.spravka}"/> </p:column>
+            <p:column colspan="2"><p:selectBooleanCheckbox itemLabel="Карточка о закреплении выдана" value="#{quickSearch.selectedAvto.selectedZakrep.card}"/> </p:column>
+        </p:row>
+        <p:row>
+            <p:column><p:outputLabel value="ФИО"/></p:column>
+            <p:column colspan="3">
+                <p:inputText value="#{quickSearch.selectedAvto.selectedZakrep.fio}" style="width:600px"/>
+            </p:column>
+        </p:row>
+        <p:row>
+            <p:column><p:outputLabel value="Телефон"/></p:column>
+            <p:column colspan="3">
+                <p:inputText value="#{quickSearch.selectedAvto.selectedZakrep.phone}" style="width:600px"/>
+            </p:column>
+        </p:row>
+        <p:row>
+            <p:column><p:outputLabel value="Должность"/></p:column>
+            <p:column colspan="3">
+                <p:inputText value="#{quickSearch.selectedAvto.selectedZakrep.dolg}" style="width:600px"/>
+            </p:column>
+        </p:row>
+        <p:row>
+            <p:column><p:outputLabel value="Звание"/></p:column>
+            <p:column colspan="3">
+                <p:inputText value="#{quickSearch.selectedAvto.selectedZakrep.zvan}" style="width:600px"/>
+            </p:column>
+        </p:row>
+        <p:row>
+            <p:column><p:outputLabel value="Место стоянки"/></p:column>
+            <p:column colspan="3">
+                <p:inputText value="#{quickSearch.selectedAvto.selectedZakrep.address}" style="width:600px"/>
+            </p:column>
+        </p:row>
+        <p:row>
+            <p:column><p:outputLabel value="Вод.удостоверение"/></p:column>
+            <p:column colspan="3">
+                <p:inputText value="#{quickSearch.selectedAvto.selectedZakrep.vod_ud}" style="width:600px"/>
+            </p:column>
+        </p:row>
+        <p:row>
+            <p:column><p:outputLabel value="Мед.справка"/></p:column>
+            <p:column colspan="3"><p:calendar showOn="button" value="#{quickSearch.selectedAvto.selectedZakrep.med}"
+                                  locale="ru" pattern="dd.MM.yyyy"/></p:column>
+        </p:row>
+        <p:row>
+            <p:column><p:outputLabel value="Комментарий"/></p:column>
+            <p:column colspan="3"><p:inputTextarea rows="3" cols="80" value="#{quickSearch.selectedAvto.selectedZakrep.comm}" /></p:column>
+        </p:row>
+
+
+
+
+
+
+
+    </p:panelGrid>
+    <f:facet name="footer">
+        <p:commandButton type="button" value="Отменить" styleClass="ui-button-flat p-mr-20" global="false" onclick="PF('dlg_zakrep').hide()"  >
+            <p:confirm header="Подтверждение" message="Выйти без сохранения?" icon="pi pi-info-circle"/>
+        </p:commandButton>
+
+        <p:commandButton title="Сохранить" value="Сохранить" icon="pi pi-save"  actionListener="#{quickSearch.saveZakrepCards}"
+                         oncomplete="PF('dlg_zakrep').hide()"
+                         update=":form:tabview:zakrep_data :form:growlAvto"/>
+
+        <p:commandButton title="Справка" value="Справка (docx)" icon="pi pi-print" rendered="#{quickSearch.selectedAvto.selectedZakrep.id>0}"
+                         styleClass="ui-button-raised ui-button-success" actionListener="#{quickSearch.printZakrepSpravka}" ajax="false"/>
+        <p:commandButton title="Карточка" value="Карточка (docx)" icon="pi pi-print" rendered="#{quickSearch.selectedAvto.selectedZakrep.id>0}"
+                         styleClass="ui-button-raised ui-button-success" actionListener="#{quickSearch.printZakrepCard}" ajax="false"/>
+
+
+
+    </f:facet>
+
+</p:dialog>
+</html>

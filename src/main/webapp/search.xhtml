@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<f:view>
+    <h:form id="formSearch">
+    <p:panelGrid columnClasses="label2,value2,label2,value" style="margin-top: 30px;margin-left: 30px"
+                 styleClass="panelGridAvtoCard90">
+<p:row>
+    <p:column>
+        <p:selectBooleanCheckbox value="#{fullSearch.on_region}" itemLabel="Гарнизон/Область">
+            <p:ajax global="false" update="id_region"/>
+        </p:selectBooleanCheckbox>
+    </p:column>
+        <p:column>
+        <p:selectOneMenu id="id_region" value="#{fullSearch.id_region}" disabled="#{!fullSearch.on_region}" style="width:300px">
+            <f:selectItem itemLabel="&nbsp;" itemValue="#{0}"/>
+            <f:selectItems value="#{quickSearch.listRegionModel}" var="entry"
+                           itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+        </p:selectOneMenu>
+        </p:column>
+        <p:column>
+        <p:selectBooleanCheckbox value="#{fullSearch.on_engine}" itemLabel="№ двигателя">
+            <p:ajax global="false" update="n_engine"/>
+        </p:selectBooleanCheckbox>
+        </p:column>
+        <p:column>
+        <p:inputText id="n_engine" value="#{fullSearch.n_engine}"  disabled="#{!fullSearch.on_engine}" style="width:300px">
+        </p:inputText>
+        </p:column>
+</p:row>
+        <!-- -->
+        <p:row><p:column>
+        <p:selectBooleanCheckbox value="#{fullSearch.on_division}" itemLabel="Управление">
+            <p:ajax global="false" update="id_division"/>
+        </p:selectBooleanCheckbox>
+    </p:column>
+        <p:column>
+        <p:selectOneMenu id="id_division" value="#{fullSearch.id_division}" disabled="#{!fullSearch.on_division}" style="width:300px">
+            <f:selectItem itemLabel="&nbsp;" itemValue="#{0}"/>
+            <f:selectItems value="#{quickSearch.listDivisionModel}" var="entry"
+                           itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+        </p:selectOneMenu>
+        </p:column>
+        <p:column>
+        <p:selectBooleanCheckbox value="#{fullSearch.on_body}" itemLabel="№ кузова">
+            <p:ajax global="false" update="n_body"/>
+        </p:selectBooleanCheckbox>
+        </p:column>
+        <p:column>
+        <p:inputText id="n_body" value="#{fullSearch.n_body}"  disabled="#{!fullSearch.on_body}" style="width:300px">
+        </p:inputText>
+        </p:column>
+        </p:row>
+        <!-- -->
+        <p:row><p:column>
+        <p:selectBooleanCheckbox value="#{fullSearch.on_depart}" itemLabel="Отдел">
+            <p:ajax global="false" update="id_depart"/>
+        </p:selectBooleanCheckbox>
+        </p:column>
+        <p:column>
+        <p:selectOneMenu id="id_depart" value="#{fullSearch.id_depart}" disabled="#{!fullSearch.on_depart}" style="width:300px">
+            <f:selectItem itemLabel="&nbsp;" itemValue="#{0}"/>
+            <f:selectItems value="#{quickSearch.listDepartModel}" var="entry"
+                           itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+        </p:selectOneMenu>
+        </p:column>
+        <p:column>
+        <p:selectBooleanCheckbox value="#{fullSearch.on_chassis}" itemLabel="№ шасси">
+            <p:ajax global="false" update="n_chassis"/>
+        </p:selectBooleanCheckbox>
+        </p:column>
+        <p:column>
+        <p:inputText id="n_chassis" value="#{fullSearch.n_chassis}"  disabled="#{!fullSearch.on_chassis}" style="width:300px">
+        </p:inputText>
+        </p:column>
+        </p:row>
+        <!-- -->
+        <p:row><p:column>
+        <p:selectBooleanCheckbox value="#{fullSearch.on_preDepart}" itemLabel="под-Отдел">
+            <p:ajax global="false" update="id_preDepart"/>
+        </p:selectBooleanCheckbox>
+        </p:column>
+        <p:column>
+        <p:selectOneMenu id="id_preDepart" value="#{fullSearch.id_preDepart}" disabled="#{!fullSearch.on_preDepart}" style="width:300px">
+            <f:selectItem itemLabel="&nbsp;" itemValue="#{0}"/>
+            <f:selectItems value="#{quickSearch.listPreDepartModel}" var="entry"
+                           itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+        </p:selectOneMenu>
+        </p:column>
+        <p:column>
+        <p:selectBooleanCheckbox value="#{fullSearch.on_pts}" itemLabel="№ техпаспорта">
+            <p:ajax global="false" update="n_pts"/>
+        </p:selectBooleanCheckbox>
+        </p:column>
+        <p:column>
+        <p:inputText id="n_pts" value="#{fullSearch.n_pts}"  disabled="#{!fullSearch.on_pts}" style="width:300px">
+        </p:inputText>
+        </p:column>
+        </p:row>
+        <!-- -->
+        <p:row><p:column>
+        <p:selectBooleanCheckbox value="#{fullSearch.on_serv}" itemLabel="Служба">
+            <p:ajax global="false" update="id_serv"/>
+        </p:selectBooleanCheckbox>
+        </p:column>
+        <p:column>
+        <p:selectOneMenu id="id_serv" value="#{fullSearch.id_serv}" disabled="#{!fullSearch.on_serv}" style="width:300px">
+            <f:selectItem itemLabel="&nbsp;" itemValue="#{0}"/>
+            <f:selectItems value="#{quickSearch.listServModel}" var="entry"
+                           itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+        </p:selectOneMenu>
+        </p:column>
+        <p:column>
+        <p:selectBooleanCheckbox value="#{fullSearch.on_source_bay}" itemLabel="Источник приобретения">
+            <p:ajax global="false" update="id_source_bay"/>
+        </p:selectBooleanCheckbox>
+        </p:column>
+        <p:column>
+        <p:selectOneMenu id="id_source_bay" value="#{fullSearch.id_source_bay}" disabled="#{!fullSearch.on_source_bay}" style="width:300px">
+            <f:selectItem itemLabel="&nbsp;" itemValue="#{0}"/>
+            <f:selectItems value="#{quickSearch.listSourceModel}" var="entry"
+                           itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+        </p:selectOneMenu>
+        </p:column>
+        </p:row>
+        <!-- -->
+        <p:row><p:column>
+        <p:selectBooleanCheckbox value="#{fullSearch.on_PreServ}" itemLabel="под-Служба">
+            <p:ajax global="false" update="id_PreServ"/>
+        </p:selectBooleanCheckbox>
+        </p:column>
+        <p:column>
+        <p:selectOneMenu id="id_PreServ" value="#{fullSearch.id_PreServ}" disabled="#{!fullSearch.on_PreServ}" style="width:300px">
+            <f:selectItem itemLabel="&nbsp;" itemValue="#{0}"/>
+            <f:selectItems value="#{quickSearch.listPreServModel}" var="entry"
+                           itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+        </p:selectOneMenu>
+        </p:column>
+        <p:column>
+        <p:selectBooleanCheckbox value="#{fullSearch.on_source_fin}" itemLabel="Источник содержания">
+            <p:ajax global="false" update="id_source_fin"/>
+        </p:selectBooleanCheckbox>
+        </p:column>
+        <p:column>
+        <p:selectOneMenu id="id_source_fin" value="#{fullSearch.id_source_fin}" disabled="#{!fullSearch.on_source_fin}" style="width:300px">
+            <f:selectItem itemLabel="&nbsp;" itemValue="#{0}"/>
+            <f:selectItems value="#{quickSearch.listSourceModel}" var="entry"
+                           itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+        </p:selectOneMenu>
+        </p:column>
+        </p:row>
+        <!-- -->
+        <p:row><p:column>
+        <p:selectBooleanCheckbox value="#{fullSearch.on_dislocation}" itemLabel="Место дислокации">
+            <p:ajax global="false" update="id_dislocation"/>
+        </p:selectBooleanCheckbox>
+        </p:column>
+        <p:column>
+        <p:selectOneMenu id="id_dislocation" value="#{fullSearch.id_dislocation}" disabled="#{!fullSearch.on_dislocation}" style="width:300px">
+            <f:selectItem itemLabel="&nbsp;" itemValue="#{0}"/>
+            <f:selectItems value="#{quickSearch.listDislocationModel}" var="entry"
+                           itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+        </p:selectOneMenu>
+        </p:column>
+        <p:column>
+        <p:selectBooleanCheckbox value="#{fullSearch.on_group}" itemLabel="Группа эксплуатации">
+            <p:ajax global="false" update="id_group"/>
+        </p:selectBooleanCheckbox>
+        </p:column>
+        <p:column>
+        <p:selectOneMenu id="id_group" value="#{fullSearch.id_group}" disabled="#{!fullSearch.on_group}" style="width:300px">
+            <f:selectItem itemLabel="&nbsp;" itemValue="#{0}"/>
+            <f:selectItems value="#{quickSearch.listGroupModel}" var="entry"
+                           itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+        </p:selectOneMenu>
+        </p:column>
+        </p:row>
+        <!-- -->
+        <p:row><p:column>
+        <p:selectBooleanCheckbox value="#{fullSearch.on_mark}" itemLabel="Марка">
+            <p:ajax global="false" update="id_mark"/>
+        </p:selectBooleanCheckbox>
+        </p:column>
+        <p:column>
+        <p:selectOneMenu id="id_mark" value="#{fullSearch.id_mark}" disabled="#{!fullSearch.on_mark}" style="width:300px">
+            <p:ajax global="false" listener="#{quickSearch.handleMarkSearchChange(fullSearch.id_mark)}"
+                    update="formSearch:id_model"/>
+            <f:selectItem itemLabel="&nbsp;" itemValue="#{0}"/>
+            <f:selectItems value="#{quickSearch.listMarkAvtModel}" var="entry"
+                           itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+        </p:selectOneMenu>
+        </p:column>
+        <p:column>
+        <p:selectBooleanCheckbox value="#{fullSearch.on_insur}" itemLabel="№ страховки">
+            <p:ajax global="false" update="insur"/>
+        </p:selectBooleanCheckbox>
+        </p:column>
+        <p:column>
+        <p:inputText id="insur" value="#{fullSearch.insur}"  disabled="#{!fullSearch.on_insur}" style="width:300px">
+        </p:inputText>
+        </p:column>
+        </p:row>
+        <!-- -->
+        <p:row><p:column>
+        <p:selectBooleanCheckbox value="#{fullSearch.on_model}" itemLabel="Модель">
+            <p:ajax global="false" update="id_model"/>
+        </p:selectBooleanCheckbox>
+        </p:column>
+        <p:column>
+        <p:selectOneMenu id="id_model" value="#{fullSearch.id_model}" disabled="#{!fullSearch.on_model}" style="width:300px">
+            <f:selectItem itemLabel="&nbsp;" itemValue="#{0}"/>
+            <f:selectItems value="#{quickSearch.listModelAvtModel}" var="entry"
+                           itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+        </p:selectOneMenu>
+        </p:column>
+        </p:row>
+        <!-- -->
+        <p:row><p:column>
+            <p:selectBooleanCheckbox value="#{fullSearch.on_numb_1}" itemLabel="Гос № (1)">
+                <p:ajax global="false" update="numb_1"/>
+            </p:selectBooleanCheckbox>
+        </p:column>
+            <p:column>
+                <p:inputText id="numb_1" value="#{fullSearch.numb_1}"  disabled="#{!fullSearch.on_numb_1}" style="width:300px">
+                </p:inputText>
+            </p:column>
+        </p:row>
+        <!-- -->
+        <p:row><p:column>
+            <p:selectBooleanCheckbox value="#{fullSearch.on_numb_2}" itemLabel="Гос № (2)">
+                <p:ajax global="false" update="numb_2"/>
+            </p:selectBooleanCheckbox>
+        </p:column>
+            <p:column>
+                <p:inputText id="numb_2" value="#{fullSearch.numb_2}"  disabled="#{!fullSearch.on_numb_2}" style="width:300px">
+                </p:inputText>
+            </p:column>
+        </p:row>
+        <!-- -->
+        <p:row><p:column>
+            <p:selectBooleanCheckbox value="#{fullSearch.on_m_year}" itemLabel="Год выпуска">
+                <p:ajax global="false" update="m_year1 m_year2"/>
+            </p:selectBooleanCheckbox>
+        </p:column>
+            <p:column>
+                <p:outputLabel value="с "/>
+                <p:inputText id="m_year1" value="#{fullSearch.m_year1}" placeholder="2000"  disabled="#{!fullSearch.on_m_year}" style="width:50px">
+                    <p:keyFilter mask="num" />
+                </p:inputText>
+                <p:outputLabel value="по " style="margin-left: 10px"/>
+                <p:inputText id="m_year2" value="#{fullSearch.m_year2}" placeholder="2010"  disabled="#{!fullSearch.on_m_year}" style="width:50px">
+                    <p:keyFilter mask="num" />
+                </p:inputText>
+            </p:column>
+        </p:row>
+
+        <!-- -->
+        <p:row><p:column>
+            <p:selectBooleanCheckbox value="#{fullSearch.on_vin}" itemLabel="VIN">
+                <p:ajax global="false" update="vin"/>
+            </p:selectBooleanCheckbox>
+        </p:column>
+            <p:column>
+                <p:inputText id="vin" value="#{fullSearch.vin}"  disabled="#{!fullSearch.on_vin}" style="width:300px">
+                </p:inputText>
+            </p:column>
+        </p:row>
+
+        <!-- -->
+        <p:row>
+            <p:column>
+                <p:commandButton value="Найти" icon="pi pi-search" actionListener="#{fullSearch.find}" update=":main-content"/>
+        </p:column>
+        </p:row>
+
+    </p:panelGrid>
+    </h:form>
+
+</f:view>
+</html>

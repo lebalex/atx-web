@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<f:view>
+    <h:form id="formLibr2">
+        <p:growl id="msgs" showDetail="true"/>
+        <div class="ui-g">
+            <div class="ui-g-12">
+                <p:selectOneMenu value="#{librGSMPrice.id_parent}"
+                                 style="width:400px">
+                    <p:ajax update=":formLibr2:libra" process="@this" listener="#{librGSMPrice.getChild}"/>
+                    <f:selectItems value="#{librGSMPrice.listParentModel}" var="entry"
+                                   itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+                </p:selectOneMenu>
+            </div>
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <p:commandButton value="добавить" styleClass="p-mt-3" process="@this"
+                                     action="#{librGSMPrice.onAddNew()}" oncomplete="PF('libra').addRow();"/>
+                </div>
+            </div>
+        </div>
+        <p:dataTable id="libra" widgetVar="libra" var="libra" value="#{librGSMPrice.listChildModel}" emptyMessage="нет записей"
+                     editable="true" scrollable="true" scrollHeight="600" style="width: 90%">
+            <p:ajax event="rowEdit" listener="#{librGSMPrice.onRowEdit}" update=":formLibr2:msgs"/>
+            <p:column headerText="Название">
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{libra.dat}">
+                        <f:convertDateTime pattern="dd.MM.yyyy"/>
+                    </h:outputText></f:facet>
+                    <f:facet name="input">
+                        <p:calendar id="date_texpasport" showOn="button" style="width:75px !important;"
+                                    locale="ru" pattern="dd.MM.yyyy" value="#{libra.dat}"/></f:facet>
+                </p:cellEditor>
+            </p:column>
+            <p:column headerText="Срок эксплуатации" width="100px">
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{libra.val}"/></f:facet>
+                    <f:facet name="input"><p:inputText value="#{libra.val}"
+                                                       style="width:100%"><p:keyFilter mask="num" /></p:inputText></f:facet>
+                </p:cellEditor>
+            </p:column>
+            <p:column style="width:6rem">
+                <p:rowEditor/>
+            </p:column>
+            <p:column style="width:6rem">
+                <p:commandButton icon="pi pi-trash" actionListener="#{librGSMPrice.onDelete(libra.num)}" update=":formLibr2:libra"/>
+            </p:column>
+            <!--  нельзя давть пользователям удалять в НСИ, удалят машины-->
+        </p:dataTable>
+    </h:form>
+
+</f:view>
+</html>

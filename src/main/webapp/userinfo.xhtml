@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<f:view>
+
+    <h:form id="userForm" prependId="false">
+        <p:growl id="growluserForm" showDetail="true" sticky="false" life="5000"/>
+        <p:panelGrid id="idPanelUserInfo" styleClass="pgrid_top">
+            <p:row>
+                <p:column>
+
+                    <p:panelGrid id="idPanelUserName">
+                        <p:row>
+                            <p:column><p:outputLabel value="логин"
+                                                     for="username"
+                                                     indicateRequired="true"/></p:column>
+                            <p:column><p:inputText id="username" value="#{users.user.username}" required="true"
+                                                   size="50">
+                                <f:validateLength minimum="2"/>
+                            </p:inputText>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column><p:outputLabel value="Пароль"
+                                                     for="pwd"/></p:column>
+                            <p:column><p:outputLabel id="pwd" value="#{users.pwd}"/>
+                                <p:commandButton actionListener="#{users.generate_pwd}" value="сгенерировать"
+                                                 update="pwd" style="float:right;"/></p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column><p:outputLabel value="ФИО"
+                                                     for="fio"
+                                                     indicateRequired="true"/></p:column>
+                            <p:column><p:inputText id="fio" value="#{users.user.fio}" required="true" size="50">
+                                <f:validateLength minimum="2"/>
+                            </p:inputText>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column><p:outputLabel value="Email"
+                                                     for="email"/></p:column>
+                            <p:column><p:inputText id="email" value="#{users.user.email}" size="50">
+                            </p:inputText>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column><p:outputLabel value="Телефон"
+                                                     for="phone"/></p:column>
+                            <p:column><p:inputText id="phone" value="#{users.user.phone}" size="50">
+                            </p:inputText>
+                            </p:column>
+                        </p:row>
+
+                        <p:row>
+                            <p:column><p:outputLabel value="Коментарий"
+                                                     for="description"/></p:column>
+                            <p:column><p:inputTextarea id="description" rows="10" cols="50"
+                                                       value="#{users.user.decsription}">
+
+                            </p:inputTextarea>
+                            </p:column>
+                        </p:row>
+
+                        <p:row>
+                            <p:column colspan="2"><p:commandButton actionListener="#{users.save}" update="@form"
+                                                                   value="Сохранить" icon="ui-icon-plus"
+                                                                   style="float:right;"/></p:column>
+
+                        </p:row>
+
+                    </p:panelGrid>
+
+
+                </p:column>
+
+                <p:column>
+                    <div style="width:600px">
+                        <p:dataTable var="role" value="#{users.listRoles}">
+                            <p:column width="30%" headerText="Выбрать">
+
+                                <p:selectBooleanCheckbox value="#{role.selected}" itemLabel="#{role.role_code}"/>
+                            </p:column>
+
+                            <p:column headerText="Роль">
+                                <h:outputText value="#{role.role_name}"/>
+
+                            </p:column>
+
+                        </p:dataTable>
+                    </div>
+                </p:column>
+
+                <p:column>
+                        <p:panelGrid style="width:400px">
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel value="Регион:"/>
+                            </p:column>
+                            <p:column>
+                                <p:selectOneMenu id="reg" value="#{users.user.region}" style="width:325px">
+                                    <f:selectItems value="#{users.options_region.entrySet()}" var="entry"
+                                                   itemLabel="#{entry.value}" itemValue="#{entry.key}"/>
+                                </p:selectOneMenu>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel value="Отдел:"/>
+                            </p:column>
+                            <p:column>
+                                <p:selectOneMenu id="depart" value="#{users.user.depart}" style="width:325px">
+                                    <f:selectItems value="#{users.options_depart.entrySet()}" var="entry"
+                                                   itemLabel="#{entry.value}" itemValue="#{entry.key}"/>
+                                </p:selectOneMenu>
+                            </p:column>
+                        </p:row>
+                        </p:panelGrid>
+
+                </p:column>
+            </p:row>
+        </p:panelGrid>
+    </h:form>
+</f:view>
+</html>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<p:dialog modal="true" style="margin-top: 20px" id="remontZayDetail"
+          header="#{quickSearch.getFromLyb(quickSearch.selectedAvto.id_mark,'MarkAvtModel')} #{quickSearch.selectedAvto.model} - #{quickSearch.selectedAvto.numb_1}"
+          widgetVar="dlg_remontZay" resizable="false">
+
+    <p:panelGrid rendered="#{not empty quickSearch.selectedAvto.selectedRemontZay}" columnClasses="label,value"
+                 styleClass="panelGridAvtoCard">
+
+        <p:row>
+            <p:column><p:outputLabel value="Номер"/></p:column>
+            <p:column><p:inputText value="#{quickSearch.selectedAvto.selectedRemontZay.num}"
+                                               style="width:100px">
+                <p:keyFilter mask="num" />
+            </p:inputText>
+            </p:column>
+            <p:column><p:outputLabel value="Дата заявки*"/></p:column>
+            <p:column><p:calendar showOn="button" value="#{quickSearch.selectedAvto.selectedRemontZay.date}"
+                                  locale="ru" pattern="dd.MM.yyyy"/></p:column>
+        </p:row>
+        <p:row>
+            <p:column><p:outputLabel value="Организация"/></p:column>
+            <p:column colspan="3"><p:selectOneMenu value="#{quickSearch.selectedAvto.selectedRemontZay.id_org}"
+                                       style="width:600px; ">
+                <f:selectItem itemLabel="&nbsp;" itemValue="#{0}"/>
+                <f:selectItems value="#{quickSearch.listPlaceRemontModel}" var="entry"
+                               itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+            </p:selectOneMenu></p:column>
+        </p:row>
+        <p:row>
+            <p:column><p:outputLabel value="Водитель"/></p:column>
+            <p:column colspan="3">
+                <p:inputText value="#{quickSearch.selectedAvto.selectedRemontZay.fio}" style="width:600px"/>
+            </p:column>
+        </p:row>
+        <p:row>
+            <p:column><p:outputLabel value="Показания спидометра"/></p:column>
+            <p:column>
+                <p:inputText value="#{quickSearch.selectedAvto.selectedRemontZay.speed}"
+                             style="width:100px">
+                    <p:keyFilter mask="num" />
+                </p:inputText>
+            </p:column>
+        </p:row>
+        <p:row>
+        <p:column><p:outputLabel value="Вид ремонта*"/></p:column>
+        <p:column><p:selectOneMenu value="#{quickSearch.selectedAvto.selectedRemontZay.id_vid_to}"
+                                   style="width:400px">
+            <f:selectItems value="#{quickSearch.listVidRemontModel}" var="entry"
+                           itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+        </p:selectOneMenu></p:column>
+        <p:column><p:outputLabel value="По графику*"/></p:column>
+        <p:column><p:selectOneMenu value="#{quickSearch.selectedAvto.selectedRemontZay.graf}"
+                                   style="width:200px">
+            <f:selectItem itemLabel="По графику" itemValue="#{0}"/>
+            <f:selectItem itemLabel="С нарушентем" itemValue="#{1}"/>
+        </p:selectOneMenu></p:column>
+        </p:row>
+
+
+
+        <p:row>
+            <p:column colspan="4">
+
+                        <div class="ui-g">
+                            <div class="ui-g-12">
+                                <p:commandButton value="добавить" styleClass="p-mt-3" process="@this" global="false"
+                                                 action="#{quickSearch.selectedAvto.selectedRemontZay.onAddNewDifr()}" oncomplete="PF('difr').addRow();"/>
+                            </div>
+                        </div>
+
+                        <p:dataTable id="difr" widgetVar="difr" var="difr" value="#{quickSearch.selectedAvto.selectedRemontZay.listRemontZayDifrModel}"
+                                     editable="true" scrollable="true" scrollHeight="310" emptyMessage="нет записей">
+                            <p:column headerText="Название">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{difr.zay}"/></f:facet>
+                                    <f:facet name="input"><p:inputText  value="#{difr.zay}"
+                                                                       style="width:100%"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+
+                            <p:column style="width:6rem">
+                                <p:rowEditor/>
+                            </p:column>
+                            <p:column style="width:6rem">
+                                <p:commandButton icon="pi pi-trash" global="false" actionListener="#{quickSearch.selectedAvto.selectedRemontZay.onDeleteDifr(difr.numb)}" update="difr"/>
+                            </p:column>
+                        </p:dataTable>
+
+            </p:column>
+        </p:row>
+
+
+    </p:panelGrid>
+    <f:facet name="footer">
+        <p:commandButton type="button" value="Отменить" styleClass="ui-button-flat p-mr-20" global="false" onclick="PF('dlg_remontZay').hide()"  >
+            <p:confirm header="Подтверждение" message="Выйти без сохранения?" icon="pi pi-info-circle"/>
+        </p:commandButton>
+
+        <p:commandButton title="Сохранить" value="Сохранить" icon="pi pi-save"  actionListener="#{quickSearch.saveRemontZayCards}"
+                         oncomplete="PF('dlg_remontZay').hide()"
+                         update=":form:tabview:remontZay_data :form:growlAvto"/>
+
+        <p:commandButton title="Акт" value="Акт (docx)" icon="pi pi-print" rendered="#{quickSearch.selectedAvto.selectedRemontZay.id>0}"
+                         styleClass="ui-button-raised ui-button-success" actionListener="#{quickSearch.printRemontZayAct}" ajax="false"/>
+        <p:commandButton title="Печать" value="Печать (docx)" icon="pi pi-print" rendered="#{quickSearch.selectedAvto.selectedRemontZay.id>0}"
+                         styleClass="ui-button-raised ui-button-success" actionListener="#{quickSearch.printRemontZayCards}" ajax="false"/>
+
+
+
+    </f:facet>
+
+</p:dialog>
+</html>

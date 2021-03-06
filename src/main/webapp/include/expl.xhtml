@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<p:panelGrid rendered="#{not empty quickSearch.selectedAvto}"
+             styleClass="panelGridAvtoCard_bar_select_date">
+    <p:row>
+        <p:column style="white-space: nowrap;">
+            <p:outputLabel value="Период"/>
+        </p:column>
+        <p:column style="white-space: nowrap;">
+            <p:calendar id="expl_d1" showOn="button" value="#{quickSearch.selectedAvto.expl_date1}"
+                        locale="ru" pattern="dd.MM.yyyy"/>
+        </p:column>
+        <p:column style="white-space: nowrap;">
+            <p:calendar id="expl_d2" showOn="button" value="#{quickSearch.selectedAvto.expl_date2}"
+                        locale="ru" pattern="dd.MM.yyyy"/>
+        </p:column>
+        <p:column style="white-space: nowrap;">
+            <p:commandButton value="Показать" actionListener="#{quickSearch.getExplCards}"
+                             update=":form:tabview:expl_data"/>
+        </p:column>
+        <p:column style="text-align:right; width: 100%">
+            <p:commandButton styleClass="p-mr-2" title="Добавить" icon="pi pi-plus"  actionListener="#{quickSearch.newExplCards}"
+                             oncomplete="PF('dlg_expl').show();" process="@this" update=":form:explDetail"/>
+
+            <p:commandButton title="Удалить" icon="fa fa-fw fa-trash" actionListener="#{quickSearch.deleteExplCards}"
+                             update=":form:tabview:expl_data :form:growlAvto">
+                <p:confirm header="Подтверждение" message="Удалить выбранную запись?" icon="pi pi-info-circle" update=":form:tabview:expl_data :form:growlAvto"/>
+            </p:commandButton>
+
+        </p:column>
+    </p:row>
+</p:panelGrid>
+
+<p:dataTable id="expl_data" var="expl" value="#{quickSearch.selectedAvto.listOperationalModel}"
+             selection="#{quickSearch.selectedAvto.selectedOperational}"
+             rendered="#{not empty quickSearch.selectedAvto}"
+             scrollable="true" scrollWidth="1300" scrollHeight="410" selectionMode="single"
+             rowKey="#{expl.dat}"
+             emptyMessage="нет записей">
+<p:ajax event="rowDblselect" oncomplete="PF('dlg_expl').show();" update=":form:explDetail"/>
+<p:column headerText="Месяц" width="50">
+    <h:outputText value="#{expl.interval}"/>
+</p:column>
+<p:column headerText="Год" width="50">
+    <h:outputText value="#{expl.year_e}"/>
+</p:column>
+<p:column headerText="Дн.спис" width="50">
+    <h:outputText value="#{expl.d_out}"/>
+</p:column>
+<p:column headerText="Дн.испр" width="50">
+    <h:outputText value="#{expl.d_good}"/>
+</p:column>
+<p:column headerText="Дн.экпл" width="50">
+    <h:outputText value="#{expl.d_operational}"/>
+</p:column>
+<p:column headerText="Дн.рем" width="50">
+    <h:outputText value="#{expl.d_remont}"/>
+</p:column>
+<p:column headerText="В нар." width="50">
+    <h:outputText value="#{expl.h_order}"/>
+</p:column>
+<p:column headerText="Норма проб" width="50">
+    <h:outputText value="#{expl.norma_run}"/>
+</p:column>
+<p:column headerText="Факт. проб" width="50">
+    <h:outputText value="#{expl.fact_run}"/>
+</p:column>
+<p:column headerText="ТО 1" width="50">
+    <h:outputText value="#{expl.to1}"/>
+</p:column>
+<p:column headerText="ТО 2" width="50">
+    <h:outputText value="#{expl.to2}"/>
+</p:column>
+<p:column headerText="КР" width="50">
+    <h:outputText value="#{expl.kp}"/>
+</p:column>
+<p:column headerText="На начало" width="50">
+    <h:outputText value="#{expl.gsm_begin_m}"/>
+</p:column>
+<p:column headerText="Выдано" width="50">
+    <h:outputText value="#{expl.gsm_given}"/>
+</p:column>
+<p:column headerText="На конец" width="50">
+    <h:outputText value="#{expl.gsm_end_m}"/>
+</p:column>
+<p:column headerText="Норма" width="50">
+    <h:outputText value="#{expl.gsm_norma}"/>
+</p:column>
+<p:column headerText="Израсх." width="50">
+    <h:outputText value="#{expl.gsm_out}"/>
+</p:column>
+<p:column headerText="Спидометр начало" width="50">
+    <h:outputText value="#{expl.speed_begin}"/>
+</p:column>
+<p:column headerText="Спидометр конец" width="50">
+    <h:outputText value="#{expl.speed_end}"/>
+</p:column>
+<p:column headerText="Квартал" width="50">
+    <h:outputText value="#{expl.kv}"/>
+</p:column>
+<p:column headerText="Масло" width="50">
+    <h:outputText value="#{expl.oil_l}"/>
+</p:column>
+
+</p:dataTable>
+
+
+</html>

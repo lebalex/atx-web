@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context antiJARLocking="true" path="/atx_web" reloadable="true">
+  <Resource auth="Container" driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+            maxIdle="100" name="jdbc/ATX_UVD_local" password="atx_user"
+            type="javax.sql.DataSource" url="jdbc:sqlserver://10.110.3.66:1433;databaseName=ATX_UVD"
+            username="user_atx"/>
+</Context>

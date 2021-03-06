@@ -1,0 +1,155 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<h:form xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:p="http://primefaces.org/ui" id="menuForm">
+    <p:growl id="growlMenu" showDetail="true" sticky="false" life="5000"/>
+<p:menubar >
+    
+    <p:submenu label="Автотранспорт">
+        <p:menuitem value="Добавить" actionListener="#{managerPages.menu_action}" update=":main-content" icon="pi pi-plus">
+            <f:attribute name="page" value="news" />
+        </p:menuitem>
+        <p:separator />
+        <p:menuitem value="Поиск автотранспорта" actionListener="#{managerPages.menu_action}" update=":main-content" icon="pi pi-search">
+            <f:attribute name="page" value="search" />
+        </p:menuitem>
+    </p:submenu>
+
+    <p:submenu label="Справочники">
+        <p:menuitem value="Гарнизон/Область"  actionListener="#{managerPages.menu_action}" update=":main-content">
+            <f:attribute name="page" value="libr" />
+            <f:attribute name="what" value="1" />
+        </p:menuitem>
+        <p:menuitem value="Управление" actionListener="#{managerPages.menu_action}" update=":main-content">
+            <f:attribute name="page" value="libr" />
+            <f:attribute name="what" value="2" />
+        </p:menuitem>
+        <p:menuitem value="Отделы" actionListener="#{managerPages.menu_action}" update=":main-content">
+            <f:attribute name="page" value="libr" />
+            <f:attribute name="what" value="3" />
+        </p:menuitem>
+        <p:menuitem value="Под отделы" actionListener="#{managerPages.menu_action}" update=":main-content">
+            <f:attribute name="page" value="libr" />
+            <f:attribute name="what" value="4" />
+        </p:menuitem>
+        <p:menuitem value="Службы" actionListener="#{managerPages.menu_action}" update=":main-content">
+            <f:attribute name="page" value="libr" />
+            <f:attribute name="what" value="5" />
+        </p:menuitem>
+        <p:menuitem value="Под службы" actionListener="#{managerPages.menu_action}" update=":main-content">
+            <f:attribute name="page" value="libr" />
+            <f:attribute name="what" value="18" />
+        </p:menuitem>
+        <p:menuitem value="Место дислокации" actionListener="#{managerPages.menu_action}" update=":main-content">
+            <f:attribute name="page" value="libr" />
+            <f:attribute name="what" value="11" />
+        </p:menuitem>
+        <p:menuitem value="Марка автотранспорта" actionListener="#{managerPages.menu_action}" update=":main-content">
+            <f:attribute name="page" value="libr" />
+            <f:attribute name="what" value="6" />
+        </p:menuitem>
+        <p:menuitem value="Модели" actionListener="#{managerPages.menu_action}" update=":main-content">
+            <f:attribute name="page" value="librModel" />
+        </p:menuitem>
+        <p:menuitem value="Источник финансирования" actionListener="#{managerPages.menu_action}" update=":main-content">
+            <f:attribute name="page" value="libr" />
+            <f:attribute name="what" value="7" />
+        </p:menuitem>
+        <p:menuitem value="Тип кузова" actionListener="#{managerPages.menu_action}" update=":main-content">
+            <f:attribute name="page" value="libr" />
+            <f:attribute name="what" value="8" />
+        </p:menuitem>
+        <p:menuitem value="Тех состояние" actionListener="#{managerPages.menu_action}" update=":main-content">
+            <f:attribute name="page" value="libr" />
+            <f:attribute name="what" value="9" />
+        </p:menuitem>
+        <p:menuitem value="Группа эксплуатации" actionListener="#{managerPages.menu_action}" update=":main-content">
+            <f:attribute name="page" value="libr" />
+            <f:attribute name="what" value="10" />
+        </p:menuitem>
+        <p:menuitem value="Страховые компании" actionListener="#{managerPages.menu_action}" update=":main-content">
+            <f:attribute name="page" value="libr" />
+            <f:attribute name="what" value="15" />
+        </p:menuitem>
+        <p:submenu label="ГСМ">
+            <p:menuitem value="Марка ГСМ" actionListener="#{managerPages.menu_action}" update=":main-content">
+            <f:attribute name="page" value="libr" />
+            <f:attribute name="what" value="12" />
+            </p:menuitem>
+            <p:menuitem value="Базовая норма"   actionListener="#{managerPages.menu_action}" update=":main-content">
+                <f:attribute name="page" value="librGSMBaseNorm" />
+            </p:menuitem>
+            <p:menuitem value="Дополнительный %"  actionListener="#{managerPages.menu_action}" update=":main-content">
+                <f:attribute name="page" value="librGSMAddPr" />
+            </p:menuitem>
+            <p:menuitem value="Надбавка за старение" actionListener="#{managerPages.menu_action}" update=":main-content">
+                <f:attribute name="page" value="librGSMYearExpl" />
+            </p:menuitem>
+            <p:menuitem value="Цены на ГСМ" actionListener="#{managerPages.menu_action}" update=":main-content">
+                <f:attribute name="page" value="librGSMPrice" />
+            </p:menuitem>
+            <p:menuitem value="Поставщик" actionListener="#{managerPages.menu_action}" update=":main-content">
+                <f:attribute name="page" value="libr" />
+                <f:attribute name="what" value="16" />
+            </p:menuitem>
+            <p:menuitem value="Контракты" actionListener="#{managerPages.menu_action}" update=":main-content">
+            <f:attribute name="page" value="libr" />
+            <f:attribute name="what" value="22" />
+            </p:menuitem>
+            <p:menuitem value="Способ закупки" actionListener="#{managerPages.menu_action}" update=":main-content">
+            <f:attribute name="page" value="libr" />
+            <f:attribute name="what" value="23" />
+            </p:menuitem>
+            <p:menuitem value="Лимит пробега" />
+        </p:submenu>
+        <p:menuitem value="Категории ТС" actionListener="#{managerPages.menu_action}" update=":main-content">
+        <f:attribute name="page" value="libr" />
+        <f:attribute name="what" value="17" />
+        </p:menuitem>
+        <p:submenu label="Ремонтный отдел">
+            <p:menuitem value="Вид ремонта" actionListener="#{managerPages.menu_action}" update=":main-content">
+            <f:attribute name="page" value="libr" />
+            <f:attribute name="what" value="13" />
+            </p:menuitem>
+            <p:menuitem value="Место ремонта" actionListener="#{managerPages.menu_action}" update=":main-content">
+            <f:attribute name="page" value="libr" />
+            <f:attribute name="what" value="14" />
+            </p:menuitem>
+        </p:submenu>
+        <p:menuitem value="Размер шин" actionListener="#{managerPages.menu_action}" update=":main-content">
+        <f:attribute name="page" value="libr" />
+        <f:attribute name="what" value="19" />
+        </p:menuitem>
+        <p:menuitem value="Лимиты пробега шин"/>
+        <p:menuitem value="Тип ДВС" actionListener="#{managerPages.menu_action}" update=":main-content">
+        <f:attribute name="page" value="libr" />
+        <f:attribute name="what" value="20" />
+        </p:menuitem>
+        <p:menuitem value="Производитель ТС" actionListener="#{managerPages.menu_action}" update=":main-content">
+        <f:attribute name="page" value="libr" />
+        <f:attribute name="what" value="21" />
+        </p:menuitem>
+    </p:submenu>
+
+    <p:submenu label="Отчеты">
+        <p:menuitem value="Инвентаризация" actionListener="#{managerPages.menu_action}" update=":main-content">
+            <f:attribute name="page" value="report01" />
+        </p:menuitem>
+    </p:submenu>
+    <p:submenu label="Настройки">
+        <p:menuitem value="Пользователи" actionListener="#{managerPages.menu_action}" icon="pi pi-save" update=":main-content" rendered="#{atxLogin.getAccess('ADMIN')}">
+            <f:attribute name="page" value="users" />
+        </p:menuitem>
+
+    </p:submenu>
+
+
+    <f:facet name="options">
+        <p:inputText id="str_find" style="margin:1px 1px 1px 1px;" placeholder="поиск по номеру" value="#{quickSearch.str_find}"/>
+        <p:commandButton icon="pi pi-search" actionListener="#{quickSearch.find}" update=":main-content :menuForm:growlMenu"/>
+        <p:commandButton value="выход" actionListener="#{atxLogin.exit}" icon="pi pi-home" style="margin-left: 10px;;" global="false"/>
+    </f:facet>
+</p:menubar>
+</h:form>

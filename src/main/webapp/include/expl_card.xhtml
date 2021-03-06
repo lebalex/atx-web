@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<p:dialog modal="true" style="margin-top: 20px" id="explDetail"
+          header="#{quickSearch.getFromLyb(quickSearch.selectedAvto.id_mark,'MarkAvtModel')} #{quickSearch.selectedAvto.model} - #{quickSearch.selectedAvto.numb_1}"
+          widgetVar="dlg_expl" resizable="false">
+
+    <p:panelGrid rendered="#{not empty quickSearch.selectedAvto.selectedOperational}" columnClasses="label,value"
+                 styleClass="panelGridAvtoCard">
+        <p:row>
+            <p:column>
+                <p:selectOneMenu id="interval" value="#{quickSearch.selectedAvto.selectedOperational.mm}"
+                                 style="width:325px">
+                    <f:selectItems value="#{quickSearch.listIntervalModel}" var="entry"
+                                   itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+                </p:selectOneMenu>
+            </p:column>
+            <p:column colspan="2">
+                <p:selectOneMenu id="yyyy" value="#{quickSearch.selectedAvto.selectedOperational.year_e}"
+                                 style="width:155px">
+                    <f:selectItems value="#{quickSearch.listYear}"/>
+                </p:selectOneMenu>
+            </p:column>
+        </p:row>
+        <p:row>
+            <p:column rowspan="2">
+                <p:panelGrid columns="2" rendered="#{not empty quickSearch.selectedAvto.selectedOperational}" columnClasses="label,value"
+                             styleClass="panelGridAvtoCard">
+                    <p:outputLabel value="дней списочных"/>
+                    <p:inputText id="d_out" value="#{quickSearch.selectedAvto.selectedOperational.d_out}"
+                                 style="width:60px"/>
+                    <p:outputLabel value="дней исправных"/>
+                    <p:inputText id="d_good" value="#{quickSearch.selectedAvto.selectedOperational.d_good}"
+                                 style="width:60px"/>
+                    <p:outputLabel value="дней эксплуатации"/>
+                    <p:inputText id="d_operational" value="#{quickSearch.selectedAvto.selectedOperational.d_operational}"
+                                 style="width:60px"/>
+                    <p:outputLabel value="дней в ремонте"/>
+                    <p:inputText id="d_remontd_out" value="#{quickSearch.selectedAvto.selectedOperational.d_remont}"
+                                 style="width:60px"/>
+                    <p:outputLabel value="часов в наряде"/>
+                    <p:inputText id="h_order" value="#{quickSearch.selectedAvto.selectedOperational.h_order}"
+                                 style="width:60px"/>
+                    <p:outputLabel value="норма пробега (км)"/>
+                    <p:inputText id="norma_run" value="#{quickSearch.selectedAvto.selectedOperational.norma_run}"
+                                 style="width:60px"/>
+                    <p:outputLabel value="фактический пробег (км)"/>
+                    <p:inputText id="fact_run" value="#{quickSearch.selectedAvto.selectedOperational.fact_run}"
+                                 style="width:60px"/>
+
+                </p:panelGrid>
+            </p:column>
+            <p:column>
+                <p:panelGrid columns="2" rendered="#{not empty quickSearch.selectedAvto.selectedOperational}" columnClasses="label,value"
+                             styleClass="panelGridAvtoCard">
+                    <f:facet name="header">
+                        <p:outputLabel value="ГСМ"/>
+                    </f:facet>
+                    <p:outputLabel value="на начало месяца"/>
+                    <p:inputText id="gsm_begin_m" value="#{quickSearch.selectedAvto.selectedOperational.gsm_begin_m}"
+                                 style="width:60px"/>
+                    <p:outputLabel value="выдано"/>
+                    <p:inputText id="gsm_given" value="#{quickSearch.selectedAvto.selectedOperational.gsm_given}"
+                                 style="width:60px"/>
+                    <p:outputLabel value="на конец месяца"/>
+                    <p:inputText id="gsm_end_m" value="#{quickSearch.selectedAvto.selectedOperational.gsm_end_m}"
+                                 style="width:60px"/>
+                    <p:outputLabel value="норма"/>
+                    <p:inputText id="gsm_norma" value="#{quickSearch.selectedAvto.selectedOperational.gsm_norma}"
+                                 style="width:60px"/>
+                    <p:outputLabel value="израсходовано"/>
+                    <p:inputText id="gsm_out" value="#{quickSearch.selectedAvto.selectedOperational.gsm_out}"
+                                 style="width:60px"/>
+                </p:panelGrid>
+            </p:column>
+            <p:column>
+                <p:panelGrid columns="2" rendered="#{not empty quickSearch.selectedAvto.selectedOperational}" columnClasses="label,value"
+                             styleClass="panelGridAvtoCard">
+                    <f:facet name="header">
+                        <p:outputLabel value="ТО"/>
+                    </f:facet>
+                    <p:outputLabel value="ТО1"/>
+                    <p:inputText id="to1" value="#{quickSearch.selectedAvto.selectedOperational.to1}"
+                                 style="width:60px"/>
+                    <p:outputLabel value="ТО2"/>
+                    <p:inputText id="to2" value="#{quickSearch.selectedAvto.selectedOperational.to2}"
+                                 style="width:60px"/>
+                    <p:outputLabel value="КР"/>
+                    <p:inputText id="kp" value="#{quickSearch.selectedAvto.selectedOperational.kp}"
+                                 style="width:60px"/>
+                    <p:outputLabel value="Коментарий"/>
+                    <p:inputTextarea cols="20" rows="3"  value="#{quickSearch.selectedAvto.selectedOperational.comm}"/>
+                </p:panelGrid>
+            </p:column>
+        </p:row>
+        <p:row>
+            <p:column>
+                <p:panelGrid columns="2" rendered="#{not empty quickSearch.selectedAvto.selectedOperational}" columnClasses="label,value"
+                             styleClass="panelGridAvtoCard">
+                    <f:facet name="header">
+                        <p:outputLabel value="Показания спидометра"/>
+                    </f:facet>
+                    <p:outputLabel value="начало месяца"/>
+                    <p:inputText id="speed_begin" value="#{quickSearch.selectedAvto.selectedOperational.speed_begin}"
+                                 style="width:100px"/>
+                    <p:outputLabel value="конец месяца"/>
+                    <p:inputText id="speed_end" value="#{quickSearch.selectedAvto.selectedOperational.speed_end}"
+                                 style="width:100px"/>
+                </p:panelGrid>
+            </p:column>
+            <p:column>
+                <p:panelGrid columns="2" rendered="#{not empty quickSearch.selectedAvto.selectedOperational}" columnClasses="label,value"
+                             styleClass="panelGridAvtoCard">
+                    <f:facet name="header">
+                        <p:outputLabel value="Масло"/>
+                    </f:facet>
+                    <p:outputLabel value="расход"/>
+                    <p:inputText id="oil_l" value="#{quickSearch.selectedAvto.selectedOperational.oil_l}"
+                                 style="width:100px"/>
+                    <p:outputLabel value="тип"/>
+                    <p:selectOneMenu id="oil_type"
+                                     value="#{quickSearch.selectedAvto.selectedOperational.oil_type}"
+                                     style="width:155px">
+                        <f:selectItem itemLabel="" itemValue="#{0}"/>
+                        <f:selectItems value="#{quickSearch.listTypeOilModel}" var="entry"
+                                       itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+                    </p:selectOneMenu>
+                </p:panelGrid>
+            </p:column>
+        </p:row>
+
+
+    </p:panelGrid>
+    <f:facet name="footer">
+        <p:commandButton type="button" value="Отменить" styleClass="ui-button-flat p-mr-20" global="false" onclick="PF('dlg_expl').hide()"  >
+            <p:confirm header="Подтверждение" message="Выйти без сохранения?" icon="pi pi-info-circle"/>
+        </p:commandButton>
+
+        <p:commandButton title="Сохранить" value="Сохранить" icon="pi pi-save"  actionListener="#{quickSearch.saveExplCards}"
+                         oncomplete="PF('dlg_expl').hide()"
+                         update=":form:tabview:expl_data :form:growlAvto"/>
+
+
+    </f:facet>
+
+</p:dialog>
+</html>

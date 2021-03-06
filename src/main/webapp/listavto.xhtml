@@ -1,0 +1,853 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<f:view>
+
+    <h:form id="form">
+        <p:growl id="growlAvto" showDetail="true" sticky="false" life="5000"/>
+        <p:dataTable id="data_avto" var="avto" value="#{quickSearch.listAvto}">
+            <p:column headerText="Марка" width="200">
+
+
+                <p:commandLink id="fc" update=":form:carDetail" onclick="PF('myTab').select(0);"
+                               oncomplete="PF('dlg').show(); " icon="pi pi-search" title="View">
+                    <h:outputText value="#{quickSearch.getFromLyb(avto.id_mark,'MarkAvtModel')} #{avto.model}"/>
+                    <f:setPropertyActionListener value="#{avto}" target="#{quickSearch.selectedAvto}"/>
+                </p:commandLink>
+            </p:column>
+
+            <p:column headerText="год" width="50">
+                <h:outputText value="#{avto.m_year}"/>
+            </p:column>
+
+            <p:column headerText="гос №" width="50">
+                <h:outputText value="#{avto.numb_1}"/>
+            </p:column>
+            <p:column headerText="Гарнизон/Область" width="120">
+                <h:outputText value="#{quickSearch.getFromLyb(avto.id_region,'RegionModel')}"/>
+            </p:column>
+            <p:column headerText="Отдел">
+                <h:outputText value="#{quickSearch.getFromLyb(avto.id_depart,'DepartModel')}"/>
+            </p:column>
+        </p:dataTable>
+
+        <p:dialog  id="carDetail"
+                  header="#{quickSearch.getFromLyb(quickSearch.selectedAvto.id_mark,'MarkAvtModel')} #{quickSearch.selectedAvto.model} - #{quickSearch.selectedAvto.numb_1}"
+                  widgetVar="dlg" resizable="false">
+
+
+            <p:panelGrid id="idPanelBtns" styleClass="panelGridTitleNoBorder"
+                         rendered="#{not empty quickSearch.selectedAvto}">
+                <p:row>
+                    <p:column>
+                        <ui:remove>
+                        <p:commandButton value="Сохранить" actionListener="#{quickSearch.saveAvtoData}" styleClass="ui-button-raised p-mr-2"
+                                         update=":form:carDetail :form:growlAvto" icon="fa fa-fw fa-save"/>
+                        <p:commandButton value="Удалить" styleClass="ui-button-raised ui-button-danger p-mr-2"
+                                         actionListener="#{quickSearch.change_peredacha}"
+                                         update=":form:carDetail :form:growlAvto"/>
+                        <p:commandButton value="Отменить" actionListener="#{quickSearch.change_peredacha}" styleClass="ui-button-raised"
+                                         update=":form:carDetail :form:growlAvto" />
+                        </ui:remove>
+
+                    </p:column>
+                    <p:column styleClass="col_right">
+
+                        <p:commandButton value="Печать (docx)" actionListener="#{quickSearch.printAvto}" ajax="false"
+                                         styleClass="ui-button-raised ui-button-success p-mr-2"/>
+                        <p:commandButton value="Акт закрепления (docx)" actionListener="#{quickSearch.printAktZakrep}" ajax="false"
+                                         styleClass="ui-button-raised"/>
+
+                    </p:column>
+                </p:row>
+            </p:panelGrid>
+
+
+            <p:tabView orientation="top" id="tabview" activeIndex="0" widgetVar="myTab" dynamic="true" cache="false">
+                <p:ajax event="tabChange" global="false"/>
+                <p:tab title="Тех.характеристики" id="tab01">
+                    <p:outputPanel style="text-align:center;">
+                        <p:panelGrid columns="4" rendered="#{not empty quickSearch.selectedAvto}"
+                                     columnClasses="label,value" styleClass="panelGridAvtoCard">
+
+
+                            <h:outputLabel value="Гарнизон/Область*"/>
+                            <p:selectOneMenu id="region" value="#{quickSearch.selectedAvto.id_region}"
+                                             style="width:325px">
+                                <f:selectItems value="#{quickSearch.listRegionModel}" var="entry"
+                                               itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Отдел*"/>
+                            <p:selectOneMenu id="depart" value="#{quickSearch.selectedAvto.id_depart}"
+                                             style="width:325px">
+                                <f:selectItems value="#{quickSearch.listDepartModel}" var="entry"
+                                               itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Управление*"/>
+                            <p:selectOneMenu id="division" value="#{quickSearch.selectedAvto.id_division}"
+                                             style="width:325px">
+                                <f:selectItems value="#{quickSearch.listDivisionModel}" var="entry"
+                                               itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Под Отдел"/>
+                            <p:selectOneMenu id="predepart" value="#{quickSearch.selectedAvto.id_preDepart}"
+                                             style="width:325px">
+                                <f:selectItem itemLabel="&nbsp;" itemValue="#{0}"/>
+                                <f:selectItems value="#{quickSearch.listPreDepartModel}" var="entry"
+                                               itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Служба*"/>
+                            <p:selectOneMenu id="serv" value="#{quickSearch.selectedAvto.id_serv}" style="width:325px">
+                                <f:selectItems value="#{quickSearch.listServModel}" var="entry"
+                                               itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Место дислокации"/>
+                            <p:selectOneMenu id="dislok" value="#{quickSearch.selectedAvto.id_dislocation}"
+                                             style="width:325px">
+                                <f:selectItem itemLabel="&nbsp;" itemValue="#{0}"/>
+                                <f:selectItems value="#{quickSearch.listDislocationModel}" var="entry"
+                                               itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Под служба"/>
+                            <p:selectOneMenu id="preserv" value="#{quickSearch.selectedAvto.id_PreServ}"
+                                             style="width:325px">
+                                <f:selectItem itemLabel="&nbsp;" itemValue="#{0}"/>
+                                <f:selectItems value="#{quickSearch.listPreServModel}" var="entry"
+                                               itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+                            </p:selectOneMenu>
+
+
+                        </p:panelGrid>
+
+                        <p:panelGrid columns="4" rendered="#{not empty quickSearch.selectedAvto}"
+                                     columnClasses="label,value" style="margin-top: 10px"
+                                     styleClass="panelGridAvtoCard">
+                            <p:outputLabel value="Источник приобретения*"/>
+                            <p:selectOneMenu id="source1" value="#{quickSearch.selectedAvto.id_source_bay}"
+                                             style="width:325px">
+                                <f:selectItems value="#{quickSearch.listSourceModel}" var="entry"
+                                               itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="Источник содержания*"/>
+                            <p:selectOneMenu id="source2" value="#{quickSearch.selectedAvto.id_source_fin}"
+                                             style="width:325px">
+                                <f:selectItems value="#{quickSearch.listSourceModel}" var="entry"
+                                               itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+                            </p:selectOneMenu>
+                        </p:panelGrid>
+                        <p:panelGrid style="width:100%;margin-top: 10px"
+                                     rendered="#{not empty quickSearch.selectedAvto}" styleClass="panelGridAvtoCard">
+                            <p:row>
+                                <p:column>
+
+                                    <p:panelGrid style="width:100%;margin-top: 10px"
+                                                 rendered="#{not empty quickSearch.selectedAvto}"
+                                                 styleClass="panelGridAvtoCard">
+                                        <p:row>
+                                            <p:column>
+                                                <p:outputLabel value="Марка*"/>
+                                            </p:column>
+                                            <p:column>
+                                                <p:selectOneMenu id="mark" value="#{quickSearch.selectedAvto.id_mark}"
+                                                                 style="width:155px">
+                                                    <p:ajax listener="#{quickSearch.handleChange}"
+                                                            update="form:tabview:model"/>
+                                                    <f:selectItems value="#{quickSearch.listMarkAvtModel}" var="entry"
+                                                                   itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+                                                </p:selectOneMenu>
+                                            </p:column>
+                                            <p:column>
+                                                <p:outputLabel value="Пред. гос №"/>
+                                            </p:column>
+                                            <p:column>
+                                                <p:inputText value="#{quickSearch.selectedAvto.old_number}"
+                                                             readonly="true" style="width:155px"/>
+                                            </p:column>
+                                        </p:row>
+                                        <p:row>
+                                            <p:column>
+                                                <p:outputLabel value="Модель*"/>
+                                            </p:column>
+                                            <p:column>
+                                                <p:selectOneMenu id="model" value="#{quickSearch.selectedAvto.model}"
+                                                                 style="width:155px" editable="true">
+                                                    <f:selectItems value="#{quickSearch.listModelAvtModel}" var="entry"
+                                                                   itemLabel="#{entry.name}" itemValue="#{entry.name}"/>
+                                                </p:selectOneMenu>
+                                            </p:column>
+                                            <p:column>
+                                                <p:outputLabel value="Мощность (лс/кВт)"/>
+                                            </p:column>
+                                            <p:column>
+                                                <p:inputText value="#{quickSearch.selectedAvto.power_energy_l}"
+                                                              style="width:50px"/>
+                                                <p:outputLabel value=" / "/>
+                                                <p:inputText value="#{quickSearch.selectedAvto.power_energy_k}"
+                                                              style="width:50px"/>
+                                            </p:column>
+                                        </p:row>
+                                        <p:row>
+                                            <p:column>
+                                                <p:outputLabel value="гос № (1)*"/>
+                                            </p:column>
+                                            <p:column>
+                                                <p:inputText value="#{quickSearch.selectedAvto.numb_1}"
+                                                             style="width:155px"/>
+                                            </p:column>
+                                            <p:column>
+                                                <p:outputLabel value="Техпаспорт №*"/>
+                                            </p:column>
+                                            <p:column>
+                                                <p:inputText value="#{quickSearch.selectedAvto.n_pts}"
+                                                             placeholder="00oo000000" style="width:155px"/>
+                                            </p:column>
+                                        </p:row>
+                                        <p:row>
+                                            <p:column>
+                                                <p:outputLabel value="гос № (2)*"/>
+                                            </p:column>
+                                            <p:column>
+                                                <p:inputText value="#{quickSearch.selectedAvto.numb_2}"
+                                                             style="width:155px"/>
+                                            </p:column>
+                                            <p:column>
+                                                <p:outputLabel value="Дата выдачи*"/>
+                                            </p:column>
+                                            <p:column>
+                                                <p:calendar id="date_texpasport" showOn="button" style="width:75px !important;"
+                                                            value="#{quickSearch.selectedAvto.date_texpasport}"
+                                                            locale="ru" pattern="dd.MM.yyyy"/>
+                                            </p:column>
+                                        </p:row>
+                                        <p:row>
+                                            <p:column>
+                                                <p:outputLabel value="Год выпуска*"/>
+                                            </p:column>
+                                            <p:column>
+                                                <p:inputText value="#{quickSearch.selectedAvto.m_year}"
+                                                             style="width:155px"/>
+                                            </p:column>
+                                            <p:column>
+                                                <p:outputLabel value="Тип кузова*"/>
+                                            </p:column>
+                                            <p:column>
+                                                <p:selectOneMenu id="typebody"
+                                                                 value="#{quickSearch.selectedAvto.id_type_body}"
+                                                                 style="width:155px">
+                                                    <f:selectItems value="#{quickSearch.listTypeBodyModel}" var="entry"
+                                                                   itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+                                                </p:selectOneMenu>
+                                            </p:column>
+                                        </p:row>
+                                        <p:row>
+                                            <p:column>
+                                                <p:outputLabel value="Цвет*"/>
+                                            </p:column>
+                                            <p:column>
+                                                <p:inputText value="#{quickSearch.selectedAvto.color}"
+                                                             style="width:155px"/>
+                                            </p:column>
+                                            <p:column>
+                                                <p:outputLabel value="Тех состояние*"/>
+                                            </p:column>
+                                            <p:column>
+                                                <p:selectOneMenu id="tech" value="#{quickSearch.selectedAvto.id_tech}"
+                                                                 style="width:155px">
+                                                    <f:selectItems value="#{quickSearch.listTechModel}" var="entry"
+                                                                   itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+                                                </p:selectOneMenu>
+                                            </p:column>
+                                        </p:row>
+                                        <p:row>
+                                            <p:column>
+                                                <p:outputLabel value="VIN*"/>
+                                            </p:column>
+                                            <p:column>
+                                                <p:inputText value="#{quickSearch.selectedAvto.vin}"
+                                                             style="width:155px"/>
+                                            </p:column>
+                                            <p:column>
+                                                <p:outputLabel value="Группа эксплуатации"/>
+                                            </p:column>
+                                            <p:column>
+                                                <p:selectOneMenu id="group" value="#{quickSearch.selectedAvto.id_group}"
+                                                                 style="width:155px">
+                                                    <f:selectItem itemLabel="&nbsp;" itemValue="#{0}"/>
+                                                    <f:selectItems value="#{quickSearch.listGroupModel}" var="entry"
+                                                                   itemLabel="#{entry.name}" itemValue="#{entry.name}"/>
+                                                </p:selectOneMenu>
+                                            </p:column>
+                                        </p:row>
+                                        <p:row>
+                                            <p:column>
+                                                <p:outputLabel value="модель ДВС"/>
+                                            </p:column>
+                                            <p:column>
+                                                <p:inputText value="#{quickSearch.selectedAvto.modelDVC}"
+                                                             style="width:155px"/>
+                                            </p:column>
+                                            <p:column>
+                                                <p:outputLabel value="Дата постановки на учет*"/>
+                                            </p:column>
+                                            <p:column>
+                                                <p:calendar id="in_account" showOn="button"
+                                                            value="#{quickSearch.selectedAvto.in_account}" locale="ru"
+                                                            pattern="dd.MM.yyyy"/>
+                                            </p:column>
+                                        </p:row>
+
+                                        <p:row>
+                                            <p:column>
+                                                <p:outputLabel value="Объем"/>
+                                            </p:column>
+                                            <p:column>
+                                                <p:inputText value="#{quickSearch.selectedAvto.volumeDVC}"
+                                                             style="width:155px"/>
+                                            </p:column>
+                                            <p:column>
+                                                <p:outputLabel value="Приказ"/>
+                                            </p:column>
+                                            <p:column>
+                                                <p:inputText value="#{quickSearch.selectedAvto.in_pr}"
+                                                             style="width:155px"/>
+                                            </p:column>
+                                        </p:row>
+                                        <p:row>
+                                            <p:column>
+                                                <p:outputLabel value="Тип двигателя"/>
+                                            </p:column>
+                                            <p:column>
+                                                <p:selectOneMenu id="typeDvs"
+                                                                 value="#{quickSearch.selectedAvto.id_typeDVC}"
+                                                                 style="width:155px">
+                                                    <f:selectItems value="#{quickSearch.listTypeDVCModel}" var="entry"
+                                                                   itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+                                                </p:selectOneMenu>
+                                            </p:column>
+                                            <p:column>
+                                                <p:outputLabel value="Категория ТС"/>
+                                            </p:column>
+                                            <p:column>
+                                                <p:selectOneMenu id="typetc"
+                                                                 value="#{quickSearch.selectedAvto.id_typetc}"
+                                                                 style="width:155px">
+                                                    <f:selectItem itemLabel="&nbsp;" itemValue="#{0}"/>
+                                                    <f:selectItems value="#{quickSearch.listTypeTCModel}" var="entry"
+                                                                   itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+                                                </p:selectOneMenu>
+                                            </p:column>
+                                        </p:row>
+                                        <p:row>
+                                            <p:column>
+                                                <p:outputLabel value="№ Двигателя*"/>
+                                            </p:column>
+                                            <p:column>
+                                                <p:inputText value="#{quickSearch.selectedAvto.n_engine}"
+                                                             style="width:155px"/>
+                                            </p:column>
+                                        </p:row>
+                                        <p:row>
+                                            <p:column>
+                                                <p:outputLabel value="№ Кузова*"/>
+                                            </p:column>
+                                            <p:column>
+                                                <p:inputText value="#{quickSearch.selectedAvto.n_body}"
+                                                             style="width:155px"/>
+                                            </p:column>
+                                        </p:row>
+                                        <p:row>
+                                            <p:column>
+                                                <p:outputLabel value="№ Шасси*"/>
+                                            </p:column>
+                                            <p:column>
+                                                <p:inputText value="#{quickSearch.selectedAvto.n_chassis}"
+                                                             style="width:155px"/>
+                                            </p:column>
+                                        </p:row>
+                                        <p:row>
+                                            <p:column>
+                                                <p:outputLabel value="Производитель ТС"/>
+                                            </p:column>
+                                            <p:column>
+                                                <p:selectOneMenu id="manuf"
+                                                                 value="#{quickSearch.selectedAvto.id_manufactureTC}"
+                                                                 style="width:155px">
+                                                    <f:selectItems value="#{quickSearch.listManufactureTCModel}"
+                                                                   var="entry"
+                                                                   itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+                                                </p:selectOneMenu>
+                                            </p:column>
+                                        </p:row>
+                                    </p:panelGrid>
+                                </p:column>
+                                <p:column>
+                                    <p:tabView orientation="top">
+                                        <p:tab title="Отстой - Списание">
+                                            <p:panelGrid style="width:100%;"
+                                                         rendered="#{not empty quickSearch.selectedAvto}"
+                                                         styleClass="panelGridAvtoCard">
+                                                <p:row>
+                                                    <p:column colspan="2">
+                                                        <p:selectBooleanCheckbox itemLabel="Отстой"
+                                                                                 value="#{quickSearch.selectedAvto.out_state_ch}"
+                                                                                 style="width:100%; background: #{quickSearch.selectedAvto.out_state_ch?'red':'white'}"/>
+                                                    </p:column>
+                                                </p:row>
+                                                <p:row>
+                                                    <p:column>
+                                                        <p:outputLabel value="Дата"/>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <p:calendar id="out_state" showOn="button"
+                                                                    value="#{quickSearch.selectedAvto.out_state}"
+                                                                    locale="ru" pattern="dd.MM.yyyy"/>
+                                                    </p:column>
+                                                </p:row>
+                                                <p:row>
+                                                    <p:column>
+                                                        <p:outputLabel value="Приказ"/>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <p:inputText value="#{quickSearch.selectedAvto.out_state_pr}"
+                                                                     style="width:155px"/>
+                                                    </p:column>
+                                                </p:row>
+                                                <p:row>
+                                                    <p:column>
+                                                        <p:outputLabel value="Отстой"/>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <p:selectOneMenu id="out_state_state"
+                                                                         value="#{quickSearch.selectedAvto.out_state_state}"
+                                                                         style="width:155px" editable="true">
+                                                            <f:selectItem itemLabel="&nbsp;" itemValue="#{0}"/>
+                                                            <f:selectItems value="#{quickSearch.listOutStateModel}"
+                                                                           var="entry"
+                                                                           itemLabel="#{entry.name}"
+                                                                           itemValue="#{entry.id}"/>
+                                                        </p:selectOneMenu>
+                                                    </p:column>
+                                                </p:row>
+                                                <p:row style="margin-top: 20px">
+                                                    <p:column colspan="2">
+                                                        <p:selectBooleanCheckbox itemLabel="Списан"
+                                                                                 value="#{quickSearch.selectedAvto.out_life_ch}"
+                                                                                 style="width:100%; background: #{quickSearch.selectedAvto.out_life_ch?'red':'white'}"/>
+                                                    </p:column>
+                                                </p:row>
+                                                <p:row>
+                                                    <p:column>
+                                                        <p:outputLabel value="Дата"/>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <p:calendar id="out_life" showOn="button"
+                                                                    value="#{quickSearch.selectedAvto.out_life}"
+                                                                    locale="ru" pattern="dd.MM.yyyy"/>
+                                                    </p:column>
+                                                </p:row>
+                                                <p:row>
+                                                    <p:column>
+                                                        <p:outputLabel value="Приказ"/>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <p:inputText value="#{quickSearch.selectedAvto.out_life_pr}"
+                                                                     style="width:155px"/>
+                                                    </p:column>
+                                                </p:row>
+                                                <p:row style="margin-top: 20px">
+                                                    <p:column colspan="2">
+                                                        <p:selectBooleanCheckbox itemLabel="Не учет АТХ"
+                                                                                 value="#{quickSearch.selectedAvto.notAtx}"
+                                                                                 style="width:100%; background: #{quickSearch.selectedAvto.notAtx?'red':'white'}"/>
+                                                    </p:column>
+                                                </p:row>
+                                                <p:row>
+                                                    <p:column>
+                                                        <p:outputLabel value="Срок.эксп"/>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <p:inputText value="#{quickSearch.selectedAvto.expl_year}"
+                                                                     style="width:155px"/>
+                                                    </p:column>
+                                                </p:row>
+                                            </p:panelGrid>
+                                        </p:tab>
+                                        <p:tab title="Снятие с учета" style="width: 100px">
+                                            <p:panelGrid style="width:100%;"
+                                                         rendered="#{not empty quickSearch.selectedAvto}"
+                                                         styleClass="panelGridAvtoCard">
+                                                <p:row>
+                                                    <p:column colspan="2">
+                                                        <p:selectBooleanCheckbox itemLabel="Снятие с учета"
+                                                                                 value="#{quickSearch.selectedAvto.out_account_ch}"
+                                                                                 style="width:100%; background: #{quickSearch.selectedAvto.out_account_ch?'red':'white'}"/>
+                                                    </p:column>
+                                                </p:row>
+                                                <p:row>
+                                                    <p:column>
+                                                        <p:outputLabel value="Дата"/>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <p:calendar id="out_account" showOn="button"
+                                                                    value="#{quickSearch.selectedAvto.out_account}"
+                                                                    locale="ru" pattern="dd.MM.yyyy"/>
+                                                    </p:column>
+                                                </p:row>
+                                            </p:panelGrid>
+                                        </p:tab>
+
+                                    </p:tabView>
+                                </p:column>
+                            </p:row>
+                        </p:panelGrid>
+
+
+                    </p:outputPanel>
+                </p:tab>
+                <p:tab title="Дополнительно">
+                    <p:panelGrid style="width:100%;margin-top: 10px" rendered="#{not empty quickSearch.selectedAvto}"
+                                 styleClass="panelGridAvtoCard">
+                        <p:row>
+                            <p:column>
+                                <p:panelGrid style="width:100%;margin-top: 10px"
+                                             rendered="#{not empty quickSearch.selectedAvto}"
+                                             styleClass="panelGridAvtoCard">
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel value="№ ИНВ бухгалтерия"/>
+                                        </p:column>
+                                        <p:column>
+                                            <p:inputText value="#{quickSearch.selectedAvto.inv_b}" style="width:155px"/>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel value="№ ИНВ тех.отдел"/>
+                                        </p:column>
+                                        <p:column>
+                                            <p:inputText value="#{quickSearch.selectedAvto.inv_t}" style="width:155px"/>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row><p:column colspan="2"><p:outputLabel
+                                            value="Место стоянки"/></p:column></p:row>
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel value="адрес"/>
+                                        </p:column>
+                                        <p:column>
+                                            <p:inputText value="#{quickSearch.selectedAvto.plase_sto_address}"
+                                                         style="width:155px"/>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel value="№ распоряжения"/>
+                                        </p:column>
+                                        <p:column>
+                                            <p:inputText value="#{quickSearch.selectedAvto.plase_sto_prikaz}"
+                                                         style="width:155px"/>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel value="дата"/>
+                                        </p:column>
+                                        <p:column>
+                                            <p:calendar id="plase_sto_date" showOn="button"
+                                                        value="#{quickSearch.selectedAvto.plase_sto_date}" locale="ru"
+                                                        pattern="dd.MM.yyyy"/>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel value="Страховой полис"/>
+                                        </p:column>
+                                        <p:column>
+                                            <p:inputText value="#{quickSearch.selectedAvto.insur}" style="width:155px"/>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel value="Дата страховки"/>
+                                        </p:column>
+                                        <p:column>
+                                            <p:calendar id="date_insur" showOn="button"
+                                                        value="#{quickSearch.selectedAvto.date_insur}" locale="ru"
+                                                        pattern="dd.MM.yyyy"/>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel value="Компания"/>
+                                        </p:column>
+                                        <p:column>
+                                            <p:selectOneMenu id="insure_company"
+                                                             value="#{quickSearch.selectedAvto.id_insure_company}"
+                                                             style="width:155px">
+                                                <f:selectItem itemLabel="&nbsp;" itemValue="#{0}"/>
+                                                <f:selectItems value="#{quickSearch.listInsureCompanyModel}" var="entry"
+                                                               itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+                                            </p:selectOneMenu>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column colspan="2">
+                                            <p:outputLabel value="Аренда"/>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel value="с"/>
+                                        </p:column>
+                                        <p:column>
+                                            <p:calendar id="arenda_d1" showOn="button"
+                                                        value="#{quickSearch.selectedAvto.arenda_d1}" locale="ru"
+                                                        pattern="dd.MM.yyyy"/>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel value="по"/>
+                                        </p:column>
+                                        <p:column>
+                                            <p:calendar id="arenda_d2" showOn="button"
+                                                        value="#{quickSearch.selectedAvto.arenda_d2}" locale="ru"
+                                                        pattern="dd.MM.yyyy"/>
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+                            </p:column>
+                            <p:column>
+                                <p:panelGrid style="width:100%;margin-top: 10px"
+                                             rendered="#{not empty quickSearch.selectedAvto}"
+                                             styleClass="panelGridAvtoCard">
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel value="Радио станция"/>
+                                        </p:column>
+                                        <p:column>
+                                            <p:inputTextarea cols="70" rows="3"
+                                                             value="#{quickSearch.selectedAvto.radio}"/>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel value="СГУ"/>
+                                        </p:column>
+                                        <p:column>
+                                            <p:inputText value="#{quickSearch.selectedAvto.sgu}" style="width:155px"/>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column>
+                                            <p:outputLabel value="Примечание"/>
+                                        </p:column>
+                                        <p:column>
+                                            <p:inputTextarea cols="70" rows="10"
+                                                             value="#{quickSearch.selectedAvto.comm}"/>
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+
+                </p:tab>
+                <p:tab title="ГСМ">
+
+                    <p:panelGrid style="width:100%;margin-top: 10px" rendered="#{not empty quickSearch.selectedAvto}"
+                                 styleClass="panelGridAvtoCard">
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel value="Марка ГСМ"/>
+                            </p:column>
+                            <p:column>
+                                <p:selectOneMenu id="id_mark_gsm" value="#{quickSearch.selectedAvto.id_mark_gsm}"
+                                                 style="width:155px">
+                                    <p:ajax listener="#{quickSearch.handleChangeMarkGsm}"
+                                            update="form:tabview:id_base_norm"/>
+                                    <f:selectItem itemLabel="&nbsp;" itemValue="#{0}"/>
+                                    <f:selectItems value="#{quickSearch.listMarkGsmModel}" var="entry"
+                                                   itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+                                </p:selectOneMenu>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel value="Базовая норма"/>
+                            </p:column>
+                            <p:column>
+                                <p:selectOneMenu id="id_base_norm" value="#{quickSearch.selectedAvto.id_base_norm}"
+                                                 style="width:155px">
+                                    <f:selectItem itemLabel="&nbsp;" itemValue="#{0}"/>
+                                    <f:selectItems value="#{quickSearch.listBaseNormModel}" var="entry"
+                                                   itemLabel="#{entry.norm}" itemValue="#{entry.id}"/>
+                                </p:selectOneMenu>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel value="Надбавка %"/>
+                            </p:column>
+                            <p:column>
+                                <p:inputText value="#{quickSearch.selectedAvto.procent_gsm}" style="width:155px"/>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel value="Лимит пробега"/>
+                            </p:column>
+                            <p:column>
+                                <p:inputText value="#{quickSearch.selectedAvto.norm_probeg}" style="width:155px"/>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                </p:tab>
+
+
+                <p:tab title="Замена гос. номера">
+                    <p:panelGrid style="width:100%;margin-top: 10px" rendered="#{not empty quickSearch.selectedAvto}"
+                                 styleClass="panelGridAvtoCard">
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel value="Новый номер"/>
+                            </p:column>
+                            <p:column>
+                                <p:inputText id="new_numb" value="#{quickSearch.selectedAvto.new_numb}"
+                                             style="width:155px"/>
+                            </p:column>
+                            <p:column>
+                                <p:outputLabel value="Дата"/>
+                            </p:column>
+                            <p:column>
+                                <p:calendar id="date_change_numb" showOn="button"
+                                            value="#{quickSearch.selectedAvto.new_numb_date}" locale="ru"
+                                            pattern="dd.MM.yyyy"/>
+                            </p:column>
+                            <p:column>
+                                <p:commandButton value="Заменить" actionListener="#{quickSearch.change_numb}"
+                                                 update=":form:tabview:new_numb :form:tabview:hist_change_numb :form:growlAvto"/>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                    <p:dataTable id="hist_change_numb" var="hist"
+                                 value="#{quickSearch.selectedAvto.listHistoryChangeNumb}"
+                                 rendered="#{not empty quickSearch.selectedAvto}">
+                        <p:column headerText="Дата">
+                            <p:outputLabel value="#{hist.date}">
+                                <f:convertDateTime pattern="dd.MM.yyyy"/>
+                            </p:outputLabel>
+                        </p:column>
+                        <p:column headerText="Старый номер">
+                            <p:outputLabel value="#{hist.old_n}"/>
+                        </p:column>
+                        <p:column headerText="Новый номер">
+                            <p:outputLabel value="#{hist.new_n}"/>
+                        </p:column>
+
+                    </p:dataTable>
+                </p:tab>
+                <p:tab title="Передача авто">
+                    <p:panelGrid style="width:100%;margin-top: 10px" rendered="#{not empty quickSearch.selectedAvto}"
+                                 styleClass="panelGridAvtoCard">
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel value="От кого"/>
+                            </p:column>
+                            <p:column>
+                                <p:inputText id="from_peredacha" value="#{quickSearch.selectedAvto.from_peredacha}"
+                                             style="width:225px"/>
+                            </p:column>
+                            <p:column>
+                                <p:outputLabel value="Дата"/>
+                            </p:column>
+                            <p:column>
+                                <p:calendar id="date_peredacha" showOn="button"
+                                            value="#{quickSearch.selectedAvto.date_peredacha}" locale="ru"
+                                            pattern="dd.MM.yyyy"/>
+                            </p:column>
+                            <p:column>
+                                <p:outputLabel value="№ приказа"/>
+                            </p:column>
+                            <p:column>
+                                <p:inputText id="n_peredacha" value="#{quickSearch.selectedAvto.n_peredacha}"
+                                             style="width:155px"/>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel value="Куда"/>
+                            </p:column>
+                            <p:column>
+                                <p:inputText id="to_peredacha" value="#{quickSearch.selectedAvto.to_peredacha}"
+                                             style="width:225px"/>
+                            </p:column>
+                            <p:column>
+                                <p:commandButton value="Заменить" actionListener="#{quickSearch.change_peredacha}"
+                                                 update=":form:tabview:n_peredacha :form:tabview:from_peredacha :form:tabview:to_peredacha :form:tabview:hist_change_peredacha :form:growlAvto"/>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                    <p:dataTable id="hist_change_peredacha" var="hist"
+                                 value="#{quickSearch.selectedAvto.listPeredachaModel}"
+                                 rendered="#{not empty quickSearch.selectedAvto}">
+                        <p:column headerText="Дата">
+                            <p:outputLabel value="#{hist.date}">
+                                <f:convertDateTime pattern="dd.MM.yyyy"/>
+                            </p:outputLabel>
+                        </p:column>
+                        <p:column headerText="От кого">
+                            <p:outputLabel value="#{hist.from_edit}"/>
+                        </p:column>
+                        <p:column headerText="Кому">
+                            <p:outputLabel value="#{hist.to_edit}"/>
+                        </p:column>
+                        <p:column headerText="№ приказа">
+                            <p:outputLabel value="#{hist.nprok_edit}"/>
+                        </p:column>
+
+                    </p:dataTable>
+                </p:tab>
+                <p:tab title="Эксплутационная карта">
+                    <ui:include src="include/expl.xhtml"/>
+                </p:tab>
+                <p:tab title="Ремонтная карта">
+                    <ui:include src="include/remont.xhtml"/>
+                </p:tab>
+                <p:tab title="Заявочный лист">
+                    <ui:include src="include/remont_zay.xhtml"/>
+                </p:tab>
+                <p:tab title="Закрепление">
+                    <ui:include src="include/zakrep.xhtml"/>
+                </p:tab>
+
+            </p:tabView>
+        </p:dialog>
+
+
+        <ui:include src="include/expl_card.xhtml"/>
+        <ui:include src="include/remont_card.xhtml"/>
+        <ui:include src="include/remontZay_card.xhtml"/>
+        <ui:include src="include/zakrep_card.xhtml"/>
+        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+            <p:commandButton value="Нет" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+            <p:commandButton value="Да" type="button" styleClass="ui-confirmdialog-yes" />
+        </p:confirmDialog>
+
+
+    </h:form>
+
+</f:view>
+</html>
+
+
+
+
+
+
+

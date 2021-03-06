@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<p:dialog modal="true" style="margin-top: 20px" id="remontDetail"
+          header="#{quickSearch.getFromLyb(quickSearch.selectedAvto.id_mark,'MarkAvtModel')} #{quickSearch.selectedAvto.model} - #{quickSearch.selectedAvto.numb_1}"
+          widgetVar="dlg_remont" resizable="false">
+
+    <p:panelGrid rendered="#{not empty quickSearch.selectedAvto.selectedRemont}" columnClasses="label,value"
+                 styleClass="panelGridAvtoCard">
+        <p:row>
+            <p:column>
+            <p:panelGrid columns="4" rendered="#{not empty quickSearch.selectedAvto.selectedRemont}" columnClasses="label,value"
+                         styleClass="panelGridAvtoCard">
+            <f:facet name="header">
+                <p:outputLabel value="Основные показатели"/>
+            </f:facet>
+                <p:row>
+                    <p:column><p:outputLabel value="Номер"/></p:column>
+                    <p:column colspan="3"><p:inputText value="#{quickSearch.selectedAvto.selectedRemont.num}"
+                                                       style="width:100px">
+                        <p:keyFilter mask="num" />
+                    </p:inputText></p:column>
+                </p:row>
+                <p:row>
+                    <p:column><p:outputLabel value="Начало*"/></p:column>
+                    <p:column><p:calendar showOn="button" value="#{quickSearch.selectedAvto.selectedRemont.date_begin}"
+                                          locale="ru" pattern="dd.MM.yyyy"/></p:column>
+                    <p:column><p:outputLabel value="Окончание*"/></p:column>
+                    <p:column><p:calendar showOn="button" value="#{quickSearch.selectedAvto.selectedRemont.date_end}"
+                                          locale="ru" pattern="dd.MM.yyyy"/></p:column>
+                </p:row>
+                <p:row>
+                    <p:column><p:outputLabel value="Вид ремонта*"/></p:column>
+                    <p:column><p:selectOneMenu value="#{quickSearch.selectedAvto.selectedRemont.id_vid}"
+                                               style="width:200px">
+                        <f:selectItems value="#{quickSearch.listVidRemontModel}" var="entry"
+                                       itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+                    </p:selectOneMenu></p:column>
+                    <p:column><p:outputLabel value="Место ремонта*"/></p:column>
+                    <p:column><p:selectOneMenu value="#{quickSearch.selectedAvto.selectedRemont.id_place}"
+                                               style="width:200px; ">
+                        <f:selectItems value="#{quickSearch.listPlaceRemontModel}" var="entry"
+                                       itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+                    </p:selectOneMenu></p:column>
+                </p:row>
+
+
+            </p:panelGrid>
+            </p:column>
+            <p:column>
+                <p:panelGrid columns="1" rendered="#{not empty quickSearch.selectedAvto.selectedRemont}" columnClasses="label,value"
+                             styleClass="panelGridAvtoCard">
+                    <f:facet name="header">
+                        <p:outputLabel value="Показания спидометра"/>
+                    </f:facet>
+                    <p:outputLabel value="начало ремонта"/>
+                    <p:inputText value="#{quickSearch.selectedAvto.selectedRemont.speed_begin}" style="width:160px">
+                        <p:keyFilter mask="num" />
+                    </p:inputText>
+                    <p:outputLabel value="следующее ТО"/>
+                    <p:inputText value="#{quickSearch.selectedAvto.selectedRemont.speed_to}" style="width:160px">
+                        <p:keyFilter mask="num" />
+                    </p:inputText>
+
+
+                </p:panelGrid>
+            </p:column>
+        </p:row>
+        <p:row>
+            <p:column colspan="2">
+                <p:tabView orientation="top">
+                <p:tab title="Замена агрегатов">
+                    <div class="ui-g">
+                        <div class="ui-g-12">
+                            <p:commandButton value="добавить" styleClass="p-mt-3" process="@this"
+                                             action="#{quickSearch.selectedAvto.selectedRemont.onAddNewAgr()}" oncomplete="PF('agr').addRow();"/>
+                        </div>
+                    </div>
+
+                    <p:dataTable id="agr" widgetVar="agr" var="agr" value="#{quickSearch.selectedAvto.selectedRemont.listRemontAgrModel}"
+                                 editable="true" scrollable="true" scrollHeight="310" emptyMessage="нет записей">
+                    <p:column headerText="Название">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{agr.name}"/></f:facet>
+                            <f:facet name="input"><p:inputText id="modelInput" value="#{agr.name}"
+                                                               style="width:100%"/></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Старый номер">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{agr.num_old}"/></f:facet>
+                            <f:facet name="input"><p:inputText value="#{agr.num_old}" style="width:100%"
+                                                               label="Старый номер"/></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                        <p:column headerText="Новый номер">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{agr.num_new}"/></f:facet>
+                                <f:facet name="input"><p:inputText value="#{agr.num_new}" style="width:100%"
+                                                                   label="Новый номер"/></f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        <p:column style="width:6rem">
+                            <p:rowEditor/>
+                        </p:column>
+                        <p:column style="width:6rem">
+                            <p:commandButton icon="pi pi-trash" actionListener="#{quickSearch.selectedAvto.selectedRemont.onDeleteAgr(agr.id)}" update="agr"/>
+                        </p:column>
+                    </p:dataTable>
+                </p:tab>
+                <p:tab title="Ремонт">
+                    <div class="ui-g">
+                        <div class="ui-g-12">
+                            <p:commandButton value="добавить" styleClass="p-mt-3" process="@this"
+                                             action="#{quickSearch.selectedAvto.selectedRemont.onAddNewDiff(1)}" oncomplete="PF('rem').addRow();"/>
+                        </div>
+                    </div>
+
+                    <p:dataTable id="rem" widgetVar="rem" var="rem" value="#{quickSearch.selectedAvto.selectedRemont.listRemontDiffModel}" emptyMessage="нет записей"
+                                 editable="true" scrollable="true"  scrollHeight="150" rowStyleClass="#{rem.type!=1 ? 'ui-helper-hidden' : ''}">
+                        <p:column headerText="Название">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{rem.name}"/></f:facet>
+                                <f:facet name="input"><p:inputText value="#{rem.name}"
+                                                                   style="width:100%"/></f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="Стоимость">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{rem.coast}">
+                                    <f:convertNumber type="number" pattern="#.##"/>
+                                </h:outputText></f:facet>
+                                <f:facet name="input"><p:inputText value="#{rem.coast}" style="width:100%">
+                                    <p:keyFilter mask="num" />
+                                </p:inputText></f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column style="width:6rem">
+                            <p:rowEditor/>
+                        </p:column>
+                        <p:column style="width:6rem">
+                            <p:commandButton icon="pi pi-trash" actionListener="#{quickSearch.selectedAvto.selectedRemont.onDeleteDiff(rem.id)}" update="rem"/>
+                        </p:column>
+                    </p:dataTable>
+                </p:tab>
+                <p:tab title="Запчастия">
+                    <div class="ui-g">
+                        <div class="ui-g-12">
+                            <p:commandButton value="добавить" styleClass="p-mt-3" process="@this"
+                                             action="#{quickSearch.selectedAvto.selectedRemont.onAddNewDiff(2)}" oncomplete="PF('zap').addRow();"/>
+                        </div>
+                    </div>
+
+                    <p:dataTable id="zap" widgetVar="zap" var="zap" value="#{quickSearch.selectedAvto.selectedRemont.listRemontDiffModel}" emptyMessage="нет записей"
+                                 editable="true" scrollable="true"  scrollHeight="150" rowStyleClass="#{zap.type!=2 ? 'ui-helper-hidden' : ''}">
+                    <p:column headerText="Название">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{zap.name}"/></f:facet>
+                            <f:facet name="input"><p:inputText value="#{zap.name}"
+                                                               style="width:100%"/></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Стоимость">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{zap.coast}">
+                                <f:convertNumber type="number" pattern="#.##"/>
+                            </h:outputText></f:facet>
+                            <f:facet name="input"><p:inputText value="#{zap.coast}" style="width:100%">
+                                <p:keyFilter mask="num" />
+                            </p:inputText></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column style="width:6rem">
+                        <p:rowEditor/>
+                    </p:column>
+                    <p:column style="width:6rem">
+                        <p:commandButton icon="pi pi-trash" actionListener="#{quickSearch.selectedAvto.selectedRemont.onDeleteDiff(zap.id)}" update="zap"/>
+                    </p:column>
+                    </p:dataTable>
+                </p:tab>
+                <p:tab title="ТМЦ">
+                    <div class="ui-g">
+                        <div class="ui-g-12">
+                            <p:commandButton value="добавить" styleClass="p-mt-3" process="@this"
+                                             action="#{quickSearch.selectedAvto.selectedRemont.onAddNewDiff(3)}" oncomplete="PF('tmc').addRow();"/>
+                        </div>
+                    </div>
+
+                    <p:dataTable id="tmc" widgetVar="tmc" var="tmc" value="#{quickSearch.selectedAvto.selectedRemont.listRemontDiffModel}" emptyMessage="нет записей"
+                                 editable="true" scrollable="true"  scrollHeight="150" rowStyleClass="#{tmc.type!=3 ? 'ui-helper-hidden' : ''}">
+                    <p:column headerText="Название">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{tmc.name}"/></f:facet>
+                            <f:facet name="input"><p:inputText value="#{tmc.name}"
+                                                               style="width:100%"/></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Стоимость">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{tmc.coast}">
+                                <f:convertNumber type="number" pattern="#.##"/>
+                            </h:outputText></f:facet>
+                            <f:facet name="input"><p:inputText value="#{tmc.coast}" style="width:100%">
+                                <p:keyFilter mask="num" />
+                            </p:inputText></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column style="width:6rem">
+                        <p:rowEditor/>
+                    </p:column>
+                    <p:column style="width:6rem">
+                        <p:commandButton icon="pi pi-trash" actionListener="#{quickSearch.selectedAvto.selectedRemont.onDeleteDiff(tmc.id)}" update="tmc"/>
+                    </p:column>
+                    </p:dataTable>
+                </p:tab>
+                <p:tab title="ТМЦ со склада">
+                    <div class="ui-g">
+                        <div class="ui-g-12">
+                            <p:commandButton value="добавить" styleClass="p-mt-3" process="@this"
+                                             action="#{quickSearch.selectedAvto.selectedRemont.onAddNewDiff(4)}" oncomplete="PF('tmc2').addRow();"/>
+                        </div>
+                    </div>
+
+                    <p:dataTable id="tmc2" widgetVar="tmc2" var="tmc2" value="#{quickSearch.selectedAvto.selectedRemont.listRemontDiffModel}" emptyMessage="нет записей"
+                                 editable="true" scrollable="true"  scrollHeight="150" rowStyleClass="#{tmc2.type!=4 ? 'ui-helper-hidden' : ''}">
+                    <p:column headerText="Название">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{tmc2.name}"/></f:facet>
+                            <f:facet name="input"><p:inputText value="#{tmc2.name}"
+                                                               style="width:100%"/></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Стоимость">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{tmc2.coast}">
+                                <f:convertNumber type="number" pattern="#.##"/>
+                            </h:outputText></f:facet>
+                            <f:facet name="input"><p:inputText value="#{tmc2.coast}" style="width:100%">
+                                <p:keyFilter mask="num" />
+                            </p:inputText></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column style="width:6rem">
+                        <p:rowEditor/>
+                    </p:column>
+                    <p:column style="width:6rem">
+                        <p:commandButton icon="pi pi-trash" actionListener="#{quickSearch.selectedAvto.selectedRemont.onDeleteDiff(tmc2.id)}" update="tmc2"/>
+                    </p:column>
+                    </p:dataTable>
+                </p:tab>
+                <p:tab title="Жидкости">
+                    <p:panelGrid columns="3" rendered="#{not empty quickSearch.selectedAvto.selectedRemont}" columnClasses="label,value"
+                                 styleClass="panelGridAvtoCard">
+                        <p:outputLabel value="Масло моторное (л)"/>
+                        <p:inputText value="#{quickSearch.selectedAvto.selectedRemont.oil_l}" style="width:160px">
+                            <p:keyFilter mask="num" />
+                        </p:inputText>
+                        <p:selectOneMenu value="#{quickSearch.selectedAvto.selectedRemont.oil_type}"
+                                         style="width:200px">
+                            <f:selectItem itemLabel="" itemValue="#{0}"/>
+                            <f:selectItems value="#{quickSearch.listTypeOilModel}" var="entry"
+                                           itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Жидкость охлаждающая (л)"/>
+                        <p:inputText value="#{quickSearch.selectedAvto.selectedRemont.freez}" style="width:160px">
+                            <p:keyFilter mask="num" />
+                        </p:inputText>
+                        <p:selectOneMenu value="#{quickSearch.selectedAvto.selectedRemont.freez_type}"
+                                         style="width:200px">
+                            <f:selectItem itemLabel="" itemValue="#{0}"/>
+                            <f:selectItems value="#{quickSearch.listTypeFreezModel}" var="entry"
+                                           itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Жидкость тормозная (л)"/>
+                        <p:inputText value="#{quickSearch.selectedAvto.selectedRemont.liq_break}" style="width:160px">
+                            <p:keyFilter mask="num" />
+                        </p:inputText>
+                        <p:outputLabel value=" "/>
+
+                        <p:outputLabel value="Масло трансмисионное (л)"/>
+                        <p:inputText value="#{quickSearch.selectedAvto.selectedRemont.oil_atf}" style="width:160px">
+                            <p:keyFilter mask="num" />
+                        </p:inputText>
+                        <p:selectOneMenu value="#{quickSearch.selectedAvto.selectedRemont.oil_atf_type}"
+                                         style="width:200px">
+                            <f:selectItem itemLabel="" itemValue="#{0}"/>
+                            <f:selectItems value="#{quickSearch.listTypeOilModel}" var="entry"
+                                           itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+                        </p:selectOneMenu>
+
+                    </p:panelGrid>
+
+                </p:tab>
+                </p:tabView>
+            </p:column>
+        </p:row>
+
+
+    </p:panelGrid>
+    <f:facet name="footer">
+        <p:commandButton type="button" value="Отменить" styleClass="ui-button-flat p-mr-20" global="false" onclick="PF('dlg_remont').hide()"  >
+            <p:confirm header="Подтверждение" message="Выйти без сохранения?" icon="pi pi-info-circle"/>
+        </p:commandButton>
+
+        <p:commandButton title="Сохранить" value="Сохранить" icon="pi pi-save"  actionListener="#{quickSearch.saveRemontCards}"
+                         oncomplete="PF('dlg_remont').hide()"
+                         update=":form:tabview:remont_data :form:growlAvto"/>
+
+        <p:commandButton title="Печать" value="Печать" icon="pi pi-print" rendered="#{quickSearch.selectedAvto.selectedRemont.id>0}"
+                         styleClass="ui-button-raised ui-button-success" actionListener="#{quickSearch.printRemontCards}"/>
+
+
+
+    </f:facet>
+
+</p:dialog>
+</html>

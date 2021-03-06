@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Автохозяйство УВД</title>
+    <link rel="stylesheet" type="text/css" href="css/atx.css"/>
+
+
+
+</h:head>
+<h:body>
+
+    <!--p:layout fullPage="true">
+        <p:layoutUnit position="north"
+                      resizable="false"
+                      size="65" style="display:block; text-align:center"-->
+    <div class="p-d-inline">
+            <div style="padding: 15px;">
+                <p:outputLabel styleClass="mytitles" value="Автохозяйство УВД"/>
+            </div>
+    </div>
+        <!--/p:layoutUnit>
+        <p:layoutUnit position="center"-->
+    <div class="p-d-flex">
+            <h:form id="formId">
+                <p:growl id="growlloginForm" showDetail="true" sticky="false" life="5000"/>
+                <p:panel id="pnl" styleClass="pnl">
+                <p:panelGrid id="loginGrid" styleClass="panelGridCenter" >
+                    <p:row>
+                        <p:column><p:outputLabel value="Логин"/></p:column>
+                        <p:column><p:inputText id="username" value="#{atxLogin.username}" widgetVar="username"
+                                               localStorage="atx_storage">
+                        </p:inputText>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column><p:outputLabel value="Пароль"/></p:column>
+                        <p:column><p:password value="#{atxLogin.password}"/></p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column colspan="2">
+                            <p:commandButton id="loginButton" actionListener="#{atxLogin.login}" value="Вход" style="float:right;" update="@form">
+                                <f:ajax execute="@form" render="script_save" />
+                            </p:commandButton>
+                        </p:column>
+
+                    </p:row>
+                </p:panelGrid>
+
+                <h:panelGroup id="script">
+                    <h:outputScript>var element = document.getElementById('formId:username');
+                    if (element) {
+                        element.value = localStorage.getItem('username');
+                    }</h:outputScript>
+                </h:panelGroup>
+
+                <h:panelGroup id="script_save">
+                    <h:outputScript rendered="#{not empty atxLogin.username}">var element = document.getElementById('formId:username');
+                    if (element)
+                    {
+                        localStorage.setItem('username', element.value);
+                    } </h:outputScript>
+                </h:panelGroup>
+                </p:panel>
+
+                <p:blockUI block="pnl" trigger="loginButton">
+            </p:blockUI>
+
+
+            </h:form>
+    </div>
+        <!--/p:layoutUnit>
+    </p:layout-->
+
+
+
+</h:body>
+</html>
+

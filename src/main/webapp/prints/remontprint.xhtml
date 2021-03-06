@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Ремонтная карта №#{remontPrint.num_remont}</title>
+    <link rel="stylesheet" type="text/css" href="../css/atx.css"/>
+
+</h:head>
+
+<h:body>
+    <h:form>
+            <!--div>
+    <p:commandButton value="XLS" styleClass="p-mr-2 p-mb-2" ajax="false">
+        <p:dataExporter type="xls" target="tbl" fileName="remont"/>
+    </p:commandButton>
+            </div-->
+
+    <h:outputLabel value="Ремонтная карта №#{remontPrint.num_remont} #{remontPrint.avto} "/>
+        <p:contextMenu for="tbl" id="contextMenu">
+            <p:menuitem value="в Excel" ajax="false" actionListener="#{remontPrint.getReportData}"/>
+            <p:menuitem value="в Excel 2" ajax="false" rendered="false" >
+                <p:dataExporter type="xls" target="tbl" fileName="remont"/>
+            </p:menuitem>
+
+        </p:contextMenu>
+    <p:dataTable id="tbl" var="rem" value="#{remontPrint.remontPrintModel}" styleClass="table_print">
+
+        <p:columnGroup type="header">
+            <p:row>
+                <p:column colspan="2" rowspan="2" headerText="Дата" style="width: 140px"/>
+                <p:column rowspan="3" headerText="Вид"/>
+                <p:column colspan="8" headerText="Сумма затрат"/>
+                <p:column colspan="3" rowspan="2" headerText="Замена агрегатов"/>
+                <p:column rowspan="3" headerText="Масло (л)" style="width: 50px"/>
+                <p:column rowspan="3" headerText="Кол-во дней" style="width: 50px"/>
+                <p:column rowspan="3" headerText="Место ремонта"/>
+                <p:column colspan="2" rowspan="2" headerText="Показания спидометра" style="width: 120px"/>
+            </p:row>
+            <p:row>
+                <p:column colspan="2" headerText="Ремонт"/>
+                <p:column colspan="2" headerText="Зап.частия"/>
+                <p:column colspan="2" headerText="ТМЦ"/>
+                <p:column colspan="2" headerText="ТМЦ (склад)"/>
+            </p:row>
+            <p:row>
+                <p:column headerText="Начало"/>
+                <p:column headerText="Окончание"/>
+                <p:column headerText="Наименование"/>
+                <p:column headerText="Стоимость"/>
+                <p:column headerText="Наименование"/>
+                <p:column headerText="Стоимость"/>
+                <p:column headerText="Наименование"/>
+                <p:column headerText="Стоимость"/>
+                <p:column headerText="Наименование"/>
+                <p:column headerText="Стоимость"/>
+                <p:column headerText="Вид"/>
+                <p:column headerText="старый номер"/>
+                <p:column headerText="новый номер"/>
+                <p:column headerText="На начало работ"/>
+                <p:column headerText="на следующее ТО"/>
+            </p:row>
+
+        </p:columnGroup>
+        <p:column groupRow="true">
+            <h:outputText value="#{rem.date_begin}">
+                <f:convertDateTime pattern="dd.MM.yyyy"/>
+            </h:outputText>
+        </p:column>
+        <p:column groupRow="true">
+            <h:outputText value="#{rem.date_end}">
+                <f:convertDateTime pattern="dd.MM.yyyy"/>
+            </h:outputText>
+        </p:column>
+        <p:column groupRow="true">
+            <h:outputText value="#{rem.vid}"/>
+        </p:column>
+        <p:column groupRow="true">
+            <h:outputText value="#{rem.remont_name}"/>
+        </p:column>
+        <p:column groupRow="true">
+            <h:outputText value="#{rem.remont_coast}" rendered="#{rem.remont_name!=null}"/>
+        </p:column>
+        <p:column groupRow="true">
+            <h:outputText value="#{rem.zap_name}"/>
+        </p:column>
+        <p:column groupRow="true">
+            <h:outputText value="#{rem.zap_coast}" rendered="#{rem.zap_name!=null}"/>
+        </p:column>
+        <p:column groupRow="true">
+            <h:outputText value="#{rem.tmc_name}"/>
+        </p:column>
+        <p:column groupRow="true">
+            <h:outputText value="#{rem.tmc_coast}" rendered="#{rem.tmc_name!=null}"/>
+        </p:column>
+        <p:column groupRow="true">
+            <h:outputText value="#{rem.tmc2_name}"/>
+        </p:column>
+        <p:column groupRow="true">
+            <h:outputText value="#{rem.tmc2_coast}" rendered="#{rem.tmc2_name!=null}"/>
+        </p:column>
+        <p:column groupRow="true">
+            <h:outputText value="#{rem.arg_name}"/>
+        </p:column>
+        <p:column groupRow="true">
+            <h:outputText value="#{rem.arg_old_num}"/>
+        </p:column>
+        <p:column groupRow="true">
+            <h:outputText value="#{rem.arg_new_num}"/>
+        </p:column>
+        <p:column groupRow="true">
+            <h:outputText value="#{rem.oil}"/>
+        </p:column>
+        <p:column groupRow="true">
+            <h:outputText value="#{rem.days}"/>
+        </p:column>
+        <p:column groupRow="true">
+            <h:outputText value="#{rem.place}"/>
+        </p:column>
+        <p:column groupRow="true">
+            <h:outputText value="#{rem.speed_b}"/>
+        </p:column>
+        <p:column groupRow="true">
+            <h:outputText value="#{rem.speed_n}"/>
+        </p:column>
+
+
+    </p:dataTable>
+
+
+
+
+    </h:form>
+</h:body>
+</html>

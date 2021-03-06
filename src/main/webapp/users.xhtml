@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<f:view>
+    <div style="width:960px">
+        <h:form id="someForm">
+        <p:panelGrid styleClass="panelGridTitleNoBorder" id="idPanelUserName">
+            <p:row>
+                <p:column>
+                    <p:commandButton actionListener="#{users.newUser}" value="Добавить" icon="ui-icon-plus"
+                                     update=":main-content"/>
+                </p:column>
+                <p:column style="float:right;">
+                    <p:inputText id="user_find" style="margin:1px 1px 1px 1px;" placeholder="поиск"
+                                 value="#{users.user_find}"/>
+                    <p:commandButton icon="ui-icon-search" actionListener="#{users.searchUser}" update=":data_users"/>
+                </p:column>
+            </p:row>
+        </p:panelGrid>
+        </h:form>
+
+        <p:dataTable id="data_users" var="user" value="#{users.listUser}">
+            <p:column width="10%" headerText="Id">
+                <h:outputText value="#{user.id}"/>
+            </p:column>
+
+            <p:column width="10%" headerText="логин">
+                <p:commandLink actionListener="#{users.getInfo(user)}" update=":main-content">
+                    <h:outputText value="#{user.username}"/>
+                </p:commandLink>
+            </p:column>
+
+            <p:column headerText="ФИО">
+                <h:outputText value="#{user.fio}"/>
+            </p:column>
+        </p:dataTable>
+    </div>
+</f:view>
+</html>
+
+
+
+
+
+
+
