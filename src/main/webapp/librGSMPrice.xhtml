@@ -34,7 +34,7 @@
                         <f:convertDateTime pattern="dd.MM.yyyy"/>
                     </h:outputText></f:facet>
                     <f:facet name="input">
-                        <p:calendar id="date_texpasport" showOn="button" style="width:75px !important;"
+                        <p:datePicker showIcon="true" size="10" id="date_texpasport" showOn="button" style="width:75px !important;"
                                     locale="ru" pattern="dd.MM.yyyy" value="#{libra.dat}"/></f:facet>
                 </p:cellEditor>
             </p:column>
@@ -49,7 +49,9 @@
                 <p:rowEditor/>
             </p:column>
             <p:column style="width:6rem">
-                <p:commandButton icon="pi pi-trash" actionListener="#{librGSMPrice.onDelete(libra.num)}" update=":formLibr2:libra"/>
+                <p:commandButton icon="pi pi-trash" actionListener="#{librGSMPrice.onDelete(libra.num)}" update=":formLibr2:libra :formLibr2:msgs">
+                <p:confirm header="Подтверждение" message="Удалить выбранную запись?" icon="pi pi-info-circle" update=":formLibr2:libra :formLibr2:msgs"/>
+                </p:commandButton>
             </p:column>
             <!--  нельзя давть пользователям удалять в НСИ, удалят машины-->
         </p:dataTable>

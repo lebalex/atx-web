@@ -29,6 +29,16 @@ public class ManagerPages extends AtxBase implements Serializable {
                 whatLibr = Integer.parseInt((String) event.getComponent().getAttributes().get("what"));
             }catch(Exception e){}
         }
+        if(((String) event.getComponent().getAttributes().get("page")).equalsIgnoreCase("reports/report01")){
+            try {
+                whatLibr = Integer.parseInt((String) event.getComponent().getAttributes().get("what"));
+            }catch(Exception e){}
+        }
+        if(((String) event.getComponent().getAttributes().get("page")).equalsIgnoreCase("reports/report02")){
+            try {
+                whatLibr = Integer.parseInt((String) event.getComponent().getAttributes().get("what"));
+            }catch(Exception e){}
+        }
 
         page = (String) event.getComponent().getAttributes().get("page")+".xhtml";
     }

@@ -181,6 +181,7 @@ public class LibrAvtoModel extends AtxBase implements Serializable {
     }
 
     public void onDelete(int num) {
+        if (atxLogin.isSave(Roles.TECH_NSI)) {
         Iterator<ModelAvtLibrModel> i = this.listChildModel.iterator();
         while (i.hasNext()) {
             ModelAvtLibrModel agr = i.next();
@@ -188,6 +189,9 @@ public class LibrAvtoModel extends AtxBase implements Serializable {
                 //saveLibr(this.what, agr, 1);
                 i.remove();
             }
+        }
+        } else {
+            viewMessage("Ошибка", Txt.ACCESS_ERROR);
         }
     }
 

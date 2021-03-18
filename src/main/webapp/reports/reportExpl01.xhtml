@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<f:view>
+
+    <h:form id="form">
+        <p:growl id="growlAvto" showDetail="true" sticky="false" life="5000"/>
+
+        <p:contextMenu for="data_avto" id="contextMenu">
+            <p:menuitem value="в Excel с форматирование" ajax="false" actionListener="#{reportExpl01.excelInventar}"/>
+            <p:menuitem value="в Excel" ajax="false" rendered="true" >
+                <p:dataExporter type="xls" target="data_avto" fileName="expl01"/>
+            </p:menuitem>
+
+        </p:contextMenu>
+
+        <p:dataTable id="data_avto" var="avto" value="#{reportExpl01.listExpl01Model}" scrollable="true" scrollHeight="650" scrollWidth="100%">
+            <f:facet name="header">
+                <h:outputText value="#{reportExpl01.caption}"/>
+            </f:facet>
+            <p:headerRow  groupBy="#{avto.name} #{avto.expr1} #{avto.expr2}">
+
+                <p:column colspan="5">
+                    <!--div class="p-d-inline-flex p-ai-center" style="vertical-align: middle"-->
+                    <h:outputText styleClass="p-ml-2" value="#{avto.name}"/>
+                    <p:panelGrid columns="2" styleClass="panelGridAvtoCard50" columnClasses="label2,value3">
+                        <h:outputText style="font-weight: normal" styleClass="p-ml-2" value="Управление: "/>
+                        <h:outputText styleClass="p-ml-2" value="#{avto.expr1}"/>
+                        <h:outputText style="font-weight: normal" styleClass="p-ml-2" value="Отдел: "/>
+                        <h:outputText styleClass="p-ml-2" value="#{avto.expr2}"/>
+                    </p:panelGrid>
+                    <!--/div-->
+                </p:column>
+            </p:headerRow>
+
+
+            <p:column headerText="Служба" width="200">
+                <h:outputText value=" #{avto.expr4}"/>
+            </p:column>
+            <p:column headerText="Пробег (факт)" width="100">
+                <h:outputText value="#{avto.fact_run}">
+                    <f:convertNumber type="number" pattern="#"/></h:outputText>
+            </p:column>
+            <p:column headerText="КТГ" width="100">
+                <h:outputText value="#{avto.ktg}">
+                    <f:convertNumber type="number" pattern="#.##"/></h:outputText>
+            </p:column>
+            <p:column headerText="КТВ" width="100">
+                <h:outputText value="#{avto.ktv}">
+                    <f:convertNumber type="number" pattern="#.##"/></h:outputText>
+            </p:column>
+            <p:column headerText="Перепробег" width="100">
+                <h:outputText value="#{avto.pere}">
+                    <f:convertNumber type="number" pattern="#"/></h:outputText>
+            </p:column>
+            <p:summaryRow>
+                <p:column style="text-align:right">
+                    <h:outputText value="Итого по отделу"/>
+                </p:column>
+                <p:column>
+                    <h:outputText value="#{reportExpl01.getTotalSumProbeg(avto.expr2)}">
+                        <f:convertNumber type="number" pattern="#"/></h:outputText>
+                </p:column>
+                <p:column>
+                    <h:outputText value="#{reportExpl01.getTotalSumKtg(avto.expr2)}">
+                        <f:convertNumber type="number" pattern="#.##"/></h:outputText>
+                </p:column>
+                <p:column>
+                    <h:outputText value="#{reportExpl01.getTotalSumKtv(avto.expr2)}">
+                        <f:convertNumber type="number" pattern="#.##"/></h:outputText>
+                </p:column>
+                <p:column>
+                    <h:outputText value="#{reportExpl01.getTotalSumPereProbeg(avto.expr2)}">
+                        <f:convertNumber type="number" pattern="#"/></h:outputText>
+                </p:column>
+            </p:summaryRow>
+
+            <p:columnGroup type="footer">
+                <p:row>
+                    <p:column style="text-align:right" footerText="Итого:" />
+                    <p:column style="text-align:left">
+                        <f:facet name="footer">
+                            <h:outputText value="#{reportExpl01.getTotalSumProbegFull()}">
+                                <f:convertNumber type="number" pattern="#"/></h:outputText>
+                        </f:facet>
+                    </p:column>
+                    <p:column style="text-align:left">
+                        <f:facet name="footer">
+                            <h:outputText value="#{reportExpl01.getTotalSumKtgFull()}">
+                                <f:convertNumber type="number" pattern="#.##"/></h:outputText>
+                        </f:facet>
+                    </p:column>
+                    <p:column style="text-align:left">
+                        <f:facet name="footer">
+                            <h:outputText value="#{reportExpl01.getTotalSumKtvFull()}">
+                                <f:convertNumber type="number" pattern="#.##"/></h:outputText>
+                        </f:facet>
+                    </p:column>
+                    <p:column style="text-align:left">
+                        <f:facet name="footer">
+                            <h:outputText value="#{reportExpl01.getTotalSumPereProbegFull()}">
+                                <f:convertNumber type="number" pattern="#"/></h:outputText>
+                        </f:facet>
+                    </p:column>
+
+                </p:row>
+            </p:columnGroup>
+
+
+
+        </p:dataTable>
+    </h:form>
+</f:view>
+</html>

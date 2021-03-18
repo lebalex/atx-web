@@ -10,85 +10,128 @@
 
     <h:form id="form">
         <p:growl id="growlAvto" showDetail="true" sticky="false" life="5000"/>
-        <p:dataTable id="data_avto" var="avto" value="#{reportView.listInventarModel}" scrollable="true" scrollHeight="60%" scrollWidth="100%">
-            <p:column headerText="Марка" width="200" rendered="#{reportView.filds.get(0)}">
+
+        <p:contextMenu for="data_avto" id="contextMenu">
+            <p:menuitem value="в Excel с форматирование" ajax="false" actionListener="#{reportInventar.excelInventar}"/>
+            <p:menuitem value="в Excel" ajax="false" rendered="true" >
+                <p:dataExporter type="xls" target="data_avto" fileName="inventar"/>
+            </p:menuitem>
+
+        </p:contextMenu>
+
+        <p:dataTable id="data_avto" var="avto" value="#{reportInventar.listInventarModel}" scrollable="true" scrollHeight="750" scrollWidth="100%">
+            <f:facet name="header">
+                <h:outputText value="#{reportInventar.caption}"/>
+            </f:facet>
+            <p:headerRow field="groupField" rendered="#{reportInventar.what==1}">
+
+                <p:column>
+                    <div class="p-d-inline-flex p-ai-center" style="vertical-align: middle">
+                        <h:outputText styleClass="p-ml-2" value="#{avto.groupField}"/>
+                    </div>
+                </p:column>
+            </p:headerRow>
+
+
+            <p:column headerText="Марка" width="200" rendered="#{reportInventar.filds.get(0)}">
                     <h:outputText value=" #{avto.mark}"/>
             </p:column>
-            <p:column headerText="Категория" width="50" rendered="#{reportView.filds.get(1)}">
+            <p:column headerText="Категория" width="50" rendered="#{reportInventar.filds.get(1)}">
                 <h:outputText value="#{avto.typetc}"/>
             </p:column>
-            <p:column headerText="гос №" width="50" rendered="#{reportView.filds.get(2)}">
+            <p:column headerText="гос №" width="50" rendered="#{reportInventar.filds.get(2)}">
                 <h:outputText value="#{avto.numb_1}"/>
             </p:column>
-            <p:column headerText="Год выпуска" width="50" rendered="#{reportView.filds.get(3)}">
+            <p:column headerText="Год выпуска" width="50" rendered="#{reportInventar.filds.get(3)}">
                 <h:outputText value="#{avto.m_year}"/>
             </p:column>
-            <p:column headerText="Цвет" width="50" rendered="#{reportView.filds.get(4)}">
+            <p:column headerText="Цвет" width="50" rendered="#{reportInventar.filds.get(4)}">
                 <h:outputText value="#{avto.color}"/>
             </p:column>
-            <p:column headerText="VIN" width="150" rendered="#{reportView.filds.get(5)}">
+            <p:column headerText="VIN" width="150" rendered="#{reportInventar.filds.get(5)}">
                 <h:outputText value="#{avto.vin}"/>
             </p:column>
-            <p:column headerText="№ двигателя" width="50" rendered="#{reportView.filds.get(6)}">
+            <p:column headerText="№ двигателя" width="50" rendered="#{reportInventar.filds.get(6)}">
                 <h:outputText value="#{avto.n_engine}"/>
             </p:column>
-            <p:column headerText="№ кузова" width="50" rendered="#{reportView.filds.get(7)}">
+            <p:column headerText="№ кузова" width="50" rendered="#{reportInventar.filds.get(7)}">
                 <h:outputText value="#{avto.n_body}"/>
             </p:column>
-            <p:column headerText="№ шасси" width="50" rendered="#{reportView.filds.get(8)}">
+            <p:column headerText="№ шасси" width="50" rendered="#{reportInventar.filds.get(8)}">
                 <h:outputText value="#{avto.n_chassis}"/>
             </p:column>
-            <p:column headerText="Модель ДВС" width="50" rendered="#{reportView.filds.get(9)}">
+            <p:column headerText="Модель ДВС" width="50" rendered="#{reportInventar.filds.get(9)}">
                 <h:outputText value="#{avto.modelDVC}"/>
             </p:column>
-            <p:column headerText="Объем" width="50" rendered="#{reportView.filds.get(10)}">
+            <p:column headerText="Объем" width="50" rendered="#{reportInventar.filds.get(10)}">
                 <h:outputText value="#{avto.volumeDVC}"/>
             </p:column>
-            <p:column headerText="Тип ДВС" width="50" rendered="#{reportView.filds.get(11)}">
+            <p:column headerText="Тип ДВС" width="50" rendered="#{reportInventar.filds.get(11)}">
                 <h:outputText value="#{avto.typeDVC}"/>
             </p:column>
-            <p:column headerText="Производитель ТС" width="150" rendered="#{reportView.filds.get(12)}">
+            <p:column headerText="Производитель ТС" width="150" rendered="#{reportInventar.filds.get(12)}">
                 <h:outputText value="#{avto.manufactureTC}"/>
             </p:column>
-            <p:column headerText="Бюджет" width="150" rendered="#{reportView.filds.get(13)}">
+            <p:column headerText="Бюджет" width="150" rendered="#{reportInventar.filds.get(13)}">
                 <h:outputText value="#{avto.expr5}"/>
             </p:column>
-            <p:column headerText="Служба" width="150" rendered="#{reportView.filds.get(14)}">
+            <p:column headerText="Служба" width="150" rendered="#{reportInventar.filds.get(14)}">
                 <h:outputText value="#{avto.expr6}"/>
             </p:column>
-            <p:column headerText="Под.служба" width="150" rendered="#{reportView.filds.get(15)}">
+            <p:column headerText="Под.служба" width="150" rendered="#{reportInventar.filds.get(15)}">
                 <h:outputText value="#{avto.expr6p}"/>
             </p:column>
-            <p:column headerText="№ техпаспорта" width="150" rendered="#{reportView.filds.get(16)}">
+            <p:column headerText="№ техпаспорта" width="150" rendered="#{reportInventar.filds.get(16)}">
                 <h:outputText value="#{avto.expr7}"/>
             </p:column>
-            <p:column headerText="№ страховки" width="150" rendered="#{reportView.filds.get(17)}">
+            <p:column headerText="№ страховки" width="150" rendered="#{reportInventar.filds.get(17)}">
                 <h:outputText value="#{avto.expr8}"/>
             </p:column>
-            <p:column headerText="Дата страховки" width="150" rendered="#{reportView.filds.get(18)}">
+            <p:column headerText="Дата страховки" width="150" rendered="#{reportInventar.filds.get(18)}">
                 <h:outputText value="#{avto.expr8d}"/>
             </p:column>
-            <p:column headerText="Страховая компания" width="150" rendered="#{reportView.filds.get(19)}">
+            <p:column headerText="Страховая компания" width="150" rendered="#{reportInventar.filds.get(19)}">
                 <h:outputText value="#{avto.expr10}"/>
             </p:column>
-            <p:column headerText="Мощность" width="50" rendered="#{reportView.filds.get(20)}">
+            <p:column headerText="Мощность" width="50" rendered="#{reportInventar.filds.get(20)}">
                 <h:outputText value="#{avto.expr9}"/>
             </p:column>
-            <p:column headerText="Дата на учет" width="150" rendered="#{reportView.filds.get(21)}">
+            <p:column headerText="Дата на учет" width="150" rendered="#{reportInventar.filds.get(21)}">
                 <h:outputText value="#{avto.expr11}"/>
             </p:column>
-            <p:column headerText="Дислокация" width="150" rendered="#{reportView.filds.get(22)}">
+            <p:column headerText="Дислокация" width="150" rendered="#{reportInventar.filds.get(22)}">
                 <h:outputText value="#{avto.expr4}"/>
             </p:column>
-            <p:column headerText="Спидометр" width="50" rendered="#{reportView.filds.get(23)}">
+            <p:column headerText="Спидометр" width="50" rendered="#{reportInventar.filds.get(23)}">
                 <h:outputText value="#{avto.speed_end}"/>
             </p:column>
-            <p:column headerText="Аренда" width="150" rendered="#{reportView.filds.get(24)}">
+            <p:column headerText="Аренда" width="150" rendered="#{reportInventar.filds.get(24)}">
                 <h:outputText value="#{avto.aD1} - #{avto.aD1}" rendered="#{avto.aD1!=null}"/>
             </p:column>
-            <p:column headerText="Группа эксплуатации" width="150" rendered="#{reportView.filds.get(25)}">
+            <p:column headerText="Группа эксплуатации" width="150" rendered="#{reportInventar.filds.get(25)}">
                 <h:outputText value="#{avto.explGroup}"/>
             </p:column>
+
+            <p:summaryRow rendered="#{reportInventar.what==1}">
+                <p:column style="text-align:right">
+                    <h:outputText value="Итого:"/>
+                </p:column>
+                <p:column>
+                    <h:outputText value="#{reportInventar.getTotalCount(avto.groupField)}">
+                        <f:convertNumber type="number" pattern="#"/></h:outputText>
+                </p:column>
+            </p:summaryRow>
+            <p:columnGroup type="footer">
+                <p:row>
+                    <p:column style="text-align:right" footerText="Итого:" />
+                    <p:column style="text-align:left">
+                        <f:facet name="footer">
+                            <h:outputText value="#{reportInventar.getTotalCountAll()}">
+                                <f:convertNumber type="number" pattern="#"/></h:outputText>
+                        </f:facet>
+                    </p:column>
+                </p:row>
+            </p:columnGroup>
 
 
         </p:dataTable>

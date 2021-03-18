@@ -102,13 +102,13 @@ public class Libr extends AtxBase implements Serializable {
         if (atxLogin.isSave(getRoleForLibr(this.what))) {
             saveLibr(this.what, (LibrModel) event.getObject(), 0);
             viewMessage("Успешно", Txt.DATA_SAVE);
-        }else {
+        } else {
             viewMessage("Ошибка", Txt.ACCESS_ERROR);
         }
     }
-    private String getRoleForLibr(int whatLibr)
-    {
-        switch(whatLibr){
+
+    private String getRoleForLibr(int whatLibr) {
+        switch (whatLibr) {
             case 1:
             case 2:
             case 3:
@@ -125,16 +125,20 @@ public class Libr extends AtxBase implements Serializable {
             case 18:
             case 19:
             case 20:
-            case 21:return Roles.TECH_NSI;
+            case 21:
+                return Roles.TECH_NSI;
 
             case 12:
             case 16:
             case 22:
-            case 23:return Roles.GSM_NSI;
+            case 23:
+                return Roles.GSM_NSI;
 
             case 13:
-            case 14:return Roles.REM_NSI;
-            default:return Roles.TECH_NSI;
+            case 14:
+                return Roles.REM_NSI;
+            default:
+                return Roles.TECH_NSI;
         }
     }
 
@@ -157,13 +161,17 @@ public class Libr extends AtxBase implements Serializable {
     }
 
     public void onDelete(int num) {
-        Iterator<LibrModel> i = this.listLibrModel.iterator();
-        while (i.hasNext()) {
-            LibrModel agr = i.next();
-            if (agr.getNum() == num) {
-                //saveLibr(this.what, agr, 1);
-                i.remove();
+        if (atxLogin.isSave(getRoleForLibr(this.what))) {
+            Iterator<LibrModel> i = this.listLibrModel.iterator();
+            while (i.hasNext()) {
+                LibrModel agr = i.next();
+                if (agr.getNum() == num) {
+                    //saveLibr(this.what, agr, 1);
+                    i.remove();
+                }
             }
+        } else {
+            viewMessage("Ошибка", Txt.ACCESS_ERROR);
         }
     }
 

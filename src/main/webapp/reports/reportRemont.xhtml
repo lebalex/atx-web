@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<f:view>
+
+    <h:form id="form">
+        <p:growl id="growlAvto" showDetail="true" sticky="false" life="5000"/>
+
+        <p:contextMenu for="data_avto" id="contextMenu">
+            <p:menuitem value="в Excel с форматирование" ajax="false" actionListener="#{reportRemont.excelInventar}"/>
+            <p:menuitem value="в Excel" ajax="false" rendered="true" >
+                <p:dataExporter type="xls" target="data_avto" fileName="remont"/>
+            </p:menuitem>
+
+        </p:contextMenu>
+
+        <p:dataTable id="data_avto" var="avto" value="#{reportRemont.listRemontModel}" scrollable="true" scrollHeight="750" scrollWidth="100%">
+            <f:facet name="header">
+                <h:outputText value="#{reportRemont.caption}"/>
+            </f:facet>
+            <p:headerRow groupBy="#{avto.name} #{avto.expr1} #{avto.expr2} #{avto.expr3} #{avto.expr5}">
+
+                <p:column colspan="#{reportRemont.getSpam()}">
+                    <!--div class="p-d-inline-flex p-ai-center" style="vertical-align: middle"-->
+                    <h:outputText styleClass="p-ml-2" value="#{avto.name}"/>
+                    <p:panelGrid columns="2" styleClass="panelGridAvtoCard50" columnClasses="label2,value3">
+                        <h:outputText style="font-weight: normal" styleClass="p-ml-2" value="Управление: "/>
+                        <h:outputText styleClass="p-ml-2" value="#{avto.expr1}"/>
+                        <h:outputText style="font-weight: normal" styleClass="p-ml-2" value="Отдел: "/>
+                        <h:outputText styleClass="p-ml-2" value="#{avto.expr2}"/>
+                        <h:outputText style="font-weight: normal" styleClass="p-ml-2" value="Под-Отдел: "/>
+                        <h:outputText styleClass="p-ml-2" value="#{avto.expr3}"/>
+                    </p:panelGrid>
+                    <!--/div-->
+                </p:column>
+            </p:headerRow>
+
+
+            <p:column headerText="Марка" width="200" rendered="#{reportRemont.filds.get(0)}">
+                <h:outputText value=" #{avto.mark}"/>
+            </p:column>
+            <p:column headerText="гос №" width="50" rendered="#{reportRemont.filds.get(1)}">
+                <h:outputText value="#{avto.numb_1}"/>
+            </p:column>
+            <p:column headerText="Год выпуска" width="50" rendered="#{reportRemont.filds.get(2)}">
+                <h:outputText value="#{avto.m_year}"/>
+            </p:column>
+            <p:column headerText="VIN" width="150" rendered="#{reportRemont.filds.get(3)}">
+                <h:outputText value="#{avto.vin}"/>
+            </p:column>
+            <p:column headerText="№ двигателя" width="50" rendered="#{reportRemont.filds.get(4)}">
+                <h:outputText value="#{avto.n_engine}"/>
+            </p:column>
+            <p:column headerText="№ кузова" width="50" rendered="#{reportRemont.filds.get(5)}">
+                <h:outputText value="#{avto.n_body}"/>
+            </p:column>
+            <p:column headerText="№ шасси" width="50" rendered="#{reportRemont.filds.get(6)}">
+                <h:outputText value="#{avto.n_chassis}"/>
+            </p:column>
+            <p:column headerText="Модель ДВС" width="50" rendered="#{reportRemont.filds.get(7)}">
+                <h:outputText value="#{avto.modelDVC}"/>
+            </p:column>
+            <p:column headerText="Объем" width="50" rendered="#{reportRemont.filds.get(8)}">
+                <h:outputText value="#{avto.volumeDVC}"/>
+            </p:column>
+            <p:column headerText="Тип ДВС" width="50" rendered="#{reportRemont.filds.get(9)}">
+                <h:outputText value="#{avto.typeDVC}"/>
+            </p:column>
+            <p:column headerText="Производитель ТС" width="150" rendered="#{reportRemont.filds.get(10)}">
+                <h:outputText value="#{avto.manufactureTC}"/>
+            </p:column>
+            <p:column headerText="Бюджет" width="150" rendered="#{reportRemont.filds.get(11)}">
+                <h:outputText value="#{avto.expr5}"/>
+            </p:column>
+            <p:column headerText="Служба" width="150" rendered="#{reportRemont.filds.get(12)}">
+                <h:outputText value="#{avto.expr6}"/>
+            </p:column>
+
+            <p:column headerText="Наимен. ремонта" width="150" rendered="#{reportRemont.filds.get(13)}">
+                <h:outputText value="#{avto.n1}"/>
+            </p:column>
+            <p:column headerText="Сумма ремонта" width="150" rendered="#{reportRemont.filds.get(14)}">
+                <h:outputText value="#{avto.coast1}">
+                    <f:convertNumber type="number" pattern="#.##"/></h:outputText>
+            </p:column>
+            <p:column headerText="Наимен. з/ч" width="150" rendered="#{reportRemont.filds.get(15)}">
+                <h:outputText value="#{avto.n2}"/>
+            </p:column>
+            <p:column headerText="Сумма на з/ч" width="150" rendered="#{reportRemont.filds.get(16)}">
+                <h:outputText value="#{avto.coast2}">
+                    <f:convertNumber type="number" pattern="#.##"/></h:outputText>
+            </p:column>
+            <p:column headerText="Наимен. ТМЦ" width="150" rendered="#{reportRemont.filds.get(17)}">
+                <h:outputText value="#{avto.n3}"/>
+            </p:column>
+            <p:column headerText="Сумма ТМЦ" width="50" rendered="#{reportRemont.filds.get(18)}">
+                <h:outputText value="#{avto.coast3}">
+                    <f:convertNumber type="number" pattern="#.##"/></h:outputText>
+            </p:column>
+            <p:column headerText="Наимен. ТМЦ (склад)" width="150" rendered="#{reportRemont.filds.get(19)}">
+                <h:outputText value="#{avto.n4}"/>
+            </p:column>
+            <p:column headerText="Сумма ТМЦ (склад)" width="150" rendered="#{reportRemont.filds.get(20)}">
+                <h:outputText value="#{avto.coast4}">
+                    <f:convertNumber type="number" pattern="#.##"/></h:outputText>
+            </p:column>
+            <p:column headerText="Масло" width="50" rendered="#{reportRemont.filds.get(21)}">
+                <h:outputText value="#{avto.oil_l}"/>
+            </p:column>
+            <p:column headerText="Всего затрачено" width="150" rendered="#{reportRemont.filds.get(22)}">
+                <h:outputText value="#{avto.coast1+avto.coast2+avto.coast3}">
+                    <f:convertNumber type="number" pattern="#.##"/></h:outputText>
+            </p:column>
+            <p:column headerText="Кол-во дней" width="150" rendered="#{reportRemont.filds.get(23)}">
+                <h:outputText value="#{avto.ddd}"/>
+            </p:column>
+            <p:column headerText="Ремонт. замена" width="150" rendered="#{reportRemont.filds.get(24)}">
+                <h:outputText value="#{avto.expr4}"/>
+            </p:column>
+            <p:column headerText="Период ремонта" width="150" rendered="#{reportRemont.filds.get(25)}">
+                <h:outputText value="#{avto.date_begin}">
+                 <f:convertDateTime pattern="dd.MM.yyyy"/>
+                </h:outputText>
+                <h:outputText value="#{avto.date_end}">
+                    <f:convertDateTime pattern="dd.MM.yyyy"/>
+                </h:outputText>
+            </p:column>
+
+            <p:summaryRow>
+            <p:column colspan="5">
+                <h:outputText value="Кол-во автотранспорта #{reportRemont.getTotalCount(avto.groupField)} на сумму "/>
+                <h:outputText value="#{reportRemont.getTotalCoast(avto.groupField)}">
+                    <f:convertNumber type="number" pattern="#.##"/></h:outputText>
+            </p:column>
+        </p:summaryRow>
+
+            <p:columnGroup type="footer">
+                <p:row>
+                    <p:column style="text-align:left">
+                        <f:facet name="footer">
+                            <h:outputText value="Кол-во автотранспорта #{reportRemont.getTotalCountAll()} на сумму "/>
+                            <h:outputText value="#{reportRemont.getTotalCoastAll()}">
+                                <f:convertNumber type="number" pattern="#.##"/></h:outputText>
+                        </f:facet>
+                    </p:column>
+                </p:row>
+            </p:columnGroup>
+
+
+        </p:dataTable>
+    </h:form>
+</f:view>
+</html>

@@ -11,6 +11,29 @@
         <p:panelGrid columns="2" styleClass="panelGridAvtoCard90">
             <p:panelGrid columnClasses="label2,value2,label2,value" style="margin-top: 30px;margin-left: 30px"
                          styleClass="panelGridAvtoCard90">
+                <p:row rendered="#{report01.getVisibleDatePeriod()}">
+                    <p:column colspan="4">
+                        <p:outputPanel>
+                            <p:outputLabel value="с "/>
+
+                            <p:datePicker size="10" value="#{report01.dr1}" showIcon="true" locale="ru" pattern="dd.MM.yyyy"/>
+                            <p:outputLabel value="по " style="margin-left: 10px"/>
+                            <p:datePicker size="10" showIcon="true"  value="#{report01.dr2}"
+                                        locale="ru" pattern="dd.MM.yyyy"/>
+                        </p:outputPanel>
+                    </p:column>
+                </p:row>
+                <p:row rendered="#{report01.getVisibleYearPeriod()}">
+                    <p:column colspan="4">
+                        <p:selectOneMenu value="#{report01.year_selected}"
+                                         style="width:100px">
+                            <p:ajax global="false" listener="#{report01.handleYearChange(report01.year_selected)}"/>
+                            <f:selectItems value="#{report01.listYear}" var="entry"
+                                           itemLabel="#{entry}" itemValue="#{entry}"/>
+                        </p:selectOneMenu>
+                    </p:column>
+                </p:row>
+
                 <p:row>
                     <p:column>
                         <p:selectBooleanCheckbox value="#{report01.on_region}" itemLabel="Гарнизон/Область">
@@ -265,11 +288,11 @@
                     </p:column>
                     <p:column>
                         <p:outputLabel value="с "/>
-                        <p:calendar id="inAc1" showOn="button" value="#{report01.inAc1}"
+                        <p:datePicker showIcon="true" size="10" id="inAc1"  value="#{report01.inAc1}"
                                     disabled="#{!report01.on_account}"
                                     locale="ru" pattern="dd.MM.yyyy"/>
                         <p:outputLabel value="по " style="margin-left: 10px"/>
-                        <p:calendar id="inAc2" showOn="button" value="#{report01.inAc2}"
+                        <p:datePicker showIcon="true" size="10" id="inAc2" value="#{report01.inAc2}"
                                     disabled="#{!report01.on_account}"
                                     locale="ru" pattern="dd.MM.yyyy"/>
                     </p:column>
@@ -287,7 +310,7 @@
                         </p:inputText>
                     </p:column>
                     <p:column rowspan="4">
-                        <p:selectOneRadio id="customRadio" value="#{report01.stateOut}" layout="grid" columns="1">
+                        <p:selectOneRadio id="customRadio" value="#{report01.stateOut}" layout="grid" columns="1" rendered="#{report01.getVisibleOut()}">
                             <f:selectItem itemLabel="В отстое" itemValue="1"/>
                             <f:selectItem itemLabel="Снятые с учета" itemValue="2"/>
                             <f:selectItem itemLabel="Списанные" itemValue="3"/>
@@ -298,13 +321,13 @@
 
                     </p:column>
                     <p:column rowspan="4">
-                        <p:outputPanel id="customPanel" style="margin-top:30px">
+                        <p:outputPanel id="customPanel" style="margin-top:30px" rendered="#{report01.getVisibleOut()}">
                             <p:outputLabel value="с "/>
-                            <p:calendar id="out1" showOn="button" value="#{report01.inAc1}"
+                            <p:datePicker showIcon="true" size="10" id="out1"  value="#{report01.out1}"
                                         disabled="#{report01.stateOut=='0'}"
                                         locale="ru" pattern="dd.MM.yyyy"/>
                             <p:outputLabel value="по " style="margin-left: 10px"/>
-                            <p:calendar id="out2" showOn="button" value="#{report01.inAc2}"
+                            <p:datePicker showIcon="true" size="10" id="out2"  value="#{report01.out2}"
                                         disabled="#{report01.stateOut=='0'}"
                                         locale="ru" pattern="dd.MM.yyyy"/>
                         </p:outputPanel>
@@ -428,7 +451,7 @@
                 </p:row>
 
             </p:panelGrid>
-            <p:panelGrid columns="1">
+            <p:panelGrid columns="1" rendered="#{report01.getVisibleFieldsInventer()}">
                 <p:selectBooleanCheckbox value="#{report01.tf01}" itemLabel="Марка" />
                 <p:selectBooleanCheckbox value="#{report01.tf02}" itemLabel="Категория"/>
                 <p:selectBooleanCheckbox value="#{report01.tf03}" itemLabel="гос№"/>
@@ -448,13 +471,44 @@
                 <p:selectBooleanCheckbox value="#{report01.tf17}" itemLabel="№ техпаспорта"/>
                 <p:selectBooleanCheckbox value="#{report01.tf18}" itemLabel="№ страховки"/>
                 <p:selectBooleanCheckbox value="#{report01.tf19}" itemLabel="Дата страховки"/>
-                <p:selectBooleanCheckbox value="#{report01.tf20}" itemLabel="Страховая компания"/>
+                <p:selectBooleanCheckbox value="#{report01.tf20}" itemLabel="#{report01.getTitle20()}"/>
                 <p:selectBooleanCheckbox value="#{report01.tf21}" itemLabel="Мощность"/>
                 <p:selectBooleanCheckbox value="#{report01.tf22}" itemLabel="Дата на учет"/>
                 <p:selectBooleanCheckbox value="#{report01.tf23}" itemLabel="Дислокация"/>
                 <p:selectBooleanCheckbox value="#{report01.tf24}" itemLabel="Спидометр"/>
                 <p:selectBooleanCheckbox value="#{report01.tf25}" itemLabel="Аренда"/>
                 <p:selectBooleanCheckbox value="#{report01.tf26}" itemLabel="Группа эксплуатации"/>
+
+
+            </p:panelGrid>
+            <p:panelGrid columns="1" rendered="#{report01.getVisibleFieldsRemont()}">
+                <p:selectBooleanCheckbox value="#{report01.tf01}" itemLabel="Марка" />
+                <p:selectBooleanCheckbox value="#{report01.tf02}" itemLabel="гос№"/>
+                <p:selectBooleanCheckbox value="#{report01.tf03}" itemLabel="Год выпуска"/>
+                <p:selectBooleanCheckbox value="#{report01.tf04}" itemLabel="VIN"/>
+                <p:selectBooleanCheckbox value="#{report01.tf05}" itemLabel="№ двигателя"/>
+                <p:selectBooleanCheckbox value="#{report01.tf06}" itemLabel="№ кузова"/>
+                <p:selectBooleanCheckbox value="#{report01.tf07}" itemLabel="№ шасси"/>
+                <p:selectBooleanCheckbox value="#{report01.tf08}" itemLabel="Модель ДВС"/>
+                <p:selectBooleanCheckbox value="#{report01.tf09}" itemLabel="Объем"/>
+                <p:selectBooleanCheckbox value="#{report01.tf10}" itemLabel="Тип ДВС"/>
+                <p:selectBooleanCheckbox value="#{report01.tf11}" itemLabel="Производитель ТС"/>
+                <p:selectBooleanCheckbox value="#{report01.tf12}" itemLabel="Бюджет"/>
+                <p:selectBooleanCheckbox value="#{report01.tf13}" itemLabel="Служба"/>
+
+                <p:selectBooleanCheckbox value="#{report01.tf14}" itemLabel="Наимен. ремонта"/>
+                <p:selectBooleanCheckbox value="#{report01.tf16}" itemLabel="Сумма ремонта"/>
+                <p:selectBooleanCheckbox value="#{report01.tf17}" itemLabel="Наимен. з/ч"/>
+                <p:selectBooleanCheckbox value="#{report01.tf18}" itemLabel="Сумма на з/ч"/>
+                <p:selectBooleanCheckbox value="#{report01.tf18}" itemLabel="Наимен. ТМЦ"/>
+                <p:selectBooleanCheckbox value="#{report01.tf19}" itemLabel="Сумма ТМЦ"/>
+                <p:selectBooleanCheckbox value="#{report01.tf20}" itemLabel="ТМЦ (склад)"/>
+                <p:selectBooleanCheckbox value="#{report01.tf21}" itemLabel="Сумма ТМЦ (склад)"/>
+                <p:selectBooleanCheckbox value="#{report01.tf22}" itemLabel="Масло"/>
+                <p:selectBooleanCheckbox value="#{report01.tf23}" itemLabel="Всего затрачено"/>
+                <p:selectBooleanCheckbox value="#{report01.tf24}" itemLabel="Кол-во дней"/>
+                <p:selectBooleanCheckbox value="#{report01.tf25}" itemLabel="Ремонт. замена"/>
+                <p:selectBooleanCheckbox value="#{report01.tf26}" itemLabel="Период ремонта"/>
 
 
             </p:panelGrid>

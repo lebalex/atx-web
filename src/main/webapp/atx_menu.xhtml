@@ -135,8 +135,78 @@
 
     <p:submenu label="Отчеты">
         <p:menuitem value="Инвентаризация" actionListener="#{managerPages.menu_action}" update=":main-content">
-            <f:attribute name="page" value="report01" />
+            <f:attribute name="page" value="reports/report01" />
+            <f:attribute name="what" value="1" />
         </p:menuitem>
+        <p:menuitem value="Эксплуатационные показатели (кратко)" actionListener="#{managerPages.menu_action}" update=":main-content">
+            <f:attribute name="page" value="reports/report01" />
+            <f:attribute name="what" value="2" />
+        </p:menuitem>
+        <p:menuitem value="Эксплуатационная карта 1" actionListener="#{managerPages.menu_action}" update=":main-content">
+            <f:attribute name="page" value="reports/report02" />
+            <f:attribute name="what" value="11" />
+        </p:menuitem>
+        <p:menuitem value="Эксплуатационная карта 2" actionListener="#{managerPages.menu_action}" update=":main-content">
+            <f:attribute name="page" value="reports/report02" />
+            <f:attribute name="what" value="12" />
+        </p:menuitem>
+        <p:menuitem value="Расчет линейных норм ГСМ" actionListener="#{managerPages.menu_action}" update=":main-content">
+            <f:attribute name="page" value="reports/report01" />
+            <f:attribute name="what" value="3" />
+        </p:menuitem>
+        <p:menuitem value="Расчет линейных норм ГСМ по марке" actionListener="#{managerPages.menu_action}" update=":main-content">
+            <f:attribute name="page" value="reports/report01" />
+            <f:attribute name="what" value="4" />
+        </p:menuitem>
+        <p:menuitem value="Расчет линейных норм ГСМ по марке (с моделью ДВС)" actionListener="#{managerPages.menu_action}" update=":main-content">
+            <f:attribute name="page" value="reports/report01" />
+            <f:attribute name="what" value="5" />
+        </p:menuitem>
+        <p:menuitem value="Ремонт" actionListener="#{managerPages.menu_action}" update=":main-content">
+            <f:attribute name="page" value="reports/report01" />
+            <f:attribute name="what" value="6" />
+        </p:menuitem>
+        <p:menuitem value="..."></p:menuitem>
+        <p:menuitem value="Эксплуатационные показатели" actionListener="#{managerPages.menu_action}" update=":main-content">
+            <f:attribute name="page" value="reports/report02" />
+            <f:attribute name="what" value="13" />
+        </p:menuitem>
+        <p:menuitem rendered="false" value="Годовой план эксплуатации не правильно распределяет на типы транспорта" actionListener="#{managerPages.menu_action}" update=":main-content">
+            <f:attribute name="page" value="reports/report02" />
+            <f:attribute name="what" value="14" />
+        </p:menuitem>
+        <p:menuitem value="Отчет по шинам" actionListener="#{managerPages.menu_action}" update=":main-content">
+            <f:attribute name="page" value="reports/report02" />
+            <f:attribute name="what" value="15" />
+        </p:menuitem>
+        <p:menuitem value="Прохождение ТО" actionListener="#{managerPages.menu_action}" update=":main-content">
+            <f:attribute name="page" value="reports/report01" />
+            <f:attribute name="what" value="7" />
+        </p:menuitem>
+        <p:menuitem value="Отсутствие ТО более 3 месяцев" actionListener="#{managerPages.menu_action}" update=":main-content">
+            <f:attribute name="page" value="reports/report01" />
+            <f:attribute name="what" value="8" />
+        </p:menuitem>
+        <p:menuitem value="Отчет по маслу" actionListener="#{managerPages.menu_action}" update=":main-content">
+            <f:attribute name="page" value="reports/report02" />
+            <f:attribute name="what" value="16" />
+        </p:menuitem>
+        <p:menuitem value="..."></p:menuitem>
+        <p:menuitem value="..."></p:menuitem>
+        <p:menuitem value="..."></p:menuitem>
+        <p:menuitem value="..."></p:menuitem>
+        <p:menuitem value="..."></p:menuitem>
+        <p:menuitem value="..."></p:menuitem>
+        <p:menuitem value="Инвентаризация (без группировки)" actionListener="#{managerPages.menu_action}" update=":main-content">
+            <f:attribute name="page" value="reports/report01" />
+            <f:attribute name="what" value="9" />
+        </p:menuitem>
+        <p:menuitem value="Отчет о замене гос.номера" actionListener="#{managerPages.menu_action}" update=":main-content">
+            <f:attribute name="page" value="reports/report01" />
+            <f:attribute name="what" value="10" />
+        </p:menuitem>
+        <p:menuitem value="..."></p:menuitem>
+        <p:menuitem value="..."></p:menuitem>
     </p:submenu>
     <p:submenu label="Настройки">
         <p:menuitem value="Пользователи" actionListener="#{managerPages.menu_action}" icon="pi pi-save" update=":main-content" rendered="#{atxLogin.getAccess('ADMIN')}">
@@ -148,8 +218,8 @@
 
     <f:facet name="options">
         <p:inputText id="str_find" style="margin:1px 1px 1px 1px;" placeholder="поиск по номеру" value="#{quickSearch.str_find}"/>
-        <p:commandButton icon="pi pi-search" actionListener="#{quickSearch.find}" update=":main-content :menuForm:growlMenu"/>
-        <p:commandButton value="выход" actionListener="#{atxLogin.exit}" icon="pi pi-home" style="margin-left: 10px;;" global="false"/>
+        <p:commandButton styleClass="p-mt-2" icon="pi pi-search" value="поиск" actionListener="#{quickSearch.find}" update=":main-content :menuForm:growlMenu"/>
+        <p:commandButton  icon="pi pi-home"  value="выход" actionListener="#{atxLogin.exit}" style="margin-left: 3px;;" global="false"/>
     </f:facet>
 </p:menubar>
 </h:form>

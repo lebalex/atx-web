@@ -11,29 +11,36 @@
             <p:outputLabel value="Период"/>
         </p:column>
         <p:column style="white-space: nowrap;">
-            <p:calendar showOn="button" value="#{quickSearch.selectedAvto.expl_date1}"
+            <p:datePicker showIcon="true" size="10" showOn="button" value="#{quickSearch.selectedAvto.expl_date1}"
                         locale="ru" pattern="dd.MM.yyyy"/>
         </p:column>
         <p:column style="white-space: nowrap;">
-            <p:calendar showOn="button" value="#{quickSearch.selectedAvto.expl_date2}"
+            <p:datePicker showIcon="true" size="10" showOn="button" value="#{quickSearch.selectedAvto.expl_date2}"
                         locale="ru" pattern="dd.MM.yyyy"/>
         </p:column>
         <p:column style="white-space: nowrap;">
             <p:commandButton value="Показать" actionListener="#{quickSearch.getZakrepCards}"
                              update=":form:tabview:zakrep_data"/>
         </p:column>
+        <p:column style="white-space: nowrap;">
+            <p:commandButton title="Справка" value="Справка (docx)" icon="pi pi-print"
+                             styleClass="ui-button-raised ui-button-success" actionListener="#{quickSearch.printZakrepSpravka}" ajax="false"/>
+        </p:column>
+        <p:column style="white-space: nowrap;">
+            <p:commandButton title="Карточка" value="Карточка (docx)" icon="pi pi-print"
+                             styleClass="ui-button-raised ui-button-success" actionListener="#{quickSearch.printZakrepCard}" ajax="false"/>
+        </p:column>
         <p:column style="text-align:right; width: 100%">
             <p:commandButton styleClass="p-mr-2" title="Добавить" icon="pi pi-plus"  actionListener="#{quickSearch.newZakrepCards}"
                              oncomplete="PF('dlg_zakrep').show();" process="@this" update=":form:zakrepDetail"/>
-            <p:commandButton title="Справка" value="Справка (docx)" icon="pi pi-print"
-                             styleClass="p-mr-2 ui-button-raised ui-button-success" actionListener="#{quickSearch.printZakrepSpravka}" ajax="false"/>
-            <p:commandButton title="Карточка" value="Карточка (docx)" icon="pi pi-print"
-                             styleClass="p-mr-2 ui-button-raised ui-button-success" actionListener="#{quickSearch.printZakrepCard}" ajax="false"/>
-
-            <p:commandButton title="Удалить" icon="fa fa-fw fa-trash" actionListener="#{quickSearch.deleteZakrepCards}"
+            <p:commandButton styleClass="p-mr-2" title="Удалить" icon="fa fa-fw fa-trash" actionListener="#{quickSearch.deleteZakrepCards}"
                              update=":form:tabview:zakrep_data :form:growlAvto">
-            <p:confirm header="Подтверждение" message="Удалить выбранную запись?" icon="pi pi-info-circle" update=":form:tabview:zakrep_data :form:growlAvto"/>
+                <p:confirm header="Подтверждение" message="Удалить выбранную запись?" icon="pi pi-info-circle" update=":form:tabview:zakrep_data :form:growlAvto"/>
             </p:commandButton>
+
+
+
+
         </p:column>
     </p:row>
 </p:panelGrid>

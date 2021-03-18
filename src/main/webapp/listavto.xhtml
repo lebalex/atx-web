@@ -219,7 +219,7 @@
                                                 <p:outputLabel value="Дата выдачи*"/>
                                             </p:column>
                                             <p:column>
-                                                <p:calendar id="date_texpasport" showOn="button" style="width:75px !important;"
+                                                <p:datePicker showIcon="true" size="10" id="date_texpasport" showOn="button" style="width:75px !important;"
                                                             value="#{quickSearch.selectedAvto.date_texpasport}"
                                                             locale="ru" pattern="dd.MM.yyyy"/>
                                             </p:column>
@@ -295,7 +295,7 @@
                                                 <p:outputLabel value="Дата постановки на учет*"/>
                                             </p:column>
                                             <p:column>
-                                                <p:calendar id="in_account" showOn="button"
+                                                <p:datePicker showIcon="true" size="10" id="in_account" showOn="button"
                                                             value="#{quickSearch.selectedAvto.in_account}" locale="ru"
                                                             pattern="dd.MM.yyyy"/>
                                             </p:column>
@@ -403,7 +403,7 @@
                                                         <p:outputLabel value="Дата"/>
                                                     </p:column>
                                                     <p:column>
-                                                        <p:calendar id="out_state" showOn="button"
+                                                        <p:datePicker showIcon="true" size="10" id="out_state" showOn="button"
                                                                     value="#{quickSearch.selectedAvto.out_state}"
                                                                     locale="ru" pattern="dd.MM.yyyy"/>
                                                     </p:column>
@@ -445,7 +445,7 @@
                                                         <p:outputLabel value="Дата"/>
                                                     </p:column>
                                                     <p:column>
-                                                        <p:calendar id="out_life" showOn="button"
+                                                        <p:datePicker showIcon="true" size="10" id="out_life" showOn="button"
                                                                     value="#{quickSearch.selectedAvto.out_life}"
                                                                     locale="ru" pattern="dd.MM.yyyy"/>
                                                     </p:column>
@@ -493,7 +493,7 @@
                                                         <p:outputLabel value="Дата"/>
                                                     </p:column>
                                                     <p:column>
-                                                        <p:calendar id="out_account" showOn="button"
+                                                        <p:datePicker showIcon="true" size="10" id="out_account" showOn="button"
                                                                     value="#{quickSearch.selectedAvto.out_account}"
                                                                     locale="ru" pattern="dd.MM.yyyy"/>
                                                     </p:column>
@@ -558,7 +558,7 @@
                                             <p:outputLabel value="дата"/>
                                         </p:column>
                                         <p:column>
-                                            <p:calendar id="plase_sto_date" showOn="button"
+                                            <p:datePicker showIcon="true" size="10" id="plase_sto_date" showOn="button"
                                                         value="#{quickSearch.selectedAvto.plase_sto_date}" locale="ru"
                                                         pattern="dd.MM.yyyy"/>
                                         </p:column>
@@ -576,7 +576,7 @@
                                             <p:outputLabel value="Дата страховки"/>
                                         </p:column>
                                         <p:column>
-                                            <p:calendar id="date_insur" showOn="button"
+                                            <p:datePicker showIcon="true" size="10" id="date_insur" showOn="button"
                                                         value="#{quickSearch.selectedAvto.date_insur}" locale="ru"
                                                         pattern="dd.MM.yyyy"/>
                                         </p:column>
@@ -605,7 +605,7 @@
                                             <p:outputLabel value="с"/>
                                         </p:column>
                                         <p:column>
-                                            <p:calendar id="arenda_d1" showOn="button"
+                                            <p:datePicker showIcon="true" size="10" id="arenda_d1" showOn="button"
                                                         value="#{quickSearch.selectedAvto.arenda_d1}" locale="ru"
                                                         pattern="dd.MM.yyyy"/>
                                         </p:column>
@@ -615,7 +615,7 @@
                                             <p:outputLabel value="по"/>
                                         </p:column>
                                         <p:column>
-                                            <p:calendar id="arenda_d2" showOn="button"
+                                            <p:datePicker showIcon="true" size="10" id="arenda_d2" showOn="button"
                                                         value="#{quickSearch.selectedAvto.arenda_d2}" locale="ru"
                                                         pattern="dd.MM.yyyy"/>
                                         </p:column>
@@ -715,21 +715,13 @@
                                  styleClass="panelGridAvtoCard">
                         <p:row>
                             <p:column>
-                                <p:outputLabel value="Новый номер"/>
-                            </p:column>
-                            <p:column>
-                                <p:inputText id="new_numb" value="#{quickSearch.selectedAvto.new_numb}"
+                                <p:outputLabel styleClass="p-mr-2" value="Новый номер"/>
+                                <p:inputText styleClass="p-mr-5" id="new_numb" value="#{quickSearch.selectedAvto.new_numb}"
                                              style="width:155px"/>
-                            </p:column>
-                            <p:column>
-                                <p:outputLabel value="Дата"/>
-                            </p:column>
-                            <p:column>
-                                <p:calendar id="date_change_numb" showOn="button"
+                                <p:outputLabel styleClass="p-mr-2" value="Дата"/>
+                                <p:datePicker styleClass="p-mr-5" showIcon="true" size="10" id="date_change_numb" showOn="button"
                                             value="#{quickSearch.selectedAvto.new_numb_date}" locale="ru"
                                             pattern="dd.MM.yyyy"/>
-                            </p:column>
-                            <p:column>
                                 <p:commandButton value="Заменить" actionListener="#{quickSearch.change_numb}"
                                                  update=":form:tabview:new_numb :form:tabview:hist_change_numb :form:growlAvto"/>
                             </p:column>
@@ -756,32 +748,28 @@
                     <p:panelGrid style="width:100%;margin-top: 10px" rendered="#{not empty quickSearch.selectedAvto}"
                                  styleClass="panelGridAvtoCard">
                         <p:row>
-                            <p:column>
-                                <p:outputLabel value="От кого"/>
+                            <p:column style="width: 70">
+                                <p:outputLabel styleClass="p-mr-2" value="От кого"/>
                             </p:column>
                             <p:column>
                                 <p:inputText id="from_peredacha" value="#{quickSearch.selectedAvto.from_peredacha}"
                                              style="width:225px"/>
                             </p:column>
-                            <p:column>
-                                <p:outputLabel value="Дата"/>
-                            </p:column>
-                            <p:column>
-                                <p:calendar id="date_peredacha" showOn="button"
+                            <p:column style="width: auto">
+                                <p:outputLabel styleClass="p-mr-2" value="Дата"/>
+                                <p:datePicker showIcon="true" size="10" id="date_peredacha" showOn="button"
                                             value="#{quickSearch.selectedAvto.date_peredacha}" locale="ru"
                                             pattern="dd.MM.yyyy"/>
                             </p:column>
-                            <p:column>
-                                <p:outputLabel value="№ приказа"/>
-                            </p:column>
-                            <p:column>
+                            <p:column style="width: auto">
+                                <p:outputLabel styleClass="p-mr-2" value="№ приказа"/>
                                 <p:inputText id="n_peredacha" value="#{quickSearch.selectedAvto.n_peredacha}"
                                              style="width:155px"/>
                             </p:column>
                         </p:row>
                         <p:row>
-                            <p:column>
-                                <p:outputLabel value="Куда"/>
+                            <p:column style="width: 70px">
+                                <p:outputLabel styleClass="p-mr-2" value="Куда"/>
                             </p:column>
                             <p:column>
                                 <p:inputText id="to_peredacha" value="#{quickSearch.selectedAvto.to_peredacha}"

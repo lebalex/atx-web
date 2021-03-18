@@ -1,0 +1,467 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<f:view>
+    <h:form id="formSearch">
+        <h:inputHidden value="#{report02.what}"/>
+        <p:panelGrid columnClasses="label2,value2,label2,value" style="margin-top: 30px;margin-left: 30px"
+                     styleClass="panelGridAvtoCard90">
+            <p:row rendered="#{report02.getVisibleDatePeriod()}">
+                <p:column colspan="4">
+                    <p:outputPanel>
+                        <p:outputLabel value="с "/>
+
+                        <p:datePicker size="10" value="#{report02.dr1}" showIcon="true" locale="ru"
+                                      pattern="dd.MM.yyyy"/>
+                        <p:outputLabel value="по " style="margin-left: 10px"/>
+                        <p:datePicker size="10" showIcon="true" value="#{report02.dr2}"
+                                      locale="ru" pattern="dd.MM.yyyy"/>
+                    </p:outputPanel>
+                </p:column>
+            </p:row>
+            <p:row>
+                <p:column>
+                    <p:selectBooleanCheckbox value="#{report02.on_region}" itemLabel="Гарнизон/Область">
+                        <p:ajax global="false" update="id_region"/>
+                    </p:selectBooleanCheckbox>
+                </p:column>
+                <p:column>
+                    <p:selectOneMenu id="id_region" value="#{report02.id_region}" disabled="#{!report02.on_region}"
+                                     style="width:300px">
+                        <f:selectItem itemLabel="&nbsp;" itemValue="#{0}"/>
+                        <f:selectItems value="#{quickSearch.listRegionModel}" var="entry"
+                                       itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+                    </p:selectOneMenu>
+                </p:column>
+                <p:column>
+                    <p:selectBooleanCheckbox value="#{report02.on_engine}" itemLabel="№ двигателя">
+                        <p:ajax global="false" update="n_engine"/>
+                    </p:selectBooleanCheckbox>
+                </p:column>
+                <p:column>
+                    <p:inputText id="n_engine" value="#{report02.n_engine}" disabled="#{!report02.on_engine}"
+                                 style="width:300px">
+                    </p:inputText>
+                </p:column>
+            </p:row>
+            <!-- -->
+            <p:row><p:column>
+                <p:selectBooleanCheckbox value="#{report02.on_division}" itemLabel="Управление">
+                    <p:ajax global="false" update="id_division"/>
+                </p:selectBooleanCheckbox>
+            </p:column>
+                <p:column>
+                    <p:selectOneMenu id="id_division" value="#{report02.id_division}"
+                                     disabled="#{!report02.on_division}" style="width:300px">
+                        <f:selectItem itemLabel="&nbsp;" itemValue="#{0}"/>
+                        <f:selectItems value="#{quickSearch.listDivisionModel}" var="entry"
+                                       itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+                    </p:selectOneMenu>
+                </p:column>
+                <p:column>
+                    <p:selectBooleanCheckbox value="#{report02.on_body}" itemLabel="№ кузова">
+                        <p:ajax global="false" update="n_body"/>
+                    </p:selectBooleanCheckbox>
+                </p:column>
+                <p:column>
+                    <p:inputText id="n_body" value="#{report02.n_body}" disabled="#{!report02.on_body}"
+                                 style="width:300px">
+                    </p:inputText>
+                </p:column>
+            </p:row>
+            <!-- -->
+            <p:row><p:column>
+                <p:selectBooleanCheckbox value="#{report02.on_depart}" itemLabel="Отдел">
+                    <p:ajax global="false" update="id_depart"/>
+                </p:selectBooleanCheckbox>
+            </p:column>
+                <p:column>
+                    <p:selectOneMenu id="id_depart" value="#{report02.id_depart}" disabled="#{!report02.on_depart}"
+                                     style="width:300px">
+                        <f:selectItem itemLabel="&nbsp;" itemValue="#{0}"/>
+                        <f:selectItems value="#{quickSearch.listDepartModel}" var="entry"
+                                       itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+                    </p:selectOneMenu>
+                </p:column>
+                <p:column>
+                    <p:selectBooleanCheckbox value="#{report02.on_chassis}" itemLabel="№ шасси">
+                        <p:ajax global="false" update="n_chassis"/>
+                    </p:selectBooleanCheckbox>
+                </p:column>
+                <p:column>
+                    <p:inputText id="n_chassis" value="#{report02.n_chassis}" disabled="#{!report02.on_chassis}"
+                                 style="width:300px">
+                    </p:inputText>
+                </p:column>
+            </p:row>
+            <!-- -->
+            <p:row><p:column>
+                <p:selectBooleanCheckbox value="#{report02.on_preDepart}" itemLabel="под-Отдел">
+                    <p:ajax global="false" update="id_preDepart"/>
+                </p:selectBooleanCheckbox>
+            </p:column>
+                <p:column>
+                    <p:selectOneMenu id="id_preDepart" value="#{report02.id_preDepart}"
+                                     disabled="#{!report02.on_preDepart}" style="width:300px">
+                        <f:selectItem itemLabel="&nbsp;" itemValue="#{0}"/>
+                        <f:selectItems value="#{quickSearch.listPreDepartModel}" var="entry"
+                                       itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+                    </p:selectOneMenu>
+                </p:column>
+                <p:column>
+                    <p:selectBooleanCheckbox value="#{report02.on_pts}" itemLabel="№ техпаспорта">
+                        <p:ajax global="false" update="n_pts"/>
+                    </p:selectBooleanCheckbox>
+                </p:column>
+                <p:column>
+                    <p:inputText id="n_pts" value="#{report02.n_pts}" disabled="#{!report02.on_pts}"
+                                 style="width:300px">
+                    </p:inputText>
+                </p:column>
+            </p:row>
+            <!-- -->
+            <p:row><p:column>
+                <p:selectBooleanCheckbox value="#{report02.on_serv}" itemLabel="Служба">
+                    <p:ajax global="false" update="id_serv"/>
+                </p:selectBooleanCheckbox>
+            </p:column>
+                <p:column>
+                    <p:selectOneMenu id="id_serv" value="#{report02.id_serv}" disabled="#{!report02.on_serv}"
+                                     style="width:300px">
+                        <f:selectItem itemLabel="&nbsp;" itemValue="#{0}"/>
+                        <f:selectItems value="#{quickSearch.listServModel}" var="entry"
+                                       itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+                    </p:selectOneMenu>
+                </p:column>
+                <p:column>
+                    <p:selectBooleanCheckbox value="#{report02.on_source_bay}" itemLabel="Источник приобретения">
+                        <p:ajax global="false" update="id_source_bay"/>
+                    </p:selectBooleanCheckbox>
+                </p:column>
+                <p:column>
+                    <p:selectOneMenu id="id_source_bay" value="#{report02.id_source_bay}"
+                                     disabled="#{!report02.on_source_bay}" style="width:300px">
+                        <f:selectItem itemLabel="&nbsp;" itemValue="#{0}"/>
+                        <f:selectItems value="#{quickSearch.listSourceModel}" var="entry"
+                                       itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+                    </p:selectOneMenu>
+                </p:column>
+            </p:row>
+            <!-- -->
+            <p:row><p:column>
+                <p:selectBooleanCheckbox value="#{report02.on_PreServ}" itemLabel="под-Служба">
+                    <p:ajax global="false" update="id_PreServ"/>
+                </p:selectBooleanCheckbox>
+            </p:column>
+                <p:column>
+                    <p:selectOneMenu id="id_PreServ" value="#{report02.id_PreServ}"
+                                     disabled="#{!report02.on_PreServ}" style="width:300px">
+                        <f:selectItem itemLabel="&nbsp;" itemValue="#{0}"/>
+                        <f:selectItems value="#{quickSearch.listPreServModel}" var="entry"
+                                       itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+                    </p:selectOneMenu>
+                </p:column>
+                <p:column>
+                    <p:selectBooleanCheckbox value="#{report02.on_source_fin}" itemLabel="Источник содержания" disabled="#{report02.what==12}">
+                        <p:ajax global="false" update="id_source_fin"/>
+                    </p:selectBooleanCheckbox>
+                </p:column>
+                <p:column>
+                    <p:selectOneMenu id="id_source_fin" value="#{report02.id_source_fin}"
+                                     disabled="#{!report02.on_source_fin}" style="width:300px">
+                        <f:selectItem itemLabel="&nbsp;" itemValue="#{0}"/>
+                        <f:selectItems value="#{quickSearch.listSourceModel}" var="entry"
+                                       itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+                    </p:selectOneMenu>
+                </p:column>
+            </p:row>
+            <!-- -->
+            <p:row><p:column>
+                <p:selectBooleanCheckbox value="#{report02.on_dislocation}" itemLabel="Место дислокации">
+                    <p:ajax global="false" update="id_dislocation"/>
+                </p:selectBooleanCheckbox>
+            </p:column>
+                <p:column>
+                    <p:selectOneMenu id="id_dislocation" value="#{report02.id_dislocation}"
+                                     disabled="#{!report02.on_dislocation}" style="width:300px">
+                        <f:selectItem itemLabel="&nbsp;" itemValue="#{0}"/>
+                        <f:selectItems value="#{quickSearch.listDislocationModel}" var="entry"
+                                       itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+                    </p:selectOneMenu>
+                </p:column>
+                <p:column>
+                    <p:selectBooleanCheckbox value="#{report02.on_group}" itemLabel="Группа эксплуатации">
+                        <p:ajax global="false" update="id_group"/>
+                    </p:selectBooleanCheckbox>
+                </p:column>
+                <p:column>
+                    <p:selectOneMenu id="id_group" value="#{report02.id_group}" disabled="#{!report02.on_group}"
+                                     style="width:300px">
+                        <f:selectItem itemLabel="&nbsp;" itemValue="#{0}"/>
+                        <f:selectItems value="#{quickSearch.listGroupModel}" var="entry"
+                                       itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+                    </p:selectOneMenu>
+                </p:column>
+            </p:row>
+            <!-- -->
+            <p:row><p:column>
+                <p:selectBooleanCheckbox value="#{report02.on_mark}" itemLabel="Марка">
+                    <p:ajax global="false" update="id_mark"/>
+                </p:selectBooleanCheckbox>
+            </p:column>
+                <p:column>
+                    <p:selectOneMenu id="id_mark" value="#{report02.id_mark}" disabled="#{!report02.on_mark}"
+                                     style="width:300px">
+                        <p:ajax global="false" listener="#{quickSearch.handleMarkSearchChange(report02.id_mark)}"
+                                update="formSearch:id_model"/>
+                        <f:selectItem itemLabel="&nbsp;" itemValue="#{0}"/>
+                        <f:selectItems value="#{quickSearch.listMarkAvtModel}" var="entry"
+                                       itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+                    </p:selectOneMenu>
+                </p:column>
+                <p:column>
+                    <p:selectBooleanCheckbox value="#{report02.on_markGsm}" itemLabel="Вид топлива">
+                        <p:ajax global="false" update="id_markGsm"/>
+                    </p:selectBooleanCheckbox>
+                </p:column>
+                <p:column>
+                    <p:selectOneMenu id="id_markGsm" value="#{report02.id_markGsm}"
+                                     disabled="#{!report02.on_markGsm}" style="width:300px">
+                        <f:selectItem itemLabel="&nbsp;" itemValue="#{0}"/>
+                        <f:selectItems value="#{quickSearch.listMarkGsmModel}" var="entry"
+                                       itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+                    </p:selectOneMenu>
+                </p:column>
+            </p:row>
+            <!-- -->
+            <p:row><p:column>
+                <p:selectBooleanCheckbox value="#{report02.on_model}" itemLabel="Модель">
+                    <p:ajax global="false" update="id_model"/>
+                </p:selectBooleanCheckbox>
+            </p:column>
+                <p:column>
+                    <p:selectOneMenu id="id_model" value="#{report02.id_model}" disabled="#{!report02.on_model}"
+                                     style="width:300px">
+                        <f:selectItem itemLabel="&nbsp;" itemValue="#{0}"/>
+                        <f:selectItems value="#{quickSearch.listModelAvtModel}" var="entry"
+                                       itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+                    </p:selectOneMenu>
+                </p:column>
+                <p:column>
+                    <p:selectBooleanCheckbox value="#{report02.on_remont}" itemLabel="Вид ремонта">
+                        <p:ajax global="false" update="id_remont"/>
+                    </p:selectBooleanCheckbox>
+                </p:column>
+                <p:column>
+                    <p:selectOneMenu id="id_remont" value="#{report02.id_remont}"
+                                     disabled="#{!report02.on_remont}" style="width:300px">
+                        <f:selectItem itemLabel="&nbsp;" itemValue="#{0}"/>
+                        <f:selectItems value="#{quickSearch.listVidRemontModel}" var="entry"
+                                       itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+                    </p:selectOneMenu>
+                </p:column>
+            </p:row>
+            <!-- -->
+            <p:row><p:column>
+                <p:selectBooleanCheckbox value="#{report02.on_numb_1}" itemLabel="Гос № (1)" disabled="#{report02.what==11}">
+                    <p:ajax global="false" update="numb_1"/>
+                </p:selectBooleanCheckbox>
+            </p:column>
+                <p:column>
+                    <p:inputText id="numb_1" value="#{report02.numb_1}" disabled="#{!report02.on_numb_1}"
+                                 style="width:300px">
+                    </p:inputText>
+                </p:column>
+                <p:column>
+                    <p:selectBooleanCheckbox value="#{report02.on_account}" itemLabel="Дата постановки на учет">
+                        <p:ajax global="false" update="inAc1 inAc2"/>
+                    </p:selectBooleanCheckbox>
+                </p:column>
+                <p:column>
+                    <p:outputLabel value="с "/>
+                    <p:datePicker showIcon="true" size="10" id="inAc1" value="#{report02.inAc1}"
+                                  disabled="#{!report02.on_account}"
+                                  locale="ru" pattern="dd.MM.yyyy"/>
+                    <p:outputLabel value="по " style="margin-left: 10px"/>
+                    <p:datePicker showIcon="true" size="10" id="inAc2" value="#{report02.inAc2}"
+                                  disabled="#{!report02.on_account}"
+                                  locale="ru" pattern="dd.MM.yyyy"/>
+                </p:column>
+
+            </p:row>
+            <!-- -->
+            <p:row><p:column>
+                <p:selectBooleanCheckbox value="#{report02.on_numb_2}" itemLabel="Гос № (2)">
+                    <p:ajax global="false" update="numb_2"/>
+                </p:selectBooleanCheckbox>
+            </p:column>
+                <p:column>
+                    <p:inputText id="numb_2" value="#{report02.numb_2}" disabled="#{!report02.on_numb_2}"
+                                 style="width:300px">
+                    </p:inputText>
+                </p:column>
+                <p:column rowspan="4" colspan="2">
+
+
+                    <p:panelGrid columns="1">
+                        <p:selectBooleanCheckbox value="#{report02.on_stateOut}" itemLabel="#{report02.getVisibleStateOutTitle()}" rendered="#{report02.getVisibleStateOut()}"/>
+                        <p:selectBooleanCheckbox value="#{report02.on_stateOutAc}" itemLabel="Снятые с учета" rendered="#{report02.getVisibleStateOutAc()}"/>
+                        <p:selectBooleanCheckbox value="#{report02.on_stateOutLife}" itemLabel="Списанные" rendered="#{report02.getVisibleStateOutLife()}"/>
+                    </p:panelGrid>
+
+
+                </p:column>
+
+            </p:row>
+            <!-- -->
+            <p:row>
+                <p:column>
+                    <p:selectBooleanCheckbox value="#{report02.on_m_year}" itemLabel="Год выпуска">
+                        <p:ajax global="false" update="m_year1 m_year2"/>
+                    </p:selectBooleanCheckbox>
+                </p:column>
+                <p:column colspan="3">
+                    <p:outputLabel value="с "/>
+                    <p:inputText id="m_year1" value="#{report02.m_year1}" placeholder="2000"
+                                 disabled="#{!report02.on_m_year}" style="width:50px">
+                        <p:keyFilter mask="num"/>
+                    </p:inputText>
+                    <p:outputLabel value="по " style="margin-left: 10px"/>
+                    <p:inputText id="m_year2" value="#{report02.m_year2}" placeholder="2010"
+                                 disabled="#{!report02.on_m_year}" style="width:50px">
+                        <p:keyFilter mask="num"/>
+                    </p:inputText>
+                </p:column>
+            </p:row>
+
+            <!-- -->
+            <p:row><p:column>
+                <p:selectBooleanCheckbox value="#{report02.on_vin}" itemLabel="VIN">
+                    <p:ajax global="false" update="vin"/>
+                </p:selectBooleanCheckbox>
+            </p:column>
+                <p:column colspan="3">
+                    <p:inputText id="vin" value="#{report02.vin}" disabled="#{!report02.on_vin}"
+                                 style="width:300px">
+                    </p:inputText>
+                </p:column>
+            </p:row>
+            <!-- -->
+            <p:row>
+                <p:column>
+                    <p:selectBooleanCheckbox value="#{report02.on_typetc}" itemLabel="Категория ТС">
+                        <p:ajax global="false" update="id_typetc"/>
+                    </p:selectBooleanCheckbox>
+                </p:column>
+                <p:column>
+                    <p:selectOneMenu id="id_typetc" value="#{report02.id_typetc}" disabled="#{!report02.on_typetc}"
+                                     style="width:300px">
+                        <f:selectItem itemLabel="&nbsp;" itemValue="#{0}"/>
+                        <f:selectItems value="#{quickSearch.listTypeTCModel}" var="entry"
+                                       itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+                    </p:selectOneMenu>
+                </p:column>
+            </p:row>
+            <!-- -->
+            <p:row>
+                <p:column rendered="#{report02.getVisibleSortFio()}">
+                    <p:selectBooleanCheckbox value="#{report02.on_search_fio}" itemLabel="ФИО">
+                        <p:ajax global="false" update="id_search_fio"/>
+                    </p:selectBooleanCheckbox>
+                </p:column>
+                <p:column rendered="#{report02.getVisibleSortFio()}">
+                    <p:inputText id="id_search_fio" value="#{report02.search_fio}" disabled="#{!report02.on_search_fio}"
+                                 style="width:300px"/>
+                </p:column>
+                <p:column colspan="2">
+                    <p:selectBooleanCheckbox value="#{report02.on_notAtx}" itemLabel="Не учет АТХ"/>
+                </p:column>
+            </p:row>
+            <!-- -->
+            <p:row>
+                <p:column colspan="2" rendered="#{report02.getVisibleSortFio()}">
+                    <p:selectBooleanCheckbox value="#{report02.on_sort_fio}" itemLabel="сортировать по ФИО"/>
+                </p:column>
+                <p:column rowspan="4" rendered="#{report02.getVisibleVinoven()}">
+                    <p:outputLabel value="Виновность"/>
+                    <p:selectOneRadio id="customRadioVinoven" value="#{report02.vinoven}" layout="grid" columns="1">
+                        <f:selectItem itemLabel="не учитывать" itemValue="0"/>
+                        <f:selectItem itemLabel="виновен" itemValue="1"/>
+                        <f:selectItem itemLabel="не виновен" itemValue="2"/>
+                    </p:selectOneRadio>
+                </p:column>
+                <p:column rowspan="4" rendered="#{report02.getVisibleVinoven()}">
+                    <p:outputLabel value="Пострадавшие"/>
+                    <p:selectOneRadio id="customRadioPostradali" value="#{report02.postradali}" layout="grid" columns="1">
+                        <f:selectItem itemLabel="не учитывать" itemValue="0"/>
+                        <f:selectItem itemLabel="есть пострадавшие" itemValue="1"/>
+                        <f:selectItem itemLabel="нет пострадавших" itemValue="2"/>
+                    </p:selectOneRadio>
+                </p:column>
+            </p:row>
+            <!-- -->
+            <p:row>
+                <p:column colspan="2" rendered="#{report02.getVisibleSortFio()}">
+                    <p:selectBooleanCheckbox value="#{report02.on_notAtx}" itemLabel="Группировать отчет по отделам"/>
+                </p:column>
+            </p:row>
+            <!-- -->
+            <p:row>
+                <p:column rendered="#{report02.getVisibleSortFio()}">
+                    <p:outputLabel value="Кол-во дней"/>
+                </p:column>
+                <p:column rendered="#{report02.getVisibleSortFio()}">
+                    <p:inputText value="#{report02.countDay}" style="width:300px"/>
+                </p:column>
+            </p:row>
+            <!-- -->
+            <p:row>
+                <p:column rendered="#{report02.getVisibleSortFio()}">
+                    <p:selectBooleanCheckbox value="#{report02.on_search_place}" itemLabel="Фильтр по стоянке">
+                        <p:ajax global="false" update="search_place"/>
+                    </p:selectBooleanCheckbox>
+                </p:column>
+                <p:column rendered="#{report02.getVisibleSortFio()}">
+                    <p:inputText id="search_place" value="#{report02.search_place}" disabled="#{!report02.on_search_place}"
+                                 style="width:300px"/>
+                </p:column>
+            </p:row>
+            <!-- -->
+            <p:row>
+                <p:column colspan="2" rendered="#{report02.getVisibleOutSpisan()}">
+                    <p:selectBooleanCheckbox value="#{report02.on_includeOutSpisan}" itemLabel="включая в Отстое и Списанные">
+                    </p:selectBooleanCheckbox>
+                </p:column>
+                <p:column rendered="#{report02.getVisibleSortFio()}">
+                    <p:selectBooleanCheckbox value="#{report02.on_remontCTO}" itemLabel="Ремонт в СТО">
+                        <p:ajax global="false" update="id_remontCTO"/>
+                    </p:selectBooleanCheckbox>
+                </p:column>
+                <p:column rendered="#{report02.getVisibleSortFio()}">
+                    <p:selectOneMenu id="id_remontCTO" value="#{report02.id_remontCTO}" disabled="#{!report02.on_remontCTO}"
+                                     style="width:300px">
+                        <f:selectItem itemLabel="&nbsp;" itemValue="#{0}"/>
+                        <f:selectItems value="#{quickSearch.listPlaceRemontModel}" var="entry"
+                                       itemLabel="#{entry.name}" itemValue="#{entry.id}"/>
+                    </p:selectOneMenu>
+                </p:column>
+            </p:row>
+            <!-- -->
+            <p:row>
+                <p:column>
+                    <p:commandButton value="Сформировать" icon="pi pi-search" actionListener="#{report02.find}"
+                                     update=":main-content"/>
+                </p:column>
+            </p:row>
+
+        </p:panelGrid>
+
+    </h:form>
+
+</f:view>
+</html>

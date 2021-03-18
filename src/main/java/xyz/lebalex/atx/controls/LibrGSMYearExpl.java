@@ -106,6 +106,7 @@ public class LibrGSMYearExpl extends AtxBase implements Serializable {
     }
 
     public void onDelete(int num) {
+        if (atxLogin.isSave(Roles.GSM_NSI)) {
         Iterator<LibrGSMYearExplModel> i = this.listYearExplModel.iterator();
         while (i.hasNext()) {
             LibrGSMYearExplModel agr = i.next();
@@ -113,6 +114,9 @@ public class LibrGSMYearExpl extends AtxBase implements Serializable {
                 //saveLibr(this.what, agr, 1);
                 i.remove();
             }
+        }
+        } else {
+            viewMessage("Ошибка", Txt.ACCESS_ERROR);
         }
     }
 

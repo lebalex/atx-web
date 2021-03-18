@@ -25,6 +25,7 @@ import javax.faces.event.ActionEvent;
 import com.google.common.hash.Hashing;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import xyz.lebalex.atx.consts.Roles;
 import xyz.lebalex.atx.consts.Txt;
 import xyz.lebalex.atx.utils.FacesUtils;
 
@@ -105,6 +106,17 @@ public class AtxLogin extends AtxBase implements Serializable{
             param = (String) e.getComponent().getAttributes().get("myParam");
         }*/
         //logger.log(Level.INFO, this.password);
+        if(this.username.equalsIgnoreCase("user"))
+        {
+            this.user_id = 0;
+            this.username = "user";
+            this.fio = "Пользователь";
+            this.roles.add(Roles.USER);
+            this.region_id = 0;
+            this.depart_id = 0;
+            FacesUtils.Redirect("index.jsf");
+            return;
+        }
         FacesContext ctx = FacesContext.getCurrentInstance();
         String myConstantValue =
                 ctx.getExternalContext().getInitParameter("javax.faces.PROJECT_STAGE");

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<f:view>
+
+    <h:form id="form">
+        <p:growl id="growlAvto" showDetail="true" sticky="false" life="5000"/>
+
+        <p:contextMenu for="data_avto" id="contextMenu">
+            <p:menuitem value="в Excel с форматирование" ajax="false" actionListener="#{reportShin.excelReport}"/>
+            <p:menuitem value="в Excel" ajax="false" rendered="true" >
+                <p:dataExporter type="xls" target="data_avto" fileName="reportshin"/>
+            </p:menuitem>
+
+        </p:contextMenu>
+
+        <p:dataTable id="data_avto" var="avto" value="#{reportShin.listReportModel}" scrollable="true" scrollHeight="650">
+            <f:facet name="header">
+                <h:outputText value="#{reportShin.caption}"/>
+            </f:facet>
+            <p:headerRow  groupBy="#{avto.name} #{avto.expr1} #{avto.expr2} #{avto.expr3}">
+
+                <p:column colspan="5">
+                    <!--div class="p-d-inline-flex p-ai-center" style="vertical-align: middle"-->
+                    <h:outputText styleClass="p-ml-2 p-mt-2" value="#{avto.name}"/>
+                    <p:panelGrid columns="2" styleClass="panelGridAvtoCard50" columnClasses="label2,value3">
+                        <h:outputText style="font-weight: normal" styleClass="p-ml-2" value="Управление: "/>
+                        <h:outputText styleClass="p-ml-2" value="#{avto.expr1}"/>
+                        <h:outputText style="font-weight: normal" styleClass="p-ml-2" value="Отдел: "/>
+                        <h:outputText styleClass="p-ml-2" value="#{avto.expr2}"/>
+                        <h:outputText style="font-weight: normal" styleClass="p-ml-2" value="Под-Отдел: "/>
+                        <h:outputText styleClass="p-ml-2" value="#{avto.expr3}"/>
+                    </p:panelGrid>
+                    <!--/div-->
+                </p:column>
+            </p:headerRow>
+
+
+            <p:column headerText="Марка" width="200" groupRow="true">
+                <p:panelGrid columns="2" styleClass="panelGridAvtoCard90r" columnClasses="label3,value_r">
+                    <h:outputText value=" #{avto.mark}"/>
+                    <h:outputText styleClass="p-ml-3" value="#{avto.numb_1}"/>
+                </p:panelGrid>
+            </p:column>
+
+            <p:column headerText="Радиус" width="100">
+                <h:outputText value="#{avto.name_r}"/>
+            </p:column>
+            <p:column headerText="Размер" width="100">
+                <h:outputText value="#{avto.razmer}"/>
+            </p:column>
+            <p:column headerText="Конструкция" width="100">
+                <h:outputText value="#{avto.name_k}"/>
+            </p:column>
+            <p:column headerText="Тип" width="100">
+                <h:outputText value="#{avto.name_t}"/>
+            </p:column>
+            <p:column headerText="Серийный №" width="100">
+                <h:outputText value="#{avto.number}"/>
+            </p:column>
+            <p:column headerText="Пробег" width="100">
+                <h:outputText value="#{avto.probeg}">
+                    <f:convertNumber type="number" pattern="#"/></h:outputText>
+            </p:column>
+            <p:column headerText="Лимит" width="100">
+                <h:outputText value="#{avto.lim_value}">
+                    <f:convertNumber type="number" pattern="#"/></h:outputText>
+            </p:column>
+
+
+
+
+            <p:summaryRow>
+                <p:column colspan="2" style="text-align:left">
+                    <p:panelGrid columns="2" styleClass="panelGridAvtoCard90r" columnClasses="label3,value_r">
+                        <h:outputText value="Кол-во автотранспорта"/>
+                        <h:outputText value="#{reportShin.getTotalCount(avto.groupField)}" styleClass="p-ml-3">
+                            <f:convertNumber type="number" pattern="#"/></h:outputText>
+                    </p:panelGrid>
+                </p:column>
+
+
+            </p:summaryRow>
+
+            <p:columnGroup type="footer">
+                <p:row>
+                    <p:column style="text-align:left" footerText="Кол-во автотранспорта" />
+                    <p:column style="text-align:left">
+                        <f:facet name="footer">
+                            <h:outputText value="#{reportShin.getTotalCountAll()}">
+                                <f:convertNumber type="number" pattern="#"/></h:outputText>
+                        </f:facet>
+                    </p:column>
+                    <p:column style="text-align:left" footerText=""></p:column>
+                    <p:column style="text-align:left" footerText=""></p:column>
+                    <p:column style="text-align:left" footerText=""></p:column>
+                    <p:column style="text-align:left" footerText=""></p:column>
+                    <p:column style="text-align:left" footerText=""></p:column>
+                    <p:column style="text-align:left" footerText=""></p:column>
+
+                </p:row>
+            </p:columnGroup>
+
+
+
+
+
+        </p:dataTable>
+    </h:form>
+</f:view>
+</html>

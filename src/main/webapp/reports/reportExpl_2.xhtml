@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<f:view>
+
+    <h:form id="form">
+        <p:growl id="growlAvto" showDetail="true" sticky="false" life="5000"/>
+
+        <p:contextMenu for="data_avto" id="contextMenu">
+            <p:menuitem value="в Excel с форматирование" ajax="false" actionListener="#{reportExpl_2.excelReport}"/>
+            <p:menuitem value="в Excel" ajax="false" rendered="true" >
+                <p:dataExporter type="xls" target="data_avto" fileName="explcard01"/>
+            </p:menuitem>
+
+        </p:contextMenu>
+
+
+
+
+
+        <p:dataTable id="data_avto" var="avto" value="#{reportExpl_2.listReportExplModel}" scrollable="true" scrollHeight="650" scrollWidth="100%">
+
+            <p:headerRow  groupBy="#{avto.name} #{avto.expr2} #{avto.expr3} #{avto.expr4}">
+                <p:column colspan="19">
+                     <p:panelGrid columns="1" styleClass="panelGridAvtoCard50 p-mt-5" columnClasses="label2,value3">
+                        <h:outputText styleClass="p-ml-2" value="#{avto.name} #{avto.expr2} #{avto.expr3}"/>
+                        <h:outputText styleClass="p-ml-2" value="#{avto.expr4}"/>
+                         <h:outputText styleClass="p-ml-2" value="#{avto.expr6}"/>
+                    </p:panelGrid>
+                </p:column>
+            </p:headerRow>
+
+            <p:columnGroup type="header">
+                <p:row>
+                    <p:column rowspan="2" headerText="№"/>
+                    <p:column rowspan="2" headerText="Служба"/>
+                    <p:column rowspan="2" headerText="Марка автомобиля"/>
+                    <p:column rowspan="2" headerText="гос №"/>
+                    <p:column colspan="4" headerText="Машино-дни"/>
+                    <p:column rowspan="2" headerText="Часы в наряде"/>
+                    <p:column colspan="5" headerText="Расход топлива в литрах"/>
+                    <p:column colspan="2" headerText="Пробег"/>
+                    <p:column colspan="3" headerText="Тех. обсл-е"/>
+                    <p:column rowspan="2" headerText="Пок. спид."/>
+                </p:row>
+                <p:row>
+                    <p:column headerText="спис"/>
+                    <p:column headerText="испр"/>
+                    <p:column headerText="экспл"/>
+                    <p:column headerText="рем"/>
+
+                    <p:column headerText="Топл полож. норм"/>
+                    <p:column headerText="Топл израсх факт"/>
+                    <p:column headerText="Топл ост. нач"/>
+                    <p:column headerText="Топл выд."/>
+                    <p:column headerText="Топл ост. кон."/>
+                    <p:column headerText="Норма экспл."/>
+                    <p:column headerText="Факт пробег"/>
+                    <p:column headerText="Выполн ТО1"/>
+                    <p:column headerText="Выполн ТО2"/>
+                    <p:column headerText="Выполн КР"/>
+                </p:row>
+
+            </p:columnGroup>
+
+
+            <p:column width="30">
+                <h:outputText value="#{reportExpl_2.getIdx(avto.groupField)}"/>
+            </p:column>
+
+            <p:column width="100">
+                <h:outputText value=" #{avto.expr5}"/>
+            </p:column>
+            <p:column  width="100">
+                <h:outputText value=" #{avto.mark}"/>
+            </p:column>
+            <p:column  width="100">
+                <h:outputText value=" #{avto.numb_1}"/>
+            </p:column>
+
+            <p:column width="50">
+                <h:outputText value="#{avto.d_out}">
+                    <f:convertNumber type="number" pattern="#"/></h:outputText>
+            </p:column>
+            <p:column width="50">
+                <h:outputText value="#{avto.d_g}">
+                    <f:convertNumber type="number" pattern="#"/></h:outputText>
+            </p:column>
+            <p:column width="50">
+                <h:outputText value="#{avto.d_oper}">
+                    <f:convertNumber type="number" pattern="#"/></h:outputText>
+            </p:column>
+            <p:column width="50">
+                <h:outputText value="#{avto.d_rem}">
+                    <f:convertNumber type="number" pattern="#"/></h:outputText>
+            </p:column>
+            <p:column width="50">
+                <h:outputText value="#{avto.h_or}">
+                    <f:convertNumber type="number" pattern="#"/></h:outputText>
+            </p:column>
+            <p:column width="50">
+                <h:outputText value="#{avto.gsm_nor}">
+                    <f:convertNumber type="number" pattern="#.##"/></h:outputText>
+            </p:column>
+            <p:column width="50">
+                <h:outputText value="#{avto.gsm_out}">
+                    <f:convertNumber type="number" pattern="#.##"/></h:outputText>
+            </p:column>
+            <p:column width="50">
+                <h:outputText value="#{avto.gsm_b}">
+                    <f:convertNumber type="number" pattern="#.##"/></h:outputText>
+            </p:column>
+            <p:column width="50">
+                <h:outputText value="#{avto.gsm_g}">
+                    <f:convertNumber type="number" pattern="#.##"/></h:outputText>
+            </p:column>
+            <p:column  width="50">
+                <h:outputText value="#{avto.gsm_end}">
+                    <f:convertNumber type="number" pattern="#.##"/></h:outputText>
+            </p:column>
+            <p:column  width="50">
+                <h:outputText value="#{avto.n_run}">
+                    <f:convertNumber type="number" pattern="#.##"/></h:outputText>
+            </p:column>
+            <p:column  width="50">
+                <h:outputText value="#{avto.f_run}">
+                    <f:convertNumber type="number" pattern="#.##"/></h:outputText>
+            </p:column>
+            <p:column  width="50">
+                <h:outputText value="#{avto.to1}">
+                    <f:convertNumber type="number" pattern="#.##"/></h:outputText>
+            </p:column>
+            <p:column  width="50">
+                <h:outputText value="#{avto.to2}">
+                    <f:convertNumber type="number" pattern="#.##"/></h:outputText>
+            </p:column>
+            <p:column  width="50">
+                <h:outputText value="#{avto.kp}">
+                    <f:convertNumber type="number" pattern="#.##"/></h:outputText>
+            </p:column>
+            <p:column  width="50">
+                <h:outputText value="#{avto.speed_end}">
+                    <f:convertNumber type="number" pattern="#"/></h:outputText>
+            </p:column>
+
+
+
+
+            <p:summaryRow>
+                <p:column>
+                    <h:outputText value=""/>
+                </p:column>
+                <p:column style="text-align:left">
+                    <h:outputText value="Итого"/>
+                </p:column>
+                <p:column>
+                    <h:outputText value=""/>
+                </p:column>
+                <p:column>
+                    <h:outputText value=""/>
+                </p:column>
+                <p:column>
+                    <h:outputText value="#{reportExpl_2.getTotalSum(avto.groupField,1)}">
+                        <f:convertNumber type="number" pattern="#"/></h:outputText>
+                </p:column>
+                <p:column>
+                    <h:outputText value="#{reportExpl_2.getTotalSum(avto.groupField,2)}">
+                        <f:convertNumber type="number" pattern="#"/></h:outputText>
+                </p:column>
+                <p:column>
+                    <h:outputText value="#{reportExpl_2.getTotalSum(avto.groupField,3)}">
+                        <f:convertNumber type="number" pattern="#"/></h:outputText>
+                </p:column>
+                <p:column>
+                    <h:outputText value="#{reportExpl_2.getTotalSum(avto.groupField,4)}">
+                        <f:convertNumber type="number" pattern="#"/></h:outputText>
+                </p:column>
+                <p:column>
+                    <h:outputText value="#{reportExpl_2.getTotalSum(avto.groupField,5)}">
+                        <f:convertNumber type="number" pattern="#"/></h:outputText>
+                </p:column>
+                <p:column>
+                    <h:outputText value="#{reportExpl_2.getTotalSum(avto.groupField,6)}">
+                        <f:convertNumber type="number" pattern="#.##"/></h:outputText>
+                </p:column>
+                <p:column>
+                    <h:outputText value="#{reportExpl_2.getTotalSum(avto.groupField,7)}">
+                        <f:convertNumber type="number" pattern="#.##"/></h:outputText>
+                </p:column>
+                <p:column>
+                    <h:outputText value="#{reportExpl_2.getTotalSum(avto.groupField,8)}">
+                        <f:convertNumber type="number" pattern="#.##"/></h:outputText>
+                </p:column>
+                <p:column>
+                    <h:outputText value="#{reportExpl_2.getTotalSum(avto.groupField,9)}">
+                        <f:convertNumber type="number" pattern="#.##"/></h:outputText>
+                </p:column>
+                <p:column>
+                    <h:outputText value="#{reportExpl_2.getTotalSum(avto.groupField,10)}">
+                        <f:convertNumber type="number" pattern="#.##"/></h:outputText>
+                </p:column>
+                <p:column>
+                    <h:outputText value="#{reportExpl_2.getTotalSum(avto.groupField,11)}">
+                        <f:convertNumber type="number" pattern="#.##"/></h:outputText>
+                </p:column>
+                <p:column>
+                    <h:outputText value="#{reportExpl_2.getTotalSum(avto.groupField,12)}">
+                        <f:convertNumber type="number" pattern="#.##"/></h:outputText>
+                </p:column>
+                <p:column>
+                    <h:outputText value="#{reportExpl_2.getTotalSum(avto.groupField,13)}">
+                        <f:convertNumber type="number" pattern="#.##"/></h:outputText>
+                </p:column>
+                <p:column>
+                    <h:outputText value="#{reportExpl_2.getTotalSum(avto.groupField,14)}">
+                        <f:convertNumber type="number" pattern="#.##"/></h:outputText>
+                </p:column>
+                <p:column>
+                    <h:outputText value="#{reportExpl_2.getTotalSum(avto.groupField,15)}">
+                        <f:convertNumber type="number" pattern="#.##"/></h:outputText>
+                </p:column>
+                <p:column>
+                    <h:outputText value=""/>
+                </p:column>
+
+            </p:summaryRow>
+
+            <p:columnGroup type="footer">
+                <p:row>
+                    <p:column style="text-align:left;" footerText="" />
+                    <p:column style="text-align:left;" footerText="Итого" />
+                    <p:column style="text-align:left;" footerText="" />
+                    <p:column style="text-align:left;" footerText="" />
+
+                    <p:column><f:facet name="footer">
+                        <h:outputText value="#{reportExpl_2.getAllSum(1)}">
+                            <f:convertNumber type="number" pattern="#"/></h:outputText></f:facet>
+                    </p:column>
+                    <p:column><f:facet name="footer">
+                        <h:outputText value="#{reportExpl_2.getAllSum(2)}">
+                            <f:convertNumber type="number" pattern="#"/></h:outputText></f:facet>
+                    </p:column>
+                    <p:column><f:facet name="footer">
+                        <h:outputText value="#{reportExpl_2.getAllSum(3)}">
+                            <f:convertNumber type="number" pattern="#"/></h:outputText></f:facet>
+                    </p:column>
+                    <p:column><f:facet name="footer">
+                        <h:outputText value="#{reportExpl_2.getAllSum(4)}">
+                            <f:convertNumber type="number" pattern="#"/></h:outputText></f:facet>
+                    </p:column>
+                    <p:column><f:facet name="footer">
+                        <h:outputText value="#{reportExpl_2.getAllSum(5)}">
+                            <f:convertNumber type="number" pattern="#"/></h:outputText></f:facet>
+                    </p:column>
+                    <p:column><f:facet name="footer">
+                        <h:outputText value="#{reportExpl_2.getAllSum(6)}">
+                            <f:convertNumber type="number" pattern="#.##"/></h:outputText></f:facet>
+                    </p:column>
+                    <p:column><f:facet name="footer">
+                        <h:outputText value="#{reportExpl_2.getAllSum(7)}">
+                            <f:convertNumber type="number" pattern="#.##"/></h:outputText></f:facet>
+                    </p:column>
+                    <p:column><f:facet name="footer">
+                        <h:outputText value="#{reportExpl_2.getAllSum(8)}">
+                            <f:convertNumber type="number" pattern="#.##"/></h:outputText></f:facet>
+                    </p:column>
+                    <p:column><f:facet name="footer">
+                        <h:outputText value="#{reportExpl_2.getAllSum(9)}">
+                            <f:convertNumber type="number" pattern="#.##"/></h:outputText></f:facet>
+                    </p:column>
+                    <p:column><f:facet name="footer">
+                        <h:outputText value="#{reportExpl_2.getAllSum(10)}">
+                            <f:convertNumber type="number" pattern="#.##"/></h:outputText></f:facet>
+                    </p:column>
+                    <p:column><f:facet name="footer">
+                        <h:outputText value="#{reportExpl_2.getAllSum(11)}">
+                            <f:convertNumber type="number" pattern="#.##"/></h:outputText></f:facet>
+                    </p:column>
+                    <p:column><f:facet name="footer">
+                        <h:outputText value="#{reportExpl_2.getAllSum(12)}">
+                            <f:convertNumber type="number" pattern="#.##"/></h:outputText></f:facet>
+                    </p:column>
+                    <p:column><f:facet name="footer">
+                        <h:outputText value="#{reportExpl_2.getAllSum(13)}">
+                            <f:convertNumber type="number" pattern="#.##"/></h:outputText></f:facet>
+                    </p:column>
+                    <p:column><f:facet name="footer">
+                        <h:outputText value="#{reportExpl_2.getAllSum(14)}">
+                            <f:convertNumber type="number" pattern="#.##"/></h:outputText></f:facet>
+                    </p:column>
+                    <p:column><f:facet name="footer">
+                        <h:outputText value="#{reportExpl_2.getAllSum(15)}">
+                            <f:convertNumber type="number" pattern="#.##"/></h:outputText></f:facet>
+                    </p:column>
+                    <p:column style="text-align:left;" footerText="" />
+
+                </p:row>
+            </p:columnGroup>
+
+
+
+        </p:dataTable>
+    </h:form>
+</f:view>
+</html>

@@ -16,13 +16,13 @@
 
         <p:row>
             <p:column><p:outputLabel value="Дата закрепления*"/></p:column>
-            <p:column><p:calendar showOn="button" value="#{quickSearch.selectedAvto.selectedZakrep.date_begin}"
+            <p:column><p:datePicker showIcon="true" size="10" showOn="button" value="#{quickSearch.selectedAvto.selectedZakrep.date_begin}"
                                   locale="ru" pattern="dd.MM.yyyy"/></p:column>
             <p:column colspan="2"><p:selectBooleanCheckbox itemLabel="Временно закрепленный" value="#{quickSearch.selectedAvto.selectedZakrep.temp}"/> </p:column>
         </p:row>
         <p:row>
             <p:column><p:outputLabel value="Дата окончания закрепления"/></p:column>
-            <p:column colspan="3"><p:calendar showOn="button" value="#{quickSearch.selectedAvto.selectedZakrep.date_end}"
+            <p:column colspan="3"><p:datePicker showIcon="true" size="10" showOn="button" value="#{quickSearch.selectedAvto.selectedZakrep.date_end}"
                                   locale="ru" pattern="dd.MM.yyyy"/></p:column>
         </p:row>
         <p:row>
@@ -37,10 +37,10 @@
         </p:row>
         <p:row>
             <p:column><p:outputLabel value="Дата приказа о закреплении*"/></p:column>
-            <p:column><p:calendar showOn="button" value="#{quickSearch.selectedAvto.selectedZakrep.date_prikaz}"
+            <p:column><p:datePicker showIcon="true" size="10" showOn="button" value="#{quickSearch.selectedAvto.selectedZakrep.date_prikaz}"
                                   locale="ru" pattern="dd.MM.yyyy"/></p:column>
             <p:column><p:outputLabel value="Дата приказа об откреплении*"/></p:column>
-            <p:column><p:calendar showOn="button" value="#{quickSearch.selectedAvto.selectedZakrep.date_out_prikaz}"
+            <p:column><p:datePicker showIcon="true" size="10" showOn="button" value="#{quickSearch.selectedAvto.selectedZakrep.date_out_prikaz}"
                                   locale="ru" pattern="dd.MM.yyyy"/></p:column>
         </p:row>
         <p:row>
@@ -85,7 +85,7 @@
         </p:row>
         <p:row>
             <p:column><p:outputLabel value="Мед.справка"/></p:column>
-            <p:column colspan="3"><p:calendar showOn="button" value="#{quickSearch.selectedAvto.selectedZakrep.med}"
+            <p:column colspan="3"><p:datePicker showIcon="true" size="10" showOn="button" value="#{quickSearch.selectedAvto.selectedZakrep.med}"
                                   locale="ru" pattern="dd.MM.yyyy"/></p:column>
         </p:row>
         <p:row>

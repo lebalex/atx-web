@@ -35,9 +35,10 @@ public class InventarModel implements Serializable {
     private String	volumeDVC;
     private String	typeDVC;
     private String	ManufactureTC;
+    private String groupField;
 
 
-    public InventarModel(String name, String expr1, String expr2, String expr3, String mark, String numb_1, String m_year, String color, String vin, String n_engine, String n_body, String n_chassis, String expr5, String expr6, String expr6p, String expr7, String expr8, String expr8d, String expr9, String expr10, String expr11, String expr4, float speed_end, String typetc, String AD1, String AD2, int id, String explGroup, String modelDVC, String volumeDVC, String typeDVC, String	ManufactureTC) {
+    public InventarModel(String name, String expr1, String expr2, String expr3, String mark, String numb_1, String m_year, String color, String vin, String n_engine, String n_body, String n_chassis, String expr5, String expr6, String expr6p, String expr7, String expr8, String expr8d, String expr9, String expr10, String expr11, String expr4, float speed_end, String typetc, String AD1, String AD2, int id, String explGroup, String modelDVC, String volumeDVC, String typeDVC, String	ManufactureTC, int what) {
         this.name = name;
         Expr1 = expr1;
         Expr2 = expr2;
@@ -70,6 +71,8 @@ public class InventarModel implements Serializable {
         this.volumeDVC = volumeDVC;
         this.typeDVC=typeDVC;
         this.ManufactureTC=ManufactureTC;
+        if(what==1)
+            this.groupField = name+((expr1!=null)?", "+expr1:"")+((expr2!=null)?", "+expr2:"")+((expr3!=null)?", "+expr3:"");
 
     }
 
@@ -327,5 +330,11 @@ public class InventarModel implements Serializable {
 
     public void setManufactureTC(String manufactureTC) {
         ManufactureTC = manufactureTC;
+    }
+
+    public String getGroupField() {
+        if(groupField!=null)
+            return groupField;
+        return "0";
     }
 }

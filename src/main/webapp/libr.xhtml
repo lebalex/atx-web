@@ -31,10 +31,18 @@
                 <p:rowEditor/>
             </p:column>
             <p:column style="width:6rem">
-                <p:commandButton icon="pi pi-trash" actionListener="#{libr.onDelete(libra.num)}" update=":formLibr:libra"/>
+                <p:commandButton icon="pi pi-trash" actionListener="#{libr.onDelete(libra.num)}" update=":formLibr:libra :formLibr:msgs">
+                <p:confirm header="Подтверждение" message="Удалить выбранную запись?" icon="pi pi-info-circle" update=":formLibr:libra :formLibr:msgs"/>
+                </p:commandButton>
             </p:column>
             <!--  нельзя давть пользователям удалять в НСИ, удалят машины-->
         </p:dataTable>
+
+        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+            <p:commandButton value="Нет" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+            <p:commandButton value="Да" type="button" styleClass="ui-confirmdialog-yes" />
+        </p:confirmDialog>
+
     </h:form>
 
 </f:view>

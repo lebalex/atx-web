@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<f:view>
+
+    <h:form id="form">
+        <p:growl id="growlAvto" showDetail="true" sticky="false" life="5000"/>
+
+        <p:contextMenu for="data_linNormGsm" id="contextMenu">
+            <p:menuitem value="в Excel с форматирование" ajax="false" actionListener="#{reportLinNormGSM.excelLinNormGsm}"/>
+            <p:menuitem value="в Excel" ajax="false" rendered="true" >
+                <p:dataExporter type="xls" target="data_linNormGsm" fileName="linnormgsm"/>
+            </p:menuitem>
+
+        </p:contextMenu>
+
+
+
+        <p:dataTable id="data_linNormGsm" styleClass="data_linNormGsm" var="avto" value="#{reportLinNormGSM.listLinNormGSMModel}" scrollable="true" scrollHeight="650" scrollWidth="100%">
+            <f:facet name="header">
+                <h:outputText value="#{reportLinNormGSM.caption}"/>
+            </f:facet>
+
+
+            <p:headerRow  groupBy="#{avto.depart} #{avto.fin}">
+
+                <p:column colspan="30">
+                    <!--div class="p-d-inline-flex p-ai-center" style="vertical-align: middle"-->
+                    <h:outputText styleClass="p-ml-2" value="#{avto.depart}"/>
+                    <h:outputText style="font-weight: normal" styleClass="p-ml-2" value="#{avto.fin}"/>
+
+                    <!--/div-->
+                </p:column>
+            </p:headerRow>
+
+
+            <p:columnGroup type="header">
+                <p:row>
+                    <p:column rowspan="2" headerText="Модель" width="50"/>
+                    <p:column rowspan="2" headerText="гос №" width="50"/>
+                    <p:column rowspan="2" headerText="гв" width="50"/>
+                    <p:column rowspan="2" headerText="служба" width="50"/>
+                    <p:column rowspan="2" headerText="Марка ГСМ" width="50"/>
+                    <p:column rowspan="2" headerText="базовая норма" width="50"/>
+                    <p:column rowspan="2" headerText="% за населенность" width="50"/>
+                    <p:column rowspan="2" headerText="% за нижнегорье" width="50"/>
+                    <p:column rowspan="2" headerText="% за старение" width="50"/>
+                    <p:column rowspan="2" headerText="дополни-тельный %" width="50"/>
+                    <p:column colspan="7" headerText="Линейные нормы, л" width="350"/>
+                    <p:column rowspan="2" headerText="Лимит пробега" width="50"/>
+                    <p:column colspan="12" headerText="потребность, л" width="600"/>
+
+                </p:row>
+                <p:row>
+                    <p:column headerText="летняя"/>
+                    <p:column headerText="ноябрь"/>
+                    <p:column headerText="декабрь"/>
+                    <p:column headerText="январь"/>
+                    <p:column headerText="февраль"/>
+                    <p:column headerText="март"/>
+                    <p:column headerText="апрель"/>
+
+                    <p:column headerText="летняя"/>
+                    <p:column headerText="ноябрь"/>
+                    <p:column headerText="декабрь"/>
+                    <p:column headerText="январь"/>
+                    <p:column headerText="февраль"/>
+                    <p:column headerText="март"/>
+                    <p:column headerText="апрель"/>
+                    <p:column headerText="1 кв-л"/>
+                    <p:column headerText="2 кв-л"/>
+                    <p:column headerText="3 кв-л"/>
+                    <p:column headerText="4 кв-л"/>
+                    <p:column headerText="год"/>
+                </p:row>
+            </p:columnGroup>
+
+            <p:column>
+                <h:outputText value=" #{avto.model}"/>
+            </p:column>
+            <p:column>
+                <h:outputText value="#{avto.numb_1}"/>
+            </p:column>
+            <p:column>
+                <h:outputText value="#{avto.m_year}"/>
+            </p:column>
+            <p:column>
+                <h:outputText value="#{avto.group_used}"/>
+            </p:column>
+            <p:column>
+                <h:outputText value="#{avto.mark_gsm}"/>
+            </p:column>
+            <p:column>
+                <h:outputText value="#{avto.norm}">
+                    <f:convertNumber type="number" pattern="#.#"/></h:outputText>
+            </p:column>
+            <p:column>
+                <h:outputText value="#{avto.nasel}">
+                    <f:convertNumber type="number" pattern="#.#"/></h:outputText>
+            </p:column>
+            <p:column>
+                <h:outputText value="#{avto.nignegor}">
+                    <f:convertNumber type="number" pattern="#.#"/></h:outputText>
+            </p:column>
+            <p:column>
+                <h:outputText value="#{avto.old}">
+                    <f:convertNumber type="number" pattern="#.#"/></h:outputText>
+            </p:column>
+            <p:column>
+                <h:outputText value="#{avto.procent_gsm}">
+                    <f:convertNumber type="number" pattern="#.#"/></h:outputText>
+            </p:column>
+
+
+            <p:column>
+                <h:outputText value="#{avto.leto}">
+                    <f:convertNumber type="number" pattern="#.#"/></h:outputText>
+            </p:column>
+            <p:column>
+                <h:outputText value="#{avto.m0}">
+                    <f:convertNumber type="number" pattern="#.#"/></h:outputText>
+            </p:column>
+            <p:column>
+                <h:outputText value="#{avto.m1}">
+                    <f:convertNumber type="number" pattern="#.#"/></h:outputText>
+            </p:column>
+            <p:column>
+                <h:outputText value="#{avto.m2}">
+                    <f:convertNumber type="number" pattern="#.#"/></h:outputText>
+            </p:column>
+            <p:column>
+                <h:outputText value="#{avto.m3}">
+                    <f:convertNumber type="number" pattern="#.#"/></h:outputText>
+            </p:column>
+            <p:column>
+                <h:outputText value="#{avto.m4}">
+                    <f:convertNumber type="number" pattern="#.#"/></h:outputText>
+            </p:column>
+            <p:column>
+                <h:outputText value="#{avto.m5}">
+                    <f:convertNumber type="number" pattern="#.#"/></h:outputText>
+            </p:column>
+
+            <p:column>
+                <h:outputText value="#{avto.norma_run}">
+                    <f:convertNumber type="number" pattern="#.#"/></h:outputText>
+            </p:column>
+
+            <p:column>
+                <h:outputText value="#{avto.leto_2}">
+                    <f:convertNumber type="number" pattern="#.#"/></h:outputText>
+            </p:column>
+            <p:column>
+                <h:outputText value="#{avto.m0_2}">
+                    <f:convertNumber type="number" pattern="#.#"/></h:outputText>
+            </p:column>
+            <p:column>
+                <h:outputText value="#{avto.m1_2}">
+                    <f:convertNumber type="number" pattern="#.#"/></h:outputText>
+            </p:column>
+            <p:column>
+                <h:outputText value="#{avto.m2_2}">
+                    <f:convertNumber type="number" pattern="#.#"/></h:outputText>
+            </p:column>
+            <p:column>
+                <h:outputText value="#{avto.m3_2}">
+                    <f:convertNumber type="number" pattern="#.#"/></h:outputText>
+            </p:column>
+            <p:column>
+                <h:outputText value="#{avto.m4_2}">
+                    <f:convertNumber type="number" pattern="#.#"/></h:outputText>
+            </p:column>
+            <p:column>
+                <h:outputText value="#{avto.m5_2}">
+                    <f:convertNumber type="number" pattern="#.#"/></h:outputText>
+            </p:column>
+
+            <p:column>
+                <h:outputText value="#{avto.kv1}">
+                    <f:convertNumber type="number" pattern="#.#"/></h:outputText>
+            </p:column>
+            <p:column>
+                <h:outputText value="#{avto.kv2}">
+                    <f:convertNumber type="number" pattern="#.#"/></h:outputText>
+            </p:column>
+            <p:column>
+                <h:outputText value="#{avto.kv3}">
+                    <f:convertNumber type="number" pattern="#.#"/></h:outputText>
+            </p:column>
+            <p:column>
+                <h:outputText value="#{avto.kv4}">
+                    <f:convertNumber type="number" pattern="#.#"/></h:outputText>
+            </p:column>
+            <p:column>
+                <h:outputText value="#{avto.god}">
+                    <f:convertNumber type="number" pattern="#.#"/></h:outputText>
+            </p:column>
+
+            <p:summaryRow>
+                <p:column>
+                    <h:outputText value="#{reportLinNormGSM.getTotalCount(avto.groupField)}"/>
+                </p:column>
+
+                <p:column>
+                    <h:outputText value=""/>
+                </p:column>
+                <p:column>
+                    <h:outputText value=""/>
+                </p:column>
+                <p:column>
+                    <h:outputText value=""/>
+                </p:column>
+                <p:column>
+                    <h:outputText value=""/>
+                </p:column>
+                <p:column>
+                    <h:outputText value=""/>
+                </p:column>
+                <p:column>
+                    <h:outputText value=""/>
+                </p:column>
+                <p:column>
+                    <h:outputText value=""/>
+                </p:column>
+                <p:column>
+                    <h:outputText value=""/>
+                </p:column>
+                <p:column>
+                    <h:outputText value=""/>
+                </p:column>
+                <p:column>
+                    <h:outputText value=""/>
+                </p:column>
+                <p:column>
+                    <h:outputText value=""/>
+                </p:column>
+                <p:column>
+                    <h:outputText value=""/>
+                </p:column>
+                <p:column>
+                    <h:outputText value=""/>
+                </p:column>
+                <p:column>
+                    <h:outputText value=""/>
+                </p:column>
+                <p:column>
+                    <h:outputText value=""/>
+                </p:column>
+                <p:column>
+                    <h:outputText value=""/>
+                </p:column>
+
+                <p:column>
+                    <h:outputText value="#{reportLinNormGSM.getTotalSumProbegLim(avto.groupField,1)}">
+                        <f:convertNumber type="number" pattern="#"/></h:outputText>
+                </p:column>
+                <p:column>
+                    <h:outputText value="#{reportLinNormGSM.getTotalSumProbegLim(avto.groupField,2)}">
+                        <f:convertNumber type="number" pattern="#"/></h:outputText>
+                </p:column>
+                <p:column>
+                    <h:outputText value="#{reportLinNormGSM.getTotalSumProbegLim(avto.groupField,3)}">
+                        <f:convertNumber type="number" pattern="#"/></h:outputText>
+                </p:column>
+                <p:column>
+                    <h:outputText value="#{reportLinNormGSM.getTotalSumProbegLim(avto.groupField,4)}">
+                        <f:convertNumber type="number" pattern="#"/></h:outputText>
+                </p:column>
+                <p:column>
+                    <h:outputText value="#{reportLinNormGSM.getTotalSumProbegLim(avto.groupField,5)}">
+                        <f:convertNumber type="number" pattern="#"/></h:outputText>
+                </p:column>
+                <p:column>
+                    <h:outputText value="#{reportLinNormGSM.getTotalSumProbegLim(avto.groupField,6)}">
+                        <f:convertNumber type="number" pattern="#"/></h:outputText>
+                </p:column>
+                <p:column>
+                    <h:outputText value="#{reportLinNormGSM.getTotalSumProbegLim(avto.groupField,7)}">
+                        <f:convertNumber type="number" pattern="#"/></h:outputText>
+                </p:column>
+                <p:column>
+                    <h:outputText value="#{reportLinNormGSM.getTotalSumProbegLim(avto.groupField,8)}">
+                        <f:convertNumber type="number" pattern="#"/></h:outputText>
+                </p:column>
+                <p:column>
+                    <h:outputText value="#{reportLinNormGSM.getTotalSumProbegLim(avto.groupField,9)}">
+                        <f:convertNumber type="number" pattern="#"/></h:outputText>
+                </p:column>
+                <p:column>
+                    <h:outputText value="#{reportLinNormGSM.getTotalSumProbegLim(avto.groupField,10)}">
+                        <f:convertNumber type="number" pattern="#"/></h:outputText>
+                </p:column>
+                <p:column>
+                    <h:outputText value="#{reportLinNormGSM.getTotalSumProbegLim(avto.groupField,11)}">
+                        <f:convertNumber type="number" pattern="#"/></h:outputText>
+                </p:column>
+                <p:column>
+                    <h:outputText value="#{reportLinNormGSM.getTotalSumProbegLim(avto.groupField,12)}">
+                        <f:convertNumber type="number" pattern="#"/></h:outputText>
+                </p:column>
+                <p:column>
+                    <h:outputText value="#{reportLinNormGSM.getTotalSumProbegLim(avto.groupField,13)}">
+                        <f:convertNumber type="number" pattern="#"/></h:outputText>
+                </p:column>
+
+            </p:summaryRow>
+
+
+
+
+
+
+        </p:dataTable>
+    </h:form>
+</f:view>
+</html>

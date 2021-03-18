@@ -152,10 +152,10 @@ public class LibrGSMBaseNorm extends AtxBase implements Serializable {
     }
 
     public void handleChange() {
-        logger.log(Level.ERROR, this.id_mark);
+        //logger.log(Level.ERROR, this.id_mark);
         geyLibrModel();
-        logger.log(Level.ERROR, this.id_model);
-        logger.log(Level.ERROR, this.id_gsm);
+        //logger.log(Level.ERROR, this.id_model);
+        //logger.log(Level.ERROR, this.id_gsm);
         getBaseNorm();
 
     }
@@ -274,6 +274,7 @@ public class LibrGSMBaseNorm extends AtxBase implements Serializable {
     }
 
     public void onDelete(int num) {
+        if (atxLogin.isSave(Roles.GSM_NSI)) {
         Iterator<BaseNormModel> i = this.listBaseNormModel.iterator();
         while (i.hasNext()) {
             BaseNormModel agr = i.next();
@@ -281,6 +282,9 @@ public class LibrGSMBaseNorm extends AtxBase implements Serializable {
                 //saveLibr(this.what, agr, 1);
                 i.remove();
             }
+        }
+        } else {
+            viewMessage("Ошибка", Txt.ACCESS_ERROR);
         }
     }
 }

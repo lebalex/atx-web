@@ -17,7 +17,7 @@ and open the template in the editor.
 
 .ui-button
 {
-    font-size: 82% !important;
+    font-size: small !important;
 }
 .ui-selectonemenu label.ui-selectonemenu-label {
     font-size: small !important;
@@ -25,11 +25,69 @@ and open the template in the editor.
 .ui-selectonemenu input.ui-selectonemenu-label {
     font-size: small !important;
 }
+.ui-selectonemenu-panel .ui-selectonemenu-items .ui-selectonemenu-item
+{
+    font-size: small !important;
+}
+.ui-selectonemenu
+{
+    min-height: 1.5rem;
+}
+.ui-chkbox .ui-chkbox-label
+{
+    font-size: small !important;
+}
 .ui-widget-header .ui-inputfield, .ui-widget-content .ui-inputfield {
     font-size: small !important;
+    padding: 0.2rem 0.2rem;
+}
+.ui-inputfield {
+    font-size: small !important;
+    padding: 0.2rem 0.2rem  !important;
 }
 .ui-calendar.ui-trigger-calendar input.hasDatepicker {
     width: 112px !important;
+}
+.ui-calendar .ui-button.ui-button-icon-only{
+    min-width: 1.5rem !important;
+    width: 1.5rem !important;
+    height: 1.5rem!important;
+}
+
+.ui-button
+{
+    height: 1.6rem;
+}
+.ui-button.ui-button-text-only .ui-button-text
+{
+    padding-right: 1rem !important;
+    padding-left: 1rem !important;
+    padding-top: 0rem !important;
+    padding-bottom: 0rem !important;
+}
+
+.ui-button.ui-button-text-icon-left .ui-button-text
+{
+    padding-top: 0.2rem !important;
+    padding-right: 1rem !important;
+    padding-bottom: 0.5rem !important;
+    padding-left: 2rem !important;
+}
+.ui-button.ui-button-icon-only
+{
+    padding-top: 0rem !important;
+    padding-right: 0rem !important;
+    padding-bottom: 0.5rem !important;
+    padding-left: 2rem !important;
+}
+
+.p-datepicker
+{
+    display: inline-flex;
+}
+.ui-calendar .ui-trigger-calendar
+{
+    margin-top: 10px;
 }
 /*.ui-widget .mypanelGrid
 {
@@ -45,7 +103,7 @@ and open the template in the editor.
     font-family: Tahoma;
 }    
 .ui-widget .textBox{
-    font-size: medium !important;
+    font-size: small !important;
     font-family: Tahoma;
     line-height: 2.0
 } 
@@ -59,7 +117,10 @@ and open the template in the editor.
 padding: 10px !important;
 }
 
-
+.ui-menuitem
+{
+    margin: -5px !important;
+}
 .ui-widget .menucheck{
     color:green !important;
 }
@@ -130,13 +191,32 @@ padding: 10px !important;
     border-style: hidden !important;
     text-align:left;
     vertical-align: top;
-    padding: 5px !important;
+    padding: 3px !important;
 
 }
 .panelGridAvtoCard90 {
     width: 90%;
 }
 .panelGridAvtoCard90 td {
+    border-style: hidden !important;
+    text-align:left;
+    vertical-align: top;
+    padding: 3px !important;
+
+}
+.panelGridAvtoCard90r {
+    width: 90% !important;
+}
+.panelGridAvtoCard90r td {
+    border-style: hidden !important;
+    vertical-align: top;
+    padding: 3px !important;
+
+}
+.panelGridAvtoCard50 {
+    width: 50%;
+}
+.panelGridAvtoCard50 td {
     border-style: hidden !important;
     text-align:left;
     vertical-align: top;
@@ -211,6 +291,18 @@ ul.ui-menu-child {
 .ui-datatable thead th{
     font-size: small !important;
 }
+
+.ui-datatable.data_linNormGsm thead th{
+    font-size: x-small !important;
+}
+.ui-datatable.data_linNormGsm tbody td {
+    padding: 0.5rem 0.5rem !important;
+    font-size: x-small !important;
+}
+
+.ui-datatable .ui-datatable-data > tr > td {
+    padding: 0.5rem 0.5rem !important;
+}
 .ui-tabs .ui-tabs-nav li.ui-tabs-header{
     font-size: small !important;
 }
@@ -222,7 +314,18 @@ ul.ui-menu-child {
 {
     width: 350px;
 }
-
+.label3
+{
+    width: auto;
+}
+.value3
+{
+    width: 350px;
+}
+.value_r
+{
+    text-align: right !important;
+}
 
 
 .table_print thead th{
@@ -247,3 +350,10 @@ ul.ui-menu-child {
 
 
 
+.ui-datatable.data_expl thead th{
+    font-size: x-small !important;
+}
+.ui-datatable.data_expl tbody td {
+    padding: 0.5rem 0.5rem !important;
+    font-size: x-small !important;
+}

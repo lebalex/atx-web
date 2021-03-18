@@ -1,9 +1,11 @@
-package xyz.lebalex.atx.controls;
+package xyz.lebalex.atx.reports;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import xyz.lebalex.atx.AtxBase;
 import xyz.lebalex.atx.AtxLogin;
+import xyz.lebalex.atx.controls.ManagerPages;
+import xyz.lebalex.atx.controls.QuickSearch;
 import xyz.lebalex.atx.utils.DateHelper;
 
 import javax.annotation.PostConstruct;
@@ -13,6 +15,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -83,6 +86,8 @@ public class Report01 extends AtxBase implements Serializable {
     private String stateOut="0";
     private Date out1;
     private Date out2;
+    private Date dr1;
+    private Date dr2;
 
     private boolean on_spasan;
     private boolean on_spasan_next;
@@ -92,6 +97,9 @@ public class Report01 extends AtxBase implements Serializable {
 
     private boolean on_arend;
     private boolean on_notAtx;
+
+    private int year_selected;
+    private List<Integer> listYear = new ArrayList<>();
 
     private boolean tf01,tf02,tf03,tf04,tf05,tf06,tf07,tf08,tf09,tf10,tf11,tf12,tf13,tf14,tf15,tf16,tf17,tf18,tf19,tf20,tf21,tf22,tf23,tf24,tf25,tf26;
 
@@ -104,12 +112,78 @@ public class Report01 extends AtxBase implements Serializable {
     @Inject
     QuickSearch quickSearch;
     @Inject
-    ReportView reportView;
+    ReportInventar reportInventar;
+    @Inject
+    ReportExpl01 reportExpl01;
+    @Inject
+    ReportRemont reportRemont;
+    @Inject
+    ReportTO reportTO;
+
+    @Inject
+    ReportLinNormGSM reportLinNormGSM;
+
+
     @PostConstruct
     public void initialize() {
-        tf01=true;tf02=true;tf03=true;
+        //logger.log(Level.INFO,"initialize");
+        Calendar c1 = Calendar.getInstance();
+        for(int i=2010;i<=(c1.get(Calendar.YEAR)+3);i++)
+            listYear.add(i);
+        this.year_selected = c1.get(Calendar.YEAR);
+
+        handleYearChange(this.year_selected);
+        if(managerPages.getWhatLibr()==1 || managerPages.getWhatLibr()==7 || managerPages.getWhatLibr()==9 || managerPages.getWhatLibr()==10) {
+            tf01 = true;
+            tf02 = true;
+            tf03 = true;
+        }
+        if(managerPages.getWhatLibr()==8) {
+            tf01 = true;
+            tf02 = true;
+            tf03 = true;
+            tf20 = true;
+            Calendar c0 = Calendar.getInstance();
+            Calendar c2 = Calendar.getInstance();
+            c0.add(Calendar.MONTH,-3);
+            this.dr1 = new Date();
+            this.dr2 = new Date();
+            this.dr1.setTime(c0.getTimeInMillis());
+            this.dr2.setTime(c2.getTimeInMillis());
+
+        }
+        if(managerPages.getWhatLibr()==6) {
+            tf01 = true;
+            tf02 = true;
+            tf12 = true;tf13 = true;tf14 = true;tf15 = true;tf16 = true;tf17 = true;tf18 = true;tf19 = true;tf20 = true;
+            tf21 = true;tf22 = true;tf23 = true;tf24 = true;tf25 = true;tf26 = true;
+        }
     }
     public Report01() {
+        //logger.log(Level.INFO,"constructor");
+    }
+
+    public void handleYearChange(int year) {
+        Calendar c1 = Calendar.getInstance();
+        c1.set(year,0,1);
+        Calendar c2 = Calendar.getInstance();
+        c2.set(year,11,31);
+        this.dr1 = new Date();
+        this.dr2 = new Date();
+        this.dr1.setTime(c1.getTimeInMillis());
+        this.dr2.setTime(c2.getTimeInMillis());
+    }
+
+    public int getYear_selected() {
+        return year_selected;
+    }
+
+    public void setYear_selected(int year_selected) {
+        this.year_selected = year_selected;
+    }
+
+    public List<Integer> getListYear() {
+        return listYear;
     }
 
     public int getId_region() {
@@ -568,6 +642,22 @@ public class Report01 extends AtxBase implements Serializable {
         this.out2 = out2;
     }
 
+    public Date getDr1() {
+        return dr1;
+    }
+
+    public void setDr1(Date dr1) {
+        this.dr1 = dr1;
+    }
+
+    public Date getDr2() {
+        return dr2;
+    }
+
+    public void setDr2(Date dr2) {
+        this.dr2 = dr2;
+    }
+
     public boolean isOn_spasan() {
         return on_spasan;
     }
@@ -824,12 +914,81 @@ public class Report01 extends AtxBase implements Serializable {
         this.tf26 = tf26;
     }
 
+    public String getTitle20()
+    {
+        switch(managerPages.getWhatLibr()){
+            case 1:
+            case 9:
+            case 10:
+                return "Страховая компания";
+            case 8:
+                return "Последнее ТО";
+            default: return "Страховая компания";
+        }
+    }
+    public boolean getVisibleOut()
+    {
+        switch(managerPages.getWhatLibr()){
+            case 2:
+            case 6:
+            case 7:
+            case 8:
+            case 9:
+            case 10:
+                return true;
+            default: return false;
+        }
+    }
+    public boolean getVisibleFieldsInventer()
+    {
+        switch(managerPages.getWhatLibr()) {
+            case 1:
+            case 7:
+            case 8:
+            case 9:
+            case 10:
+                return true;
+            default:
+                return false;
+        }
+    }
+    public boolean getVisibleFieldsRemont()
+    {
+        if(managerPages.getWhatLibr()==6) return true;
+        else return false;
+    }
+    public boolean getVisibleDatePeriod()
+    {
+        //logger.log(Level.INFO,"getVisibleDatePeriod");
+        switch(managerPages.getWhatLibr()){
+            case 2:
+            case 6:
+            case 8:
+            case 10:
+                return true;
+            default: return false;
+        }
+    }
+    public boolean getVisibleYearPeriod()
+    {
+        switch(managerPages.getWhatLibr()){
+            case 3:
+            case 4:
+                return true;
+            default: return false;
+        }
+    }
+
     public void find(ActionEvent e) {
         boolean doit=false;
         String modelAvt="-1";
         int id_region,id_division,id_depart,id_preDepart,id_serv,id_PreServ,id_dislocation,id_mark,id_source_bay,
                 id_source_fin,id_group,id_typetc,id_typedvc,id_manufactureTC,id_markGsm,state_p,uotAc_p,life_p,spasan,spasan_next,arend,notAtx;
-        String numb_1,numb_2,m_year1,m_year2,vin,n_engine,n_body,n_chassis,n_pts,insur,inAc1,inAc2,outD1,outD2,volDvc;
+        String numb_1,numb_2,m_year1,m_year2,vin,n_engine,n_body,n_chassis,n_pts,insur,inAc1,inAc2,outD1,outD2,volDvc,drD1,drD2;
+
+
+        if (this.dr1!=null) {doit=true; drD1=DateHelper.DateToString(this.dr1,"dd.MM.yyyy");} else drD1="-1";
+        if (this.dr2!=null) {doit=true; drD2=DateHelper.DateToString(this.dr2,"dd.MM.yyyy");} else drD2="-1";
 
         if (on_region && this.id_region>0) {doit=true;id_region=this.id_region;} else id_region=-1;
         if (on_division && this.id_division>0) {doit=true;id_division=this.id_division;} else id_division=-1;
@@ -874,7 +1033,7 @@ public class Report01 extends AtxBase implements Serializable {
         if (stateOut.equalsIgnoreCase("3")) {doit=true; life_p=1;} else life_p=0;
 
         if (this.out1!=null) {doit=true; outD1=DateHelper.DateToString(this.out1,"dd.MM.yyyy");} else outD1="-1";
-        if (this.out1!=null) {doit=true; outD2=DateHelper.DateToString(this.out1,"dd.MM.yyyy");} else outD2="-1";
+        if (this.out2!=null) {doit=true; outD2=DateHelper.DateToString(this.out2,"dd.MM.yyyy");} else outD2="-1";
 
         if (on_volDvc && this.volDvc.length()>0) {doit=true;volDvc=this.volDvc;} else volDvc="-1";
 
@@ -912,13 +1071,52 @@ public class Report01 extends AtxBase implements Serializable {
         if(this.tf25)filds.add(true);else filds.add(false);
         if(this.tf26)filds.add(true);else filds.add(false);
 
-        if(doit)
-            reportView.inventar(id_region,id_division,id_depart,id_preDepart,id_serv,id_PreServ,id_dislocation,id_mark,id_source_bay,
-                    id_source_fin,id_group,modelAvt,numb_1,numb_2,m_year1,m_year2,vin,n_engine,n_body,n_chassis,n_pts,insur,
-                    inAc1, inAc2, state_p, uotAc_p, life_p, outD1, outD2, id_typetc, arend, spasan, id_markGsm,
-                    notAtx, volDvc, id_typedvc, id_manufactureTC, spasan_next, filds);
+        if(doit) {
+            int what = managerPages.getWhatLibr();
+            switch(what) {
+                case 1: reportInventar.inventar(id_region, id_division, id_depart, id_preDepart, id_serv, id_PreServ, id_dislocation, id_mark, id_source_bay,
+                        id_source_fin, id_group, modelAvt, numb_1, numb_2, m_year1, m_year2, vin, n_engine, n_body, n_chassis, n_pts, insur,
+                        inAc1, inAc2, state_p, uotAc_p, life_p, outD1, outD2, id_typetc, arend, spasan, id_markGsm,
+                        notAtx, volDvc, id_typedvc, id_manufactureTC, spasan_next, filds, what);break;
+                case 2: reportExpl01.expl01(id_region, id_division, id_depart, id_preDepart, id_serv, id_PreServ, id_dislocation, id_mark, id_source_bay,
+                        id_source_fin, id_group, modelAvt, numb_1, numb_2, m_year1, m_year2, vin, n_engine, n_body, n_chassis, n_pts, insur,
+                        inAc1, inAc2, drD1, drD2, id_typetc, arend, spasan, id_markGsm,
+                        notAtx, volDvc, id_typedvc, id_manufactureTC, spasan_next);break;
+                case 3: reportLinNormGSM.rep01(id_region, id_division, id_depart, id_preDepart, id_serv, id_PreServ, id_dislocation, id_mark, id_source_bay,
+                        id_source_fin, id_group, modelAvt, numb_1, numb_2, m_year1, m_year2, vin, n_engine, n_body, n_chassis, n_pts, insur,
+                        inAc1, inAc2, drD1, drD2, id_typetc, spasan, id_markGsm,
+                        notAtx, volDvc, id_typedvc, id_manufactureTC, spasan_next, this.year_selected, what);break;
+                case 4: reportLinNormGSM.rep01(id_region, id_division, id_depart, id_preDepart, id_serv, id_PreServ, id_dislocation, id_mark, id_source_bay,
+                        id_source_fin, id_group, modelAvt, numb_1, numb_2, m_year1, m_year2, vin, n_engine, n_body, n_chassis, n_pts, insur,
+                        inAc1, inAc2, drD1, drD2, id_typetc, spasan, id_markGsm,
+                        notAtx, volDvc, id_typedvc, id_manufactureTC, spasan_next, this.year_selected, what);break;
+                case 5: reportLinNormGSM.rep01(id_region, id_division, id_depart, id_preDepart, id_serv, id_PreServ, id_dislocation, id_mark, id_source_bay,
+                        id_source_fin, id_group, modelAvt, numb_1, numb_2, m_year1, m_year2, vin, n_engine, n_body, n_chassis, n_pts, insur,
+                        inAc1, inAc2, drD1, drD2, id_typetc, spasan, id_markGsm,
+                        notAtx, volDvc, id_typedvc, id_manufactureTC, spasan_next, this.year_selected, what);break;
+                case 6: reportRemont.remont(id_region, id_division, id_depart, id_preDepart, id_serv, id_PreServ, id_dislocation, id_mark, id_source_bay,
+                        id_source_fin, id_group, modelAvt, numb_1, numb_2, m_year1, m_year2, vin, n_engine, n_body, n_chassis, n_pts, insur,
+                        inAc1, inAc2, drD1, drD2, state_p, uotAc_p, life_p, outD1, outD2, id_typetc, arend, spasan, id_markGsm,
+                        notAtx, volDvc, id_typedvc, id_manufactureTC, spasan_next, filds);break;
+                case 7: reportTO.to(id_region, id_division, id_depart, id_preDepart, id_serv, id_PreServ, id_dislocation, id_mark, id_source_bay,
+                        id_source_fin, id_group, modelAvt, numb_1, numb_2, m_year1, m_year2, vin, n_engine, n_body, n_chassis, n_pts, insur,
+                        inAc1, inAc2, state_p, uotAc_p, life_p, outD1, outD2, id_typetc, arend, spasan, id_markGsm,
+                        notAtx, volDvc, id_typedvc, id_manufactureTC, spasan_next, filds, what);break;
+                case 8: reportTO.notTo(id_region, id_division, id_depart, id_preDepart, id_serv, id_PreServ, id_dislocation, id_mark, id_source_bay,
+                        id_source_fin, id_group, modelAvt, numb_1, numb_2, m_year1, m_year2, vin, n_engine, n_body, n_chassis, n_pts, insur,
+                        inAc1, inAc2, drD1, drD2, state_p, uotAc_p, life_p, outD1, outD2, id_typetc, arend, spasan, id_markGsm,
+                        notAtx, volDvc, id_typedvc, id_manufactureTC, spasan_next, filds, what);break;
+                case 9: reportInventar.inventar(id_region, id_division, id_depart, id_preDepart, id_serv, id_PreServ, id_dislocation, id_mark, id_source_bay,
+                        id_source_fin, id_group, modelAvt, numb_1, numb_2, m_year1, m_year2, vin, n_engine, n_body, n_chassis, n_pts, insur,
+                        inAc1, inAc2, state_p, uotAc_p, life_p, outD1, outD2, id_typetc, arend, spasan, id_markGsm,
+                        notAtx, volDvc, id_typedvc, id_manufactureTC, spasan_next, filds, what);break;
+                case 10: reportInventar.govNumber(id_region, id_division, id_depart, id_preDepart, id_serv, id_PreServ, id_dislocation, id_mark, id_source_bay,
+                        id_source_fin, id_group, modelAvt, numb_1, numb_2, m_year1, m_year2, vin, n_engine, n_body, n_chassis, n_pts, insur,
+                        inAc1, inAc2, drD1, drD2, state_p, uotAc_p, life_p, outD1, outD2, id_typetc, arend, spasan, id_markGsm,
+                        notAtx, volDvc, id_typedvc, id_manufactureTC, spasan_next, filds, what);break;
+            }
 
-
+        }
 
 
 

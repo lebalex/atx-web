@@ -49,7 +49,9 @@
                 <p:rowEditor/>
             </p:column>
             <p:column style="width:6rem">
-                <p:commandButton icon="pi pi-trash" actionListener="#{librGSMYearExpl.onDelete(libra.num)}" update=":formLibr2:libra"/>
+                <p:commandButton icon="pi pi-trash" actionListener="#{librGSMYearExpl.onDelete(libra.num)}" update=":formLibr2:libra :formLibr2:msgs">
+                <p:confirm header="Подтверждение" message="Удалить выбранную запись?" icon="pi pi-info-circle" update=":formLibr2:libra :formLibr2:msgs"/>
+                </p:commandButton>
             </p:column>
             <!--  нельзя давть пользователям удалять в НСИ, удалят машины-->
         </p:dataTable>

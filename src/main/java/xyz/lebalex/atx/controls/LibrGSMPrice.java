@@ -161,6 +161,7 @@ public class LibrGSMPrice extends AtxBase implements Serializable {
     }
 
     public void onDelete(int num) {
+        if (atxLogin.isSave(Roles.GSM_NSI)) {
         Iterator<LibrGSMPriceModel> i = this.listChildModel.iterator();
         while (i.hasNext()) {
             LibrGSMPriceModel agr = i.next();
@@ -168,6 +169,9 @@ public class LibrGSMPrice extends AtxBase implements Serializable {
                 //saveLibr(this.what, agr, 1);
                 i.remove();
             }
+        }
+        } else {
+            viewMessage("Ошибка", Txt.ACCESS_ERROR);
         }
     }
 
